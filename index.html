@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arshdeep - 6-Month Jamnadas Transformation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04070d;
+  --bg-soft:#0a1018;
+  --panel:#0b121c;
+  --panel-2:#0f1825;
+  --line:rgba(145,170,214,.18);
+  --line-strong:rgba(145,170,214,.3);
+  --text:#ecf2ff;
+  --muted:#9aa8c4;
+  --soft:#6f7a93;
+  --omad:#3ed07f;
+  --omad-soft:rgba(62,208,127,.12);
+  --fast:#f2a94b;
+  --fast-soft:rgba(242,169,75,.12);
+  --zone:#66b0ff;
+  --zone-soft:rgba(102,176,255,.12);
+  --vo2:#ff6c5f;
+  --vo2-soft:rgba(255,108,95,.12);
+  --push:#ff7f66;
+  --push-soft:rgba(255,127,102,.12);
+  --pull:#4fd0c8;
+  --pull-soft:rgba(79,208,200,.12);
+  --rest:#8d98b3;
+  --rest-soft:rgba(141,152,179,.12);
+  --shadow:0 24px 60px rgba(0,0,0,.32);
+  --radius:22px;
+  --radius-sm:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  font-family:"Manrope",sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(102,176,255,.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(62,208,127,.1), transparent 26%),
+    linear-gradient(180deg, #050913 0%, #04070d 35%, #03060b 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+a{color:inherit}
+button{font:inherit}
+.shell{
+  width:min(1100px, calc(100% - 28px));
+  margin:0 auto;
+  padding:26px 0 80px;
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(0, 1.35fr) minmax(280px, .9fr);
+  gap:18px;
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:linear-gradient(180deg, rgba(12,18,28,.96), rgba(7,12,19,.96));
+  box-shadow:var(--shadow);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(125deg, rgba(102,176,255,.09), transparent 34%),
+    linear-gradient(305deg, rgba(62,208,127,.08), transparent 40%);
+  pointer-events:none;
+}
+.hero-main,.hero-side{position:relative;z-index:1}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(145,170,214,.22);
+  background:rgba(145,170,214,.07);
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:11px;
+  font-weight:800;
+}
+.eyebrow::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--omad), var(--zone));
+  box-shadow:0 0 16px rgba(62,208,127,.55);
+}
+.hero h1{
+  margin-top:18px;
+  font-size:clamp(34px, 5vw, 56px);
+  line-height:.96;
+  letter-spacing:-.05em;
+  max-width:9ch;
+}
+.hero-sub{
+  margin-top:14px;
+  color:var(--muted);
+  font-size:14px;
+  max-width:60ch;
+}
+.hero-purpose{
+  margin-top:18px;
+  max-width:54ch;
+  color:#d6def0;
+  font-size:15px;
+}
+.hero-band{
+  margin-top:22px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:40px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+  color:var(--text);
+  font-size:12px;
+  font-weight:700;
+}
+.pill span{
+  color:var(--muted);
+  font-weight:600;
+}
+.hero-side{
+  display:grid;
+  gap:12px;
+  align-content:start;
+}
+.hero-card{
+  padding:16px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+}
+.hero-card h2{
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--soft);
+  margin-bottom:10px;
+}
+.snapshot{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:10px;
+}
+.snapshot-item{
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(145,170,214,.16);
+  background:rgba(255,255,255,.025);
+}
+.snapshot-label{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--soft);
+}
+.snapshot-value{
+  margin-top:6px;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:-.03em;
+}
+.snapshot-value.mono,
+.stats-value.mono,
+.macro-value,
+.timeline-time,
+.tiny{
+  font-family:"JetBrains Mono",monospace;
+}
+.hero-note{
+  color:var(--muted);
+  font-size:13px;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(6, minmax(0, 1fr));
+  gap:10px;
+  margin-top:16px;
+}
+.stat{
+  padding:16px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(11,18,28,.86);
+  min-height:104px;
+}
+.stats-label{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--soft);
+}
+.stats-value{
+  margin-top:10px;
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:-.05em;
+}
+.stats-value.omad{color:var(--omad)}
+.stats-value.fast{color:var(--fast)}
+.stat-protocol .stats-value{
+  font-size:15px;
+  line-height:1.3;
+  letter-spacing:-.02em;
+}
+.section{
+  margin-top:26px;
+}
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.section-kicker{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--soft);
+}
+.section-title{
+  margin-top:5px;
+  font-size:24px;
+  line-height:1.08;
+  letter-spacing:-.04em;
+}
+.section-desc{
+  color:var(--muted);
+  font-size:13px;
+  max-width:64ch;
+}
+.panel{
+  padding:20px;
+  border-radius:24px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(12,18,28,.94), rgba(9,14,21,.95));
+  box-shadow:var(--shadow);
+}
+.panel-grid{
+  display:grid;
+  grid-template-columns:minmax(0, 1.2fr) minmax(280px, .8fr);
+  gap:18px;
+}
+.cycle-track{
+  display:grid;
+  grid-template-columns:repeat(11, minmax(0, 1fr));
+  gap:8px;
+  margin-top:12px;
+}
+.cycle-day{
+  padding:12px 10px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.02);
+  text-align:center;
+  transition:transform .18s ease, border-color .18s ease, background-color .18s ease;
+}
+.cycle-day:hover{transform:translateY(-2px)}
+.cycle-day strong{
+  display:block;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--soft);
+}
+.cycle-day span{
+  display:block;
+  margin-top:6px;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:-.04em;
+}
+.cycle-day small{
+  display:block;
+  margin-top:6px;
+  font-size:11px;
+  color:var(--muted);
+}
+.cycle-day.omad{
+  border-color:rgba(62,208,127,.24);
+  background:linear-gradient(180deg, rgba(62,208,127,.12), rgba(62,208,127,.05));
+}
+.cycle-day.fast{
+  border-color:rgba(242,169,75,.28);
+  background:linear-gradient(180deg, rgba(242,169,75,.15), rgba(242,169,75,.06));
+}
+.subpanel{
+  padding:16px;
+  border-radius:18px;
+  border:1px solid rgba(145,170,214,.14);
+  background:rgba(255,255,255,.025);
+}
+.subpanel h3,
+.metric-grid h3,
+.day-main h3,
+.day-side h3,
+.stack-title{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--soft);
+}
+.stack-title{margin-bottom:10px}
+.note-list{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+.note-list li{
+  list-style:none;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(145,170,214,.14);
+  background:rgba(255,255,255,.022);
+  color:#dbe4f7;
+  font-size:14px;
+}
+.callout{
+  margin-top:14px;
+  padding:16px;
+  border-radius:18px;
+  border:1px solid rgba(145,170,214,.16);
+  background:rgba(255,255,255,.025);
+}
+.callout strong{
+  display:block;
+  margin-bottom:8px;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--text);
+}
+.callout.fast{
+  border-color:rgba(242,169,75,.24);
+  background:linear-gradient(180deg, rgba(242,169,75,.11), rgba(242,169,75,.04));
+}
+.callout.omad{
+  border-color:rgba(62,208,127,.22);
+  background:linear-gradient(180deg, rgba(62,208,127,.11), rgba(62,208,127,.04));
+}
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.metric{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(145,170,214,.14);
+  background:rgba(255,255,255,.022);
+}
+.metric-label{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--soft);
+}
+.metric-value{
+  margin-top:6px;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:-.04em;
+}
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(7, minmax(0, 1fr));
+  gap:8px;
+  margin-top:14px;
+}
+.day-tab{
+  padding:12px 10px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.02);
+  color:var(--muted);
+  text-align:left;
+  cursor:pointer;
+  transition:transform .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease;
+}
+.day-tab:hover{
+  transform:translateY(-2px);
+  border-color:var(--line-strong);
+  color:var(--text);
+}
+.day-tab strong{
+  display:block;
+  font-size:13px;
+  color:var(--text);
+}
+.day-tab span{
+  display:block;
+  margin-top:3px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+.day-tab[data-tone="zone"].is-active{
+  background:var(--zone-soft);
+  border-color:rgba(102,176,255,.36);
+}
+.day-tab[data-tone="push"].is-active{
+  background:var(--push-soft);
+  border-color:rgba(255,127,102,.34);
+}
+.day-tab[data-tone="pull"].is-active{
+  background:var(--pull-soft);
+  border-color:rgba(79,208,200,.34);
+}
+.day-tab[data-tone="vo2"].is-active{
+  background:var(--vo2-soft);
+  border-color:rgba(255,108,95,.34);
+}
+.day-tab[data-tone="rest"].is-active{
+  background:var(--rest-soft);
+  border-color:rgba(141,152,179,.32);
+}
+.day-panels{
+  margin-top:14px;
+}
+.day-panel{
+  display:none;
+}
+.day-panel.is-active{
+  display:block;
+  animation:fade .22s ease;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(4px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.day-header{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 11px;
+  border-radius:999px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:800;
+}
+.chip.zone{color:var(--zone);background:var(--zone-soft)}
+.chip.push{color:var(--push);background:var(--push-soft)}
+.chip.pull{color:var(--pull);background:var(--pull-soft)}
+.chip.vo2{color:var(--vo2);background:var(--vo2-soft)}
+.chip.rest{color:var(--rest);background:var(--rest-soft)}
+.chip.omad{color:var(--omad);background:var(--omad-soft)}
+.chip.fast{color:var(--fast);background:var(--fast-soft)}
+.day-title{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.03em;
+}
+.day-time{
+  margin-left:auto;
+  color:var(--muted);
+  font-size:12px;
+}
+.day-grid{
+  display:grid;
+  grid-template-columns:minmax(0, 1.08fr) minmax(280px, .92fr);
+  gap:16px;
+}
+.stack{
+  display:grid;
+  gap:10px;
+}
+.work-row,
+.exercise-row,
+.timeline-row,
+.supp-row,
+.rule-row,
+.milestone-row{
+  display:grid;
+  grid-template-columns:minmax(92px, 110px) minmax(0, 1fr) auto;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(145,170,214,.1);
+}
+.work-row:last-child,
+.exercise-row:last-child,
+.timeline-row:last-child,
+.supp-row:last-child,
+.rule-row:last-child,
+.milestone-row:last-child{
+  border-bottom:none;
+}
+.work-label,
+.exercise-sets,
+.timeline-time,
+.supp-dose{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+.work-copy strong,
+.exercise-copy strong,
+.timeline-copy strong{
+  display:block;
+  font-size:14px;
+  color:var(--text);
+}
+.work-copy span,
+.exercise-copy span,
+.timeline-copy span,
+.supp-copy span,
+.rule-copy span,
+.milestone-copy span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:13px;
+}
+.exercise-sets{
+  font-size:12px;
+  color:#d8e2f8;
+}
+.micro{
+  color:var(--soft);
+  font-size:12px;
+}
+.note-card{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(145,170,214,.14);
+  background:rgba(255,255,255,.022);
+}
+.note-card h4{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--soft);
+  margin-bottom:8px;
+}
+.note-card p{
+  color:#d9e2f4;
+  font-size:14px;
+}
+.link-list{
+  display:grid;
+  gap:8px;
+}
+.link{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(145,170,214,.14);
+  background:rgba(255,255,255,.02);
+  text-decoration:none;
+  transition:transform .18s ease, border-color .18s ease, background-color .18s ease;
+}
+.link:hover{
+  transform:translateY(-2px);
+  border-color:var(--line-strong);
+  background:rgba(255,255,255,.035);
+}
+.link strong{
+  display:block;
+  font-size:14px;
+  line-height:1.35;
+}
+.link span{
+  display:block;
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
+.link-mark{
+  flex-shrink:0;
+  color:var(--zone);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:800;
+}
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.summary-card{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(145,170,214,.14);
+  background:rgba(255,255,255,.022);
+}
+.summary-card strong{
+  display:block;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.04em;
+}
+.summary-card span{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:12px;
+}
+.meal-grid{
+  display:grid;
+  grid-template-columns:minmax(0, 1.25fr) minmax(260px, .75fr);
+  gap:16px;
+}
+.step-list{
+  display:grid;
+  gap:2px;
+  margin-top:10px;
+}
+.step-row{
+  display:grid;
+  grid-template-columns:86px minmax(0, 1fr) auto;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(145,170,214,.1);
+}
+.step-row:last-child{border-bottom:none}
+.step-no{
+  color:var(--omad);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:800;
+}
+.step-copy strong{
+  display:block;
+  font-size:14px;
+}
+.step-copy span{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:13px;
+}
+.macro-value{
+  color:#d8e2f8;
+  font-size:11px;
+  letter-spacing:.02em;
+}
+.table-wrap{
+  overflow:auto;
+  margin-top:10px;
+  border-radius:18px;
+  border:1px solid rgba(145,170,214,.14);
+}
+table{
+  width:100%;
+  min-width:680px;
+  border-collapse:collapse;
+  background:rgba(255,255,255,.02);
+}
+th,td{
+  text-align:left;
+  padding:13px 14px;
+  border-bottom:1px solid rgba(145,170,214,.1);
+}
+th{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--soft);
+  background:rgba(255,255,255,.025);
+}
+td{
+  font-size:14px;
+  color:#e7eefc;
+}
+td span{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
+}
+tr:last-child td{border-bottom:none}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 8px;
+  border-radius:999px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:800;
+}
+.tag.omad{color:var(--omad);background:var(--omad-soft)}
+.tag.fast{color:var(--fast);background:var(--fast-soft)}
+.timeline{
+  display:grid;
+  gap:2px;
+  margin-top:10px;
+}
+.timeline-row{
+  grid-template-columns:86px minmax(0, 1fr) auto;
+}
+.timeline-row.highlight{
+  padding:14px 0;
+  border-bottom:1px solid rgba(145,170,214,.14);
+}
+.timeline-time{
+  color:#d2ddf4;
+}
+.timeline-meta{
+  color:var(--soft);
+  font-size:12px;
+}
+.dual-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:14px;
+}
+.list{
+  display:grid;
+  gap:8px;
+  margin-top:10px;
+}
+.list li{
+  list-style:none;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(145,170,214,.14);
+  background:rgba(255,255,255,.022);
+  font-size:14px;
+  color:#dbe4f7;
+}
+.supp-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:14px;
+}
+.supp-row{
+  grid-template-columns:90px minmax(0, 1fr);
+}
+.supp-copy strong{
+  display:block;
+  font-size:14px;
+  color:var(--text);
+}
+.small-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:14px;
+  margin-top:14px;
+}
+.rule-list,
+.milestone-list{
+  display:grid;
+  gap:2px;
+  margin-top:10px;
+}
+.rule-row{
+  grid-template-columns:34px minmax(0, 1fr);
+}
+.rule-number{
+  color:var(--zone);
+  font-family:"JetBrains Mono",monospace;
+  font-size:12px;
+  font-weight:700;
+}
+.rule-copy strong,
+.milestone-copy strong,
+.supp-copy strong{
+  font-size:14px;
+}
+.milestone-row{
+  grid-template-columns:80px minmax(0, 1fr);
+}
+.month{
+  color:var(--fast);
+  font-family:"JetBrains Mono",monospace;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:700;
+}
+.footer{
+  margin-top:24px;
+  padding:18px 0 0;
+  border-top:1px solid rgba(145,170,214,.12);
+  color:var(--soft);
+  font-size:12px;
+  line-height:1.8;
+}
+@media (max-width:980px){
+  .hero,
+  .panel-grid,
+  .day-grid,
+  .meal-grid{
+    grid-template-columns:1fr;
+  }
+  .stats{grid-template-columns:repeat(3, minmax(0, 1fr))}
+  .summary-grid{grid-template-columns:repeat(2, minmax(0, 1fr))}
+  .small-grid{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .shell{width:min(100% - 18px, 1100px);padding-top:18px}
+  .hero{padding:18px;border-radius:24px}
+  .hero h1{max-width:none}
+  .stats{grid-template-columns:repeat(2, minmax(0, 1fr))}
+  .tabs{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+  .cycle-track{grid-template-columns:repeat(4, minmax(0, 1fr))}
+  .metric-grid,
+  .dual-grid,
+  .supp-grid{
+    grid-template-columns:1fr;
+  }
+  .summary-grid{grid-template-columns:1fr}
+  .work-row,
+  .exercise-row,
+  .step-row,
+  .timeline-row,
+  .supp-row,
+  .milestone-row{
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+  .day-time{margin-left:0}
+  .hero-band{gap:8px}
+}
+</style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div class="hero-main">
+        <div class="eyebrow">April 2026 protocol dashboard</div>
+        <h1>6-Month Transformation</h1>
+        <p class="hero-sub">95 kg to 68 kg target | April to October 2026 | Dr. Jamnadas 9-Day OMD + 48hr Fast Protocol</p>
+        <p class="hero-purpose">A personal dashboard for my fasting protocol, training, and consistency rules.</p>
+        <div class="hero-band">
+          <div class="pill">Evening meal <span>6:00-7:00 PM</span></div>
+          <div class="pill">Train fasted <span>5:30 AM</span></div>
+          <div class="pill">Cycle repeat <span>roughly 16 rounds</span></div>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="hero-card">
+          <h2>Protocol Snapshot</h2>
+          <div class="snapshot">
+            <div class="snapshot-item">
+              <div class="snapshot-label">Days 1-9</div>
+              <div class="snapshot-value omad">OMAD</div>
+            </div>
+            <div class="snapshot-item">
+              <div class="snapshot-label">Days 10-11</div>
+              <div class="snapshot-value fast">48h Fast</div>
+            </div>
+            <div class="snapshot-item">
+              <div class="snapshot-label">Workout</div>
+              <div class="snapshot-value mono">AM Fasted</div>
+            </div>
+            <div class="snapshot-item">
+              <div class="snapshot-label">Food Rule</div>
+              <div class="snapshot-value mono">One Meal</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h2>Why This Version</h2>
+          <p class="hero-note">The app is now centered on the 9+2 fasting cycle, one evening meal, and training adjustments when the 48-hour fast lands on a strength day.</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="Top stats">
+      <div class="stat">
+        <div class="stats-label">Current Weight</div>
+        <div class="stats-value">95 kg</div>
+      </div>
+      <div class="stat">
+        <div class="stats-label">Target Weight</div>
+        <div class="stats-value">68 kg</div>
+      </div>
+      <div class="stat">
+        <div class="stats-label">Body Fat</div>
+        <div class="stats-value">30.7%</div>
+      </div>
+      <div class="stat">
+        <div class="stats-label">Visceral Fat</div>
+        <div class="stats-value fast">12</div>
+      </div>
+      <div class="stat">
+        <div class="stats-label">SMM</div>
+        <div class="stats-value">35.9 kg</div>
+      </div>
+      <div class="stat stat-protocol">
+        <div class="stats-label">Protocol</div>
+        <div class="stats-value omad">9-Day OMD + 48hr Fast</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Protocol</div>
+          <h2 class="section-title">The Protocol - 9-Day OMD + 48-Hour Water Fast</h2>
+        </div>
+        <p class="section-desc">An 11-day repeating cycle: nine OMAD days, then two water-fast days, then restart on Day 12.</p>
+      </div>
+      <div class="panel panel-grid">
+        <div>
+          <div class="subpanel">
+            <h3>11-Day Cycle Visual</h3>
+            <div class="cycle-track" aria-label="11-day cycle">
+              <div class="cycle-day omad"><strong>Day</strong><span>1</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>2</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>3</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>4</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>5</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>6</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>7</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>8</span><small>OMAD</small></div>
+              <div class="cycle-day omad"><strong>Day</strong><span>9</span><small>OMAD</small></div>
+              <div class="cycle-day fast"><strong>Day</strong><span>10</span><small>Fast</small></div>
+              <div class="cycle-day fast"><strong>Day</strong><span>11</span><small>Fast</small></div>
+            </div>
+            <div class="callout omad">
+              <strong>Days 1-9</strong>
+              23-hour fast, 1-hour eating window, one large nutrient-dense evening meal, black coffee or water during the day, and fasted morning training.
+            </div>
+            <div class="callout fast">
+              <strong>Days 10-11</strong>
+              Water only plus electrolytes, light Zone 2 cardio only, no strength training, and black coffee or plain tea allowed.
+            </div>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="subpanel">
+            <h3>Cycle Notes</h3>
+            <ul class="note-list">
+              <li>The 11-day cycle repeats for 6 months. That is roughly 16 complete cycles.</li>
+              <li>The 48-hour fast days rotate through the week. Adjust training accordingly.</li>
+              <li>If a 48-hour fast falls on a strength day, swap to a light Zone 2 walk.</li>
+            </ul>
+          </div>
+          <div class="callout fast">
+            <strong>Breaking The 48-Hour Fast</strong>
+            Start with warm bone broth or warm salt water, wait 30 minutes, then eat the regular OMAD meal. Eat slowly, chew thoroughly, and do not overeat.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Plan Math</div>
+          <h2 class="section-title">The Math - 27 kg Fat Loss in 6 Months</h2>
+        </div>
+        <p class="section-desc">Aggressive on purpose, with expected slowing as body weight and TDEE drop.</p>
+      </div>
+      <div class="panel panel-grid">
+        <div>
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="metric-label">BMR at 95 kg</div>
+              <div class="metric-value">about 1,800 kcal</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">TDEE with 5-6 days training</div>
+              <div class="metric-value">about 2,500 kcal</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">OMAD intake per day</div>
+              <div class="metric-value">about 1,700 kcal</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">48-hour fast intake</div>
+              <div class="metric-value">0 kcal</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">11-day cycle average</div>
+              <div class="metric-value">about 1,391 kcal/day</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Average daily deficit</div>
+              <div class="metric-value">about 1,100 kcal</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Monthly loss</div>
+              <div class="metric-value">about 4 kg</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">6-month projection</div>
+              <div class="metric-value">22-27 kg fat loss</div>
+            </div>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="callout">
+            <strong>Honest Note</strong>
+            As weight drops, TDEE drops. Months 1-3 will be faster at 4+ kg per month. Months 4-6 will slow to 3-3.5 kg per month. Realistic landing zone is 68-73 kg. If needed, extend to month 7-8.
+          </div>
+          <div class="callout fast">
+            <strong>Monitoring Rule</strong>
+            This is aggressive. Monitor energy, sleep, and mood. If any deteriorate significantly, add a refeed week every 4th cycle with normal eating and no fast.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workouts">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Workout Plan</div>
+          <h2 class="section-title">Day-Based Training Surface</h2>
+        </div>
+        <p class="section-desc">Only one day stays open at a time. If the 48-hour fast lands on Tuesday or Friday, swap that strength session for a light Zone 2 walk.</p>
+      </div>
+      <div class="panel">
+        <div class="tabs" role="tablist" aria-label="Workout days">
+          <button class="day-tab is-active" role="tab" aria-selected="true" aria-controls="day-mon" id="tab-mon" data-day="mon" data-tone="zone">
+            <strong>Mon</strong>
+            <span>Zone 2</span>
+          </button>
+          <button class="day-tab" role="tab" aria-selected="false" aria-controls="day-tue" id="tab-tue" data-day="tue" data-tone="push">
+            <strong>Tue</strong>
+            <span>Push</span>
+          </button>
+          <button class="day-tab" role="tab" aria-selected="false" aria-controls="day-wed" id="tab-wed" data-day="wed" data-tone="zone">
+            <strong>Wed</strong>
+            <span>Zone 2</span>
+          </button>
+          <button class="day-tab" role="tab" aria-selected="false" aria-controls="day-thu" id="tab-thu" data-day="thu" data-tone="vo2">
+            <strong>Thu</strong>
+            <span>VO2 + Core</span>
+          </button>
+          <button class="day-tab" role="tab" aria-selected="false" aria-controls="day-fri" id="tab-fri" data-day="fri" data-tone="pull">
+            <strong>Fri</strong>
+            <span>Pull</span>
+          </button>
+          <button class="day-tab" role="tab" aria-selected="false" aria-controls="day-sat" id="tab-sat" data-day="sat" data-tone="zone">
+            <strong>Sat</strong>
+            <span>Zone 2 + Mobility</span>
+          </button>
+          <button class="day-tab" role="tab" aria-selected="false" aria-controls="day-sun" id="tab-sun" data-day="sun" data-tone="rest">
+            <strong>Sun</strong>
+            <span>Rest</span>
+          </button>
+        </div>
+
+        <div class="day-panels">
+          <article class="day-panel is-active" id="day-mon" role="tabpanel" aria-labelledby="tab-mon">
+            <div class="day-header">
+              <span class="chip zone">Zone 2</span>
+              <h3 class="day-title">Monday - Aerobic Base</h3>
+              <div class="day-time">5:30-6:15 AM (fasted)</div>
+            </div>
+            <div class="day-grid">
+              <div class="day-main subpanel">
+                <h3>Main Workout</h3>
+                <div class="stack">
+                  <div class="work-row">
+                    <div class="work-label">Session</div>
+                    <div class="work-copy"><strong>45 min steady state</strong><span>Incline treadmill walk or stationary bike.</span></div>
+                    <div class="micro">Zone 2</div>
+                  </div>
+                  <div class="work-row">
+                    <div class="work-label">Target</div>
+                    <div class="work-copy"><strong>HR 112-130 bpm</strong><span>Nose-breathe the entire time.</span></div>
+                    <div class="micro">Fasted</div>
+                  </div>
+                  <div class="work-row">
+                    <div class="work-label">Coaching</div>
+                    <div class="work-copy"><strong>Conversation pace only</strong><span>If you cannot hold a full conversation, slow down and stay in Zone 2. Fasted Zone 2 maximizes fat oxidation.</span></div>
+                    <div class="micro">Control</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-side stack">
+                <div class="note-card">
+                  <h4>Why This Matters</h4>
+                  <p>Visceral fat level is high at 12. Zone 2 is the primary tool for visceral fat reduction, and fasted training amplifies fat burning.</p>
+                </div>
+                <div class="subpanel">
+                  <h3>Learning Links</h3>
+                  <div class="link-list">
+                    <a class="link" href="https://www.youtube.com/watch?v=mC4KO49_LTQ" target="_blank" rel="noreferrer">
+                      <div><strong>What is Zone 2 Cardio and Why Does It Matter?</strong><span>Peter Attia, M.D. - The Drive Podcast</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                    <a class="link" href="https://www.youtube.com/results?search_query=inigo+san+millan+zone+2+training+peter+attia+podcast" target="_blank" rel="noreferrer">
+                      <div><strong>Zone 2 Training and Metabolic Health - Deep Dive</strong><span>Inigo San Millan x Peter Attia</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="day-panel" id="day-tue" role="tabpanel" aria-labelledby="tab-tue" hidden>
+            <div class="day-header">
+              <span class="chip push">Push</span>
+              <h3 class="day-title">Tuesday - Full Body Push</h3>
+              <div class="day-time">5:30-6:30 AM (fasted)</div>
+            </div>
+            <div class="day-grid">
+              <div class="day-main subpanel">
+                <h3>Exercises</h3>
+                <div class="stack">
+                  <div class="exercise-row">
+                    <div class="exercise-sets">4 x 6-8</div>
+                    <div class="exercise-copy"><strong>Barbell Back Squat</strong><span>Legs priority. Depth: crease of hip below knee. Tempo: 3-1-1.</span></div>
+                    <div class="micro">Legs</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 8-10</div>
+                    <div class="exercise-copy"><strong>Bench Press</strong><span>Barbell or dumbbell. Full range. Retract scapulae, arch back.</span></div>
+                    <div class="micro">Press</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 8-10</div>
+                    <div class="exercise-copy"><strong>Overhead Press</strong><span>Strict press. No leg drive.</span></div>
+                    <div class="micro">Shoulders</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 10-12</div>
+                    <div class="exercise-copy"><strong>Leg Press</strong><span>Second quad and glute movement. Addresses leg deficit.</span></div>
+                    <div class="micro">Lower body</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 10-12</div>
+                    <div class="exercise-copy"><strong>Tricep Pushdown</strong><span>Full extension. Pause at bottom.</span></div>
+                    <div class="micro">Triceps</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 15</div>
+                    <div class="exercise-copy"><strong>Lateral Raise</strong><span>Light weight for shoulder health and aesthetics.</span></div>
+                    <div class="micro">Finish</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-side stack">
+                <div class="note-card">
+                  <h4>Coaching Note</h4>
+                  <p>Training fasted is fine for strength. Growth hormone is elevated during the fast. Focus on progressive overload. Log every weight and rep. The OMAD meal in the evening is your recovery fuel.</p>
+                </div>
+                <div class="note-card">
+                  <h4>Why This Matters</h4>
+                  <p>Preserve muscle while losing fat, keep upper body strength, and improve lower-body development. Legs are the only underdeveloped area per InBody.</p>
+                </div>
+                <div class="subpanel">
+                  <h3>Learning Links</h3>
+                  <div class="link-list">
+                    <a class="link" href="https://www.youtube.com/results?search_query=dr+mike+israetel+renaissance+periodization+push+training+chest+shoulders+science" target="_blank" rel="noreferrer">
+                      <div><strong>Scientific Push Training - Chest, Shoulders and Triceps</strong><span>Dr. Mike Israetel - Renaissance Periodization</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                    <a class="link" href="https://www.youtube.com/results?search_query=jeff+nippard+push+day+science+based+chest+shoulders" target="_blank" rel="noreferrer">
+                      <div><strong>The Smartest Push Workout - Science Explained</strong><span>Jeff Nippard - Science-Based Training</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="day-panel" id="day-wed" role="tabpanel" aria-labelledby="tab-wed" hidden>
+            <div class="day-header">
+              <span class="chip zone">Zone 2</span>
+              <h3 class="day-title">Wednesday - Aerobic Base</h3>
+              <div class="day-time">5:30-6:15 AM (fasted)</div>
+            </div>
+            <div class="day-grid">
+              <div class="day-main subpanel">
+                <h3>Main Workout</h3>
+                <div class="stack">
+                  <div class="work-row">
+                    <div class="work-label">Session</div>
+                    <div class="work-copy"><strong>45 min steady state</strong><span>Same as Monday. Incline walk or bike at 112-130 bpm.</span></div>
+                    <div class="micro">Zone 2</div>
+                  </div>
+                  <div class="work-row">
+                    <div class="work-label">Breathing</div>
+                    <div class="work-copy"><strong>Nose-breathe</strong><span>Stay at full conversation pace the entire session.</span></div>
+                    <div class="micro">Steady</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-side stack">
+                <div class="note-card">
+                  <h4>Why This Matters</h4>
+                  <p>Trunk fat is 383% of ideal. This session targets the highest-risk fat depot and keeps mitochondrial biogenesis momentum moving mid-week.</p>
+                </div>
+                <div class="subpanel">
+                  <h3>Learning Links</h3>
+                  <div class="link-list">
+                    <a class="link" href="https://www.youtube.com/results?search_query=peter+attia+zone+2+zone+5+exercising+for+longevity" target="_blank" rel="noreferrer">
+                      <div><strong>Exercising for Longevity: Zone 2 + Zone 5 Training</strong><span>Peter Attia, M.D. - The Drive Podcast #206</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                    <a class="link" href="https://www.youtube.com/watch?v=oNkDA2F7CjM" target="_blank" rel="noreferrer">
+                      <div><strong>How to Build Physical Endurance and Lose Fat</strong><span>Dr. Andy Galpin x Huberman Lab Guest Series</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="day-panel" id="day-thu" role="tabpanel" aria-labelledby="tab-thu" hidden>
+            <div class="day-header">
+              <span class="chip vo2">VO2 Max + Core</span>
+              <h3 class="day-title">Thursday - VO2 Max Intervals + Core</h3>
+              <div class="day-time">5:30-6:15 AM (fasted)</div>
+            </div>
+            <div class="day-grid">
+              <div class="day-main subpanel">
+                <h3>Main Workout</h3>
+                <div class="stack">
+                  <div class="work-row">
+                    <div class="work-label">Warm-Up</div>
+                    <div class="work-copy"><strong>5 min progressive HR elevation</strong><span>Bike preferred because it is joint-safe at current weight.</span></div>
+                    <div class="micro">Prep</div>
+                  </div>
+                  <div class="work-row">
+                    <div class="work-label">Intervals</div>
+                    <div class="work-copy"><strong>Norwegian 4x4 protocol</strong><span>4 x 4 min at 90-95% max HR (158-177 bpm) with 3 min easy recovery between work intervals.</span></div>
+                    <div class="micro">VO2</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 30-60s</div>
+                    <div class="exercise-copy"><strong>Front Plank</strong><span>Part of the 15 min core circuit.</span></div>
+                    <div class="micro">Core</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 20-40s</div>
+                    <div class="exercise-copy"><strong>Side Plank</strong><span>Per side.</span></div>
+                    <div class="micro">Core</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 8</div>
+                    <div class="exercise-copy"><strong>Bird Dog</strong><span>Per side.</span></div>
+                    <div class="micro">Core</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 8</div>
+                    <div class="exercise-copy"><strong>Dead Bug</strong><span>Per side.</span></div>
+                    <div class="micro">Core</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 10</div>
+                    <div class="exercise-copy"><strong>Pallof Press</strong><span>Per side, then finish with 5 min of hip flexor, hamstring, and chest stretching.</span></div>
+                    <div class="micro">Core</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-side stack">
+                <div class="note-card">
+                  <h4>Coaching Note</h4>
+                  <p>Cannot speak during work intervals. Go hard enough that you want to stop. Recovery means slow pedal or walk and dropping HR below 120 bpm. The core circuit protects your spine for heavy squats and deadlifts.</p>
+                </div>
+                <div class="note-card">
+                  <h4>Why This Matters</h4>
+                  <p>VO2max is the number one predictor of all-cause mortality. Moving from bottom 25% to top 50% cuts death risk in half. This session is the most time-efficient longevity intervention in the week.</p>
+                </div>
+                <div class="subpanel">
+                  <h3>Learning Links</h3>
+                  <div class="link-list">
+                    <a class="link" href="https://www.youtube.com/results?search_query=peter+attia+vo2+max+longevity+most+important+metric" target="_blank" rel="noreferrer">
+                      <div><strong>VO2 Max: The Most Important Metric for Longevity</strong><span>Peter Attia, M.D. - The Drive Podcast</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                    <a class="link" href="https://www.youtube.com/results?search_query=peter+attia+4x4+interval+training+protocol+vo2+max" target="_blank" rel="noreferrer">
+                      <div><strong>The 4x4 Interval Protocol - How to Actually Train VO2 Max</strong><span>Peter Attia, M.D. - The Drive Podcast</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="day-panel" id="day-fri" role="tabpanel" aria-labelledby="tab-fri" hidden>
+            <div class="day-header">
+              <span class="chip pull">Pull</span>
+              <h3 class="day-title">Friday - Full Body Pull</h3>
+              <div class="day-time">5:30-6:30 AM (fasted)</div>
+            </div>
+            <div class="day-grid">
+              <div class="day-main subpanel">
+                <h3>Exercises</h3>
+                <div class="stack">
+                  <div class="exercise-row">
+                    <div class="exercise-sets">4 x 6-8</div>
+                    <div class="exercise-copy"><strong>Deadlift</strong><span>Conventional or Romanian. Posterior chain and legs. Controlled down, explosive up.</span></div>
+                    <div class="micro">Posterior chain</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 8-10</div>
+                    <div class="exercise-copy"><strong>Barbell Row</strong><span>Pull to lower chest. Full stretch at bottom.</span></div>
+                    <div class="micro">Back</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 10-12</div>
+                    <div class="exercise-copy"><strong>Lat Pulldown</strong><span>Wide grip. Full stretch overhead, squeeze at bottom.</span></div>
+                    <div class="micro">Lats</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 10-12</div>
+                    <div class="exercise-copy"><strong>Leg Curl</strong><span>Seated or lying. Hamstrings. Addresses leg muscle deficit.</span></div>
+                    <div class="micro">Hamstrings</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 15</div>
+                    <div class="exercise-copy"><strong>Face Pull</strong><span>Rear delts and rotator cuff. Injury prevention.</span></div>
+                    <div class="micro">Shoulder health</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 10-12</div>
+                    <div class="exercise-copy"><strong>Bicep Curl</strong><span>Dumbbell or barbell. Full range of motion. No ego lifting.</span></div>
+                    <div class="micro">Arms</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-side stack">
+                <div class="note-card">
+                  <h4>Coaching Note</h4>
+                  <p>Second strength day of the week. Fasted training with elevated growth hormone. Log every weight. Progressive overload is non-negotiable.</p>
+                </div>
+                <div class="note-card">
+                  <h4>Why This Matters</h4>
+                  <p>Legs are the only underdeveloped area. Deadlifts and leg curls target this directly. Upper body lean mass is already 110-111%. Maintain it and do not lose it.</p>
+                </div>
+                <div class="subpanel">
+                  <h3>Learning Links</h3>
+                  <div class="link-list">
+                    <a class="link" href="https://www.youtube.com/results?search_query=dr+mike+israetel+renaissance+periodization+scientific+back+training+hypertrophy" target="_blank" rel="noreferrer">
+                      <div><strong>Scientific Principles of Back and Pull Training</strong><span>Dr. Mike Israetel - Renaissance Periodization</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                    <a class="link" href="https://www.youtube.com/results?search_query=jeff+nippard+pull+day+science+explained+back+workout" target="_blank" rel="noreferrer">
+                      <div><strong>The Smartest Pull Workout - Science Explained</strong><span>Jeff Nippard - Science-Based Training</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="day-panel" id="day-sat" role="tabpanel" aria-labelledby="tab-sat" hidden>
+            <div class="day-header">
+              <span class="chip zone">Zone 2 + Mobility</span>
+              <h3 class="day-title">Saturday - Long Aerobic + Deep Mobility</h3>
+              <div class="day-time">Flexible (morning preferred)</div>
+            </div>
+            <div class="day-grid">
+              <div class="day-main subpanel">
+                <h3>Main Workout</h3>
+                <div class="stack">
+                  <div class="work-row">
+                    <div class="work-label">Cardio</div>
+                    <div class="work-copy"><strong>45 min Zone 2 steady state</strong><span>Incline walk, outdoor walk, bike, or swim at 112-130 bpm. This is the longest Zone 2 session of the week.</span></div>
+                    <div class="micro">Aerobic</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">x10</div>
+                    <div class="exercise-copy"><strong>Cat-Cow</strong><span>Start the 30 min mobility routine.</span></div>
+                    <div class="micro">Mobility</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">x5/side</div>
+                    <div class="exercise-copy"><strong>World's Greatest Stretch</strong><span>Then 90/90 hip switch x8/side.</span></div>
+                    <div class="micro">Hips</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">3 x 45-60s</div>
+                    <div class="exercise-copy"><strong>Deep Squat Hold</strong><span>Follow with couch stretch 60-90s/side.</span></div>
+                    <div class="micro">Depth</div>
+                  </div>
+                  <div class="exercise-row">
+                    <div class="exercise-sets">60-90s</div>
+                    <div class="exercise-copy"><strong>Pigeon Stretch + Supine Spinal Twist</strong><span>Do both sides, then finish with Down Dog to Cobra flow x8.</span></div>
+                    <div class="micro">Recovery</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-side stack">
+                <div class="note-card">
+                  <h4>Coaching Note</h4>
+                  <p>This is where flexibility gains happen. Hold each stretch for 60-90 seconds, keep breathing slow, and let the session bias parasympathetic recovery.</p>
+                </div>
+                <div class="note-card">
+                  <h4>Why This Matters</h4>
+                  <p>At 95 kg coming from sedentary, injury is the main training derailer. Tight hip flexors from sitting limit squat depth. Mobility is non-negotiable for longevity.</p>
+                </div>
+                <div class="subpanel">
+                  <h3>Learning Link</h3>
+                  <div class="link-list">
+                    <a class="link" href="https://www.youtube.com/results?search_query=huberman+lab+fitness+toolkit+protocol+tools+optimize+physical+health" target="_blank" rel="noreferrer">
+                      <div><strong>Fitness Toolkit: Protocol and Tools to Optimize Physical Health</strong><span>Andrew Huberman - Huberman Lab #94</span></div>
+                      <div class="link-mark">Watch</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="day-panel" id="day-sun" role="tabpanel" aria-labelledby="tab-sun" hidden>
+            <div class="day-header">
+              <span class="chip rest">Rest</span>
+              <h3 class="day-title">Sunday - Full Rest</h3>
+              <div class="day-time">Recovery day</div>
+            </div>
+            <div class="day-grid">
+              <div class="day-main subpanel">
+                <h3>Notes</h3>
+                <div class="stack">
+                  <div class="work-row">
+                    <div class="work-label">Training</div>
+                    <div class="work-copy"><strong>No structured training</strong><span>This is a full recovery day.</span></div>
+                    <div class="micro">Rest</div>
+                  </div>
+                  <div class="work-row">
+                    <div class="work-label">Baseline</div>
+                    <div class="work-copy"><strong>Walk 8,000+ steps</strong><span>That remains non-negotiable every day.</span></div>
+                    <div class="micro">Daily</div>
+                  </div>
+                  <div class="work-row">
+                    <div class="work-label">Optional</div>
+                    <div class="work-copy"><strong>Light stretching or yoga flow</strong><span>If a 48-hour fast falls on Sunday, this is the ideal day for it.</span></div>
+                    <div class="micro">Optional</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-side stack">
+                <div class="note-card">
+                  <h4>Why This Matters</h4>
+                  <p>Recovery is where adaptation happens. Muscles grow at rest, not in the gym. Sleep quality matters most on rest day. Aim for 8 hours.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Weekly Summary</div>
+          <h2 class="section-title">Training Distribution</h2>
+        </div>
+        <p class="section-desc">About 5.5 hours per week across six training days plus one full rest day.</p>
+      </div>
+      <div class="panel">
+        <div class="summary-grid">
+          <div class="summary-card">
+            <strong>135 min</strong>
+            <span>Zone 2 cardio across Monday, Wednesday, and Saturday.</span>
+          </div>
+          <div class="summary-card">
+            <strong>20 min</strong>
+            <span>VO2 Max intervals on Thursday.</span>
+          </div>
+          <div class="summary-card">
+            <strong>120 min</strong>
+            <span>Strength split: Tuesday push and Friday pull.</span>
+          </div>
+          <div class="summary-card">
+            <strong>45 min</strong>
+            <span>Core plus mobility across Thursday and Saturday.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">OMAD Meal</div>
+          <h2 class="section-title">The One Meal - OMAD Protocol</h2>
+        </div>
+        <p class="section-desc">One meal per day at 6:00-7:00 PM. About 1,700 kcal and about 150g protein. Eat slowly over one hour. Protein first, then vegetables, then carbs.</p>
+      </div>
+      <div class="panel meal-grid">
+        <div class="subpanel">
+          <h3>Meal Structure</h3>
+          <div class="step-list">
+            <div class="step-row">
+              <div class="step-no">Step 1</div>
+              <div class="step-copy"><strong>Starter</strong><span>1 tbsp apple cider vinegar in warm water, 5 minutes before food.</span></div>
+              <div class="macro-value">Prep</div>
+            </div>
+            <div class="step-row">
+              <div class="step-no">Step 2</div>
+              <div class="step-copy"><strong>Salad</strong><span>Large mixed greens with cucumber, tomato, onion, and lemon dressing.</span></div>
+              <div class="macro-value">3g P · 50 kcal</div>
+            </div>
+            <div class="step-row">
+              <div class="step-no">Step 3</div>
+              <div class="step-copy"><strong>Protein First</strong><span>Choose one primary protein from the 9-day rotation below, 250g meat or equivalent.</span></div>
+              <div class="macro-value">50-62g P · 330-450 kcal</div>
+            </div>
+            <div class="step-row">
+              <div class="step-no">Step 4</div>
+              <div class="step-copy"><strong>Eggs</strong><span>2 boiled eggs on the side every day. Non-negotiable.</span></div>
+              <div class="macro-value">12g P · 140 kcal</div>
+            </div>
+            <div class="step-row">
+              <div class="step-no">Step 5</div>
+              <div class="step-copy"><strong>Dal + Sabzi</strong><span>Large bowl double dal (250g cooked) plus seasonal sabzi.</span></div>
+              <div class="macro-value">22g P · 330 kcal</div>
+            </div>
+            <div class="step-row">
+              <div class="step-no">Step 6</div>
+              <div class="step-copy"><strong>Carbs Last</strong><span>2 whole wheat roti.</span></div>
+              <div class="macro-value">8g P · 260 kcal</div>
+            </div>
+            <div class="step-row">
+              <div class="step-no">Step 7</div>
+              <div class="step-copy"><strong>Raita</strong><span>250g dahi with cucumber and cumin.</span></div>
+              <div class="macro-value">10g P · 125 kcal</div>
+            </div>
+            <div class="step-row">
+              <div class="step-no">Step 8</div>
+              <div class="step-copy"><strong>Whey Shake</strong><span>1 scoop whey isolate plus 5g creatine in water.</span></div>
+              <div class="macro-value">25g P · 120 kcal</div>
+            </div>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="callout omad">
+            <strong>Meal Rule</strong>
+            This is your only meal. Make it count. Eat the protein first, then dal and sabzi, and roti last. All supplements are taken with this meal.
+          </div>
+          <div class="subpanel">
+            <h3>Totals</h3>
+            <div class="stack">
+              <div class="metric">
+                <div class="metric-label">Base items only</div>
+                <div class="metric-value">about 80g protein, 1,145 kcal</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Primary protein add-on</div>
+                <div class="metric-value">50-62g protein, 330-450 kcal</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Grand total per OMAD day</div>
+                <div class="metric-value">155-167g protein, about 1,600-1,700 kcal</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout">
+            <strong>Cooking Fat</strong>
+            Cooking ghee or oil across the meal adds about 120 kcal.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Protein Rotation</div>
+          <h2 class="section-title">OMAD Dinner Rotation (Primary Protein Only)</h2>
+        </div>
+        <p class="section-desc">The base items stay the same every day. Rotate the main protein. Zero decisions.</p>
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cycle Day</th>
+                <th>Primary Protein</th>
+                <th>Details</th>
+                <th>Approx</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tag omad">Day 1</span></td>
+                <td>Grilled Chicken Breast (250g)</td>
+                <td>Tandoori or lemon-herb grilled.</td>
+                <td>62g P · 410 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 2</span></td>
+                <td>Paneer Bhurji (200g paneer)</td>
+                <td>Vegetarian protein powerhouse. Extra paneer for OMAD.</td>
+                <td>36g P · 520 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 3</span></td>
+                <td>Fish Curry (250g rohu, surmai, or salmon)</td>
+                <td>Omega-3 source. Curry or grilled.</td>
+                <td>55g P · 420 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 4</span></td>
+                <td>Tandoori Chicken (250g)</td>
+                <td>Yogurt marinade. High protein.</td>
+                <td>62g P · 420 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 5</span></td>
+                <td>Chicken Keema (250g mince)</td>
+                <td>Easy to cook. High protein. Spiced.</td>
+                <td>55g P · 430 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 6</span></td>
+                <td>Chicken Curry (250g bone-in)</td>
+                <td>Home-style curry.</td>
+                <td>58g P · 450 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 7</span></td>
+                <td>Paneer Tikka (200g) + Extra Egg Curry (2 eggs)</td>
+                <td>Vegetarian day with extra eggs.</td>
+                <td>48g P · 530 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 8</span></td>
+                <td>Palak Chicken (250g)</td>
+                <td>Iron from spinach plus lean protein.</td>
+                <td>60g P · 430 kcal</td>
+              </tr>
+              <tr>
+                <td><span class="tag omad">Day 9</span></td>
+                <td>Grilled Chicken Breast (250g)</td>
+                <td>Same as Day 1. Last meal before the 48-hour fast.</td>
+                <td>62g P · 410 kcal</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout omad">
+          <strong>Protein Rule</strong>
+          Primary protein gives 36-62g. Base items add about 80g. Total per day lands around 150-167g protein. Eat protein first, then dal and sabzi, then roti last.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Daily Timeline</div>
+          <h2 class="section-title">OMAD Daily Timeline (Days 1-9)</h2>
+        </div>
+        <p class="section-desc">Fasted mornings, one evening meal, and a hard stop after the eating window closes.</p>
+      </div>
+      <div class="panel">
+        <div class="timeline">
+          <div class="timeline-row highlight">
+            <div class="timeline-time">5:00 AM</div>
+            <div class="timeline-copy"><strong>Wake Up</strong><span>500ml warm water plus a pinch of pink Himalayan salt, then black coffee with no sugar or milk.</span></div>
+            <div class="timeline-meta">Fasted</div>
+          </div>
+          <div class="timeline-row highlight">
+            <div class="timeline-time">5:30 AM</div>
+            <div class="timeline-copy"><strong>Workout</strong><span>See the workout tabs above for the day’s session.</span></div>
+            <div class="timeline-meta">AM training</div>
+          </div>
+          <div class="timeline-row">
+            <div class="timeline-time">6:30 AM</div>
+            <div class="timeline-copy"><strong>Post-Workout</strong><span>500ml water plus electrolytes, sodium, and potassium. Nothing else. Stay fasted.</span></div>
+            <div class="timeline-meta">No calories</div>
+          </div>
+          <div class="timeline-row">
+            <div class="timeline-time">Daytime</div>
+            <div class="timeline-copy"><strong>Throughout The Day</strong><span>Water minimum 3L total, black coffee or plain green tea, electrolyte water if needed, and no food, calories, milk, or chai with sugar.</span></div>
+            <div class="timeline-meta">Fasting window</div>
+          </div>
+          <div class="timeline-row">
+            <div class="timeline-time">5:45 PM</div>
+            <div class="timeline-copy"><strong>Pre-Meal</strong><span>1 tbsp apple cider vinegar in warm water.</span></div>
+            <div class="timeline-meta">Prep</div>
+          </div>
+          <div class="timeline-row highlight">
+            <div class="timeline-time">6:00 PM</div>
+            <div class="timeline-copy"><strong>The One Meal</strong><span>Eat the full OMAD meal, take all supplements with it, and eat slowly over 45-60 minutes.</span></div>
+            <div class="timeline-meta">Eating window</div>
+          </div>
+          <div class="timeline-row">
+            <div class="timeline-time">7:00 PM</div>
+            <div class="timeline-copy"><strong>Eating Window Closes</strong><span>Warm water or herbal tea only after this. No food until tomorrow’s 6:00 PM meal.</span></div>
+            <div class="timeline-meta">Cutoff</div>
+          </div>
+          <div class="timeline-row highlight">
+            <div class="timeline-time">9:30-10:00 PM</div>
+            <div class="timeline-copy"><strong>Sleep</strong><span>7-8 hours minimum. Non-negotiable.</span></div>
+            <div class="timeline-meta">Recovery</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Water Fast</div>
+          <h2 class="section-title">48-Hour Water Fast - Days 10 and 11</h2>
+        </div>
+        <p class="section-desc">After nine days of OMAD, the body is primed for a deeper fast with electrolytes, light movement, and a controlled refeed.</p>
+      </div>
+      <div class="panel stack">
+        <div class="callout fast">
+          <strong>Intro Note</strong>
+          The 48-hour fast triggers autophagy, resets insulin sensitivity, and accelerates fat loss. This is the Jamnadas protocol.
+        </div>
+        <div class="dual-grid">
+          <div class="subpanel">
+            <h3>Day 10 Timeline</h3>
+            <ul class="list">
+              <li>Last meal was Day 9 at 7:00 PM.</li>
+              <li>Morning: wake up, salt water, black coffee.</li>
+              <li>Training: light Zone 2 walk only for 30-45 min with HR under 120 bpm. No strength training.</li>
+              <li>Throughout the day: water plus electrolytes, with a pinch of salt in every glass.</li>
+              <li>Evening: herbal tea and magnesium before bed.</li>
+            </ul>
+          </div>
+          <div class="subpanel">
+            <h3>Day 11 Timeline</h3>
+            <ul class="list">
+              <li>Morning: salt water and black coffee.</li>
+              <li>Training: light walk only or full rest. Listen to the body.</li>
+              <li>Afternoon: electrolyte water and rest.</li>
+              <li>5:00 PM: break the fast with warm bone broth or warm salt water.</li>
+              <li>Wait 30 minutes, then eat the regular OMAD meal. Eat slowly, do not overeat, and keep portions smaller than usual.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="dual-grid">
+          <div class="subpanel">
+            <h3>Electrolytes During The Fast</h3>
+            <ul class="list">
+              <li>Sodium: 1/2 tsp pink Himalayan salt in water, 2-3 times per day.</li>
+              <li>Potassium: Lite Salt or potassium supplement, 1/4 tsp per day.</li>
+              <li>Magnesium: 300-400mg magnesium bisglycinate before bed.</li>
+            </ul>
+          </div>
+          <div class="subpanel">
+            <h3>Allowed vs Not Allowed</h3>
+            <ul class="list">
+              <li><strong>Allowed:</strong> water, black coffee, plain green tea, herbal tea, electrolyte water, and apple cider vinegar in water.</li>
+              <li><strong>Not allowed:</strong> any food, milk, cream, butter in coffee, chai with sugar, whey, collagen, fruit juice, coconut water, or any caloric drink.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Supplements</div>
+          <h2 class="section-title">Supplements - Fasting-Optimized</h2>
+        </div>
+        <p class="section-desc">Primary split: OMAD days vs 48-hour fast days, with a separate rule for fasting hours on OMAD days.</p>
+      </div>
+      <div class="panel stack">
+        <div class="supp-grid">
+          <div class="subpanel">
+            <h3>OMAD Days - Take With The One Meal At 6:00 PM</h3>
+            <div class="stack">
+              <div class="supp-row">
+                <div class="supp-dose">5g</div>
+                <div class="supp-copy"><strong>Creatine Monohydrate</strong><span>Take with the meal.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">2g EPA+DHA</div>
+                <div class="supp-copy"><strong>Omega-3 Fish Oil</strong><span>Fat-soluble, needs food.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">4000 IU</div>
+                <div class="supp-copy"><strong>Vitamin D3</strong><span>Fat-soluble, needs food.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">1000 mcg</div>
+                <div class="supp-copy"><strong>Vitamin B12</strong><span>Take with the meal.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">400mg</div>
+                <div class="supp-copy"><strong>Magnesium Bisglycinate</strong><span>With the meal or before bed.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">1 scoop</div>
+                <div class="supp-copy"><strong>Whey Protein Isolate</strong><span>Post-meal only if the protein target is not met from food.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="subpanel">
+            <h3>48-Hour Fast Days - Only Non-Caloric Supplements</h3>
+            <div class="stack">
+              <div class="supp-row">
+                <div class="supp-dose">400mg</div>
+                <div class="supp-copy"><strong>Magnesium Bisglycinate</strong><span>Before bed. Does not break the fast.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">1/2 tsp</div>
+                <div class="supp-copy"><strong>Pink Himalayan Salt</strong><span>In water, 2-3 times per day.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">1/4 tsp</div>
+                <div class="supp-copy"><strong>Potassium (Lite Salt)</strong><span>In water, 1-2 times per day.</span></div>
+              </div>
+              <div class="supp-row">
+                <div class="supp-dose">Rule</div>
+                <div class="supp-copy"><strong>Nothing Else</strong><span>No whey, no creatine with food, and no fish oil.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="small-grid">
+          <div class="subpanel">
+            <h3>During Fasting Hours On OMAD Days</h3>
+            <ul class="list">
+              <li>Black coffee pre-workout is fine and does not break the fast.</li>
+              <li>Electrolyte water as needed is fine.</li>
+              <li>No supplements that require food.</li>
+            </ul>
+          </div>
+          <div class="subpanel">
+            <h3>Removed From Previous Plan</h3>
+            <ul class="list">
+              <li>Liquid Collagen - cut because it is redundant with high-protein OMAD and would break the fast outside the eating window.</li>
+              <li>Multivitamin - cut because it is redundant with nutrient-dense OMAD plus targeted D3, B12, Omega-3, and magnesium.</li>
+              <li>Kefir - cut because it breaks the fast and is not compatible with the OMAD protocol.</li>
+            </ul>
+          </div>
+          <div class="subpanel">
+            <h3>Added</h3>
+            <ul class="list">
+              <li>Vitamin D3 4000 IU - critical for testosterone, bones, and immune function.</li>
+              <li>Electrolyte mix with salt and potassium - essential for extended fasting support.</li>
+              <li>Pink Himalayan salt - sodium replacement during fasting hours.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Rules</div>
+          <h2 class="section-title">Rules And Reminders</h2>
+        </div>
+        <p class="section-desc">A repeatable protocol only works if the guardrails stay simple and enforced.</p>
+      </div>
+      <div class="panel">
+        <div class="rule-list">
+          <div class="rule-row">
+            <div class="rule-number">01</div>
+            <div class="rule-copy"><strong>Follow the 9+2 cycle.</strong><span>9 days OMAD, 2 days water fast, repeat. No exceptions.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">02</div>
+            <div class="rule-copy"><strong>One meal per day at 6:00 PM.</strong><span>The eating window is one hour. No snacking.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">03</div>
+            <div class="rule-copy"><strong>Protein first, always.</strong><span>Eat the protein source before dal, sabzi, or roti.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">04</div>
+            <div class="rule-copy"><strong>Train fasted in the morning.</strong><span>Use the elevated growth hormone during the fast.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">05</div>
+            <div class="rule-copy"><strong>Swap strength for light walking when needed.</strong><span>If a 48-hour fast falls on Tuesday or Friday, switch to a light Zone 2 walk.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">06</div>
+            <div class="rule-copy"><strong>Zone 2 means conversation pace.</strong><span>If you cannot talk, slow down.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">07</div>
+            <div class="rule-copy"><strong>VO2 max intervals should feel hard.</strong><span>Target 90-95% max HR and a point where you cannot speak.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">08</div>
+            <div class="rule-copy"><strong>Weigh weekly after the 48-hour fast.</strong><span>Use the same day, same morning, and best reading conditions.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">09</div>
+            <div class="rule-copy"><strong>Expect about 1 kg per week on average.</strong><span>Faster early, slower later.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">10</div>
+            <div class="rule-copy"><strong>Sleep 7-8 hours.</strong><span>Poor sleep kills testosterone and increases cortisol.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">11</div>
+            <div class="rule-copy"><strong>Hit 8,000+ steps daily.</strong><span>Every day, including fast days.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">12</div>
+            <div class="rule-copy"><strong>Drink 3-4L water daily.</strong><span>More on fast days. Add electrolytes.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">13</div>
+            <div class="rule-copy"><strong>No alcohol, no juice, and no caloric drinks.</strong><span>No chai with sugar and no milk outside the eating window. Black coffee only during fasting hours.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">14</div>
+            <div class="rule-copy"><strong>Do not force a bad fast.</strong><span>If energy crashes hard, add more salt. If still bad, break the fast early with bone broth.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">15</div>
+            <div class="rule-copy"><strong>If you miss a workout, do the next one.</strong><span>Do not double up.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">16</div>
+            <div class="rule-copy"><strong>Track weights in a notebook.</strong><span>Progressive overload is the only driver of muscle growth.</span></div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-number">17</div>
+            <div class="rule-copy"><strong>Get blood work before starting.</strong><span>Fasting glucose, HbA1c, lipid panel, testosterone, vitamin D, and thyroid. Repeat at month 3 and month 6.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Milestones</div>
+          <h2 class="section-title">Monthly Milestones</h2>
+        </div>
+        <p class="section-desc">A rough expected glide path, with faster early loss and tighter reassessment around month 3.</p>
+      </div>
+      <div class="panel">
+        <div class="milestone-list">
+          <div class="milestone-row">
+            <div class="month">Month 1</div>
+            <div class="milestone-copy"><strong>April: 95 to 91 kg</strong><span>Body adapts to OMAD. First 2-3 cycles. Energy may dip week 1-2, then stabilize. Water weight drops fast.</span></div>
+          </div>
+          <div class="milestone-row">
+            <div class="month">Month 2</div>
+            <div class="milestone-copy"><strong>May: 91 to 87 kg</strong><span>Fasting becomes routine. Zone 2 endurance improves. Clothes start fitting differently.</span></div>
+          </div>
+          <div class="milestone-row">
+            <div class="month">Month 3</div>
+            <div class="milestone-copy"><strong>June: 87 to 83 kg</strong><span>Visible changes. Visceral fat drops. Strength should be maintaining or improving. Get an InBody scan.</span></div>
+          </div>
+          <div class="milestone-row">
+            <div class="month">Month 4</div>
+            <div class="milestone-copy"><strong>July: 83 to 79 kg</strong><span>Confident in the protocol. Zone 2 can transition from walking to light jogging. Energy surplus from fat adaptation.</span></div>
+          </div>
+          <div class="milestone-row">
+            <div class="month">Month 5</div>
+            <div class="milestone-copy"><strong>August: 79 to 75 kg</strong><span>Strong and lean. VO2 max noticeably improved. Can run 5K under 35 min.</span></div>
+          </div>
+          <div class="milestone-row">
+            <div class="month">Month 6</div>
+            <div class="milestone-copy"><strong>September-October: 75 to 70-72 kg</strong><span>Near target. Get a final InBody scan. Reassess if continuing to 68 kg or transitioning to maintenance.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Based on InBody Assessment - Aug 28, 2025 - 90.3 kg - 30.7% body fat - BMR 1722 kcal<br>
+      Current weight as of April 2026: 95 kg<br>
+      Protocol: Dr. Pradip Jamnadas 9-Day OMD + 48-Hour Water Fast<br>
+      Plan updated April 2026<br>
+      Reassess at month 3 with InBody scan
+    </footer>
+  </div>
+
+<script>
+const tabs = document.querySelectorAll('.day-tab');
+const panels = document.querySelectorAll('.day-panel');
+
+function setActiveDay(day) {
+  tabs.forEach((tab) => {
+    const active = tab.dataset.day === day;
+    tab.classList.toggle('is-active', active);
+    tab.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+
+  panels.forEach((panel) => {
+    const active = panel.id === `day-${day}`;
+    panel.classList.toggle('is-active', active);
+    panel.hidden = !active;
+  });
+}
+
+tabs.forEach((tab) => {
+  tab.addEventListener('click', () => setActiveDay(tab.dataset.day));
+});
+
+setActiveDay('mon');
+</script>
+</body>
+</html>
