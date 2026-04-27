@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Daily Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e17;
+  --card: #111827;
+  --card-border: rgba(255,255,255,.06);
+  --card-hover: #161f30;
+  --text: #f0f2f7;
+  --text-2: #94a3b8;
+  --text-3: #64748b;
+  --green: #34d399;
+  --green-bg: rgba(52,211,153,.1);
+  --orange: #fbbf24;
+  --orange-bg: rgba(251,191,36,.1);
+  --blue: #60a5fa;
+  --blue-bg: rgba(96,165,250,.1);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,.1);
+  --teal: #2dd4bf;
+  --teal-bg: rgba(45,212,191,.1);
+  --gray: #94a3b8;
+  --gray-bg: rgba(148,163,184,.08);
+  --mono: "JetBrains Mono", monospace;
+  --sans: "Inter", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) 0 calc(env(safe-area-inset-bottom) + 20px);
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ── Today Header ── */
+.today-header {
+  padding: 20px 0 12px;
+}
+.today-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.today-greeting {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  margin-top: 2px;
+}
+.today-cycle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--mono);
+}
+.today-cycle.omad { background: var(--green-bg); color: var(--green); }
+.today-cycle.fast { background: var(--orange-bg); color: var(--orange); }
+.cycle-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor;
+}
+
+/* ── Day Selector (horizontal scroll) ── */
+.day-selector {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 4px 0 8px;
+  margin: 8px -16px 0;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.day-selector::-webkit-scrollbar { display: none; }
+.day-btn {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--card-border);
+  background: transparent;
+  color: var(--text-3);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s ease;
+  min-width: 56px;
+}
+.day-btn strong {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-2);
+}
+.day-btn.active {
+  background: var(--card);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.day-btn.active strong { color: var(--text); }
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.card-tap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .12s;
+}
+.card-tap:active { background: var(--card-hover); }
+.card-icon {
+  flex-shrink: 0;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.card-icon.workout { background: var(--blue-bg); }
+.card-icon.meal { background: var(--green-bg); }
+.card-icon.timeline { background: var(--orange-bg); }
+.card-icon.supps { background: var(--teal-bg); }
+.card-icon.fast-icon { background: var(--orange-bg); }
+.card-icon.rules { background: var(--gray-bg); }
+.card-info { flex: 1; min-width: 0; }
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-3);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-sub {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 1px;
+}
+.card-chevron {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  color: var(--text-3);
+  transition: transform .2s ease;
+}
+.card.open .card-chevron { transform: rotate(180deg); }
+
+.card-body {
+  display: none;
+  padding: 0 16px 16px;
+}
+.card.open .card-body { display: block; animation: slideIn .2s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+.card-divider {
+  height: 1px;
+  background: var(--card-border);
+  margin: 0 16px;
+}
+
+/* ── Exercise rows ── */
+.ex-row {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  align-items: flex-start;
+}
+.ex-row:last-child { border-bottom: none; }
+.ex-sets {
+  flex-shrink: 0;
+  width: 64px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  padding-top: 2px;
+}
+.ex-name { font-size: 14px; font-weight: 600; }
+.ex-note { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+.ex-tag {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-3);
+  padding-top: 3px;
+}
+
+/* ── Timeline rows ── */
+.tl-row {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  align-items: flex-start;
+}
+.tl-row:last-child { border-bottom: none; }
+.tl-time {
+  flex-shrink: 0;
+  width: 64px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--orange);
+  padding-top: 1px;
+}
+.tl-text { font-size: 14px; font-weight: 600; }
+.tl-sub { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+.tl-row.highlight .tl-text { color: var(--text); }
+.tl-row:not(.highlight) .tl-text { color: var(--text-2); }
+
+/* ── Meal steps ── */
+.meal-step {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.meal-step:last-child { border-bottom: none; }
+.meal-num {
+  flex-shrink: 0;
+  width: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green);
+}
+.meal-name { font-size: 14px; font-weight: 600; }
+.meal-desc { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+.meal-macro {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  padding-top: 3px;
+  text-align: right;
+}
+
+/* ── Supplement rows ── */
+.supp-row2 {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.supp-row2:last-child { border-bottom: none; }
+.supp-dose2 {
+  flex-shrink: 0;
+  width: 70px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+}
+.supp-name { font-size: 14px; font-weight: 600; }
+.supp-note { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+
+/* ── Protein rotation ── */
+.protein-day {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.protein-day:last-child { border-bottom: none; }
+.protein-badge {
+  flex-shrink: 0;
+  width: 36px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--green-bg);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+}
+.protein-info { flex: 1; }
+.protein-name { font-size: 14px; font-weight: 600; }
+.protein-detail { font-size: 12px; color: var(--text-2); }
+.protein-stats { flex-shrink: 0; font-family: var(--mono); font-size: 11px; color: var(--text-3); text-align: right; }
+
+/* ── Links ── */
+.learn-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  text-decoration: none;
+  color: var(--text);
+  transition: background .12s;
+}
+.learn-link:active { background: var(--card-hover); }
+.learn-link-icon {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--red-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+.learn-link-text { flex: 1; min-width: 0; }
+.learn-link-title { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.learn-link-source { font-size: 11px; color: var(--text-3); }
+.learn-link-go { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .04em; }
+
+/* ── Why card (coaching note) ── */
+.why-box {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: rgba(255,255,255,.02);
+}
+.why-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.why-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+/* ── Section dividers ── */
+.section-break {
+  margin: 28px 0 4px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--text-3);
+}
+
+/* ── 48hr fast card ── */
+.fast-timeline li {
+  list-style: none;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-2);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.fast-timeline li:last-child { border-bottom: none; }
+.fast-timeline strong { color: var(--text); }
+
+/* ── Bottom sections (math, milestones, rules) ── */
+.bottom-section { margin-top: 24px; }
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: 14px;
+}
+.metric-row:last-child { border-bottom: none; }
+.metric-label2 { color: var(--text-2); }
+.metric-val { font-weight: 700; font-family: var(--mono); font-size: 13px; }
+
+.milestone-row2 {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.milestone-row2:last-child { border-bottom: none; }
+.milestone-month {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.milestone-target { font-size: 14px; font-weight: 700; margin-top: 2px; }
+.milestone-note { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+
+.rule-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.rule-item:last-child { border-bottom: none; }
+.rule-num {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  width: 24px;
+}
+.rule-text { font-size: 13px; }
+.rule-text strong { display: block; }
+.rule-text span { color: var(--text-2); }
+
+/* ── Cycle visual (small) ── */
+.mini-cycle {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+.mini-dot {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+}
+.mini-dot.omad { background: var(--green); opacity: .6; }
+.mini-dot.fast { background: var(--orange); opacity: .8; }
+
+/* ── Stats row ── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.stat-chip {
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  text-align: center;
+}
+.stat-val {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+.stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* ── Footer ── */
+.app-footer {
+  margin-top: 32px;
+  padding: 16px 0;
+  border-top: 1px solid var(--card-border);
+  font-size: 11px;
+  color: var(--text-3);
+  line-height: 1.8;
+}
+
+/* ── Training dist ── */
+.dist-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.dist-row:last-child { border-bottom: none; }
+.dist-label { font-size: 13px; color: var(--text-2); }
+.dist-val { font-family: var(--mono); font-size: 14px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="app" id="app"></div>
+
+<script>
+// ── ALL DATA ──
+const DAYS_OF_WEEK = ['sun','mon','tue','wed','thu','fri','sat'];
+const DAY_LABELS = { mon:'Mon', tue:'Tue', wed:'Wed', thu:'Thu', fri:'Fri', sat:'Sat', sun:'Sun' };
+const DAY_TYPES = {
+  mon: { type:'Push', color:'red', icon:'\u{1F3CB}\uFE0F', time:'5:30\u20136:30 AM' },
+  tue: { type:'Zone 2', color:'blue', icon:'\u{1F6B6}', time:'5:30\u20136:15 AM' },
+  wed: { type:'Pull', color:'teal', icon:'\u{1F3CB}\uFE0F', time:'5:30\u20136:30 AM' },
+  thu: { type:'Zone 2', color:'blue', icon:'\u{1F6B6}', time:'5:30\u20136:15 AM' },
+  fri: { type:'Functional', color:'orange', icon:'\u{1F4AA}', time:'5:30\u20136:30 AM' },
+  sat: { type:'Rest', color:'gray', icon:'\u{1F634}', time:'Recovery day' },
+  sun: { type:'VO2 + Zone 2', color:'red', icon:'\u{1F4A8}', time:'Flexible AM' }
+};
+
+const WORKOUTS = {
+  mon: {
+    title: 'Full Body Push',
+    exercises: [
+      { sets:'4\u00d76-8', name:'Barbell Back Squat', note:'Depth: hip crease below knee. Tempo 3-1-1.', tag:'Legs' },
+      { sets:'3\u00d78-10', name:'Bench Press', note:'Full range. Retract scapulae, arch back.', tag:'Press' },
+      { sets:'3\u00d78-10', name:'Overhead Press', note:'Strict press. No leg drive.', tag:'Shoulders' },
+      { sets:'3\u00d710-12', name:'Leg Press', note:'Second quad/glute movement.', tag:'Lower' },
+      { sets:'3\u00d710-12', name:'Tricep Pushdown', note:'Full extension. Pause at bottom.', tag:'Triceps' },
+      { sets:'3\u00d715', name:'Lateral Raise', note:'Light weight, shoulder health.', tag:'Finish' },
+    ],
+    why: 'Preserve muscle while losing fat. Legs are the only underdeveloped area per InBody. Open the week with strength while the nervous system is fresh.',
+    coaching: 'Growth hormone is elevated during the fast. Focus on progressive overload. Log every weight and rep.',
+    links: [
+      { title:'Scientific Push Training', source:'Dr. Mike Israetel', url:'https://www.youtube.com/results?search_query=dr+mike+israetel+renaissance+periodization+push+training+chest+shoulders+science' },
+      { title:'Smartest Push Workout', source:'Jeff Nippard', url:'https://www.youtube.com/results?search_query=jeff+nippard+push+day+science+based+chest+shoulders' }
+    ]
+  },
+  tue: {
+    title: 'Aerobic Base',
+    exercises: [
+      { sets:'45 min', name:'Steady State Cardio', note:'Incline treadmill walk or bike', tag:'Zone 2' },
+      { sets:'Target', name:'HR 112\u2013130 bpm', note:'Nose-breathe the entire time', tag:'Fasted' },
+    ],
+    why: 'Visceral fat is high at 12. Zone 2 is the primary tool for visceral fat reduction. Fasted training amplifies fat burning. Active recovery from Monday\'s push session.',
+    coaching: 'Conversation pace only. If you can\'t hold a full conversation, slow down.',
+    links: [
+      { title:'What is Zone 2 Cardio?', source:'Peter Attia, M.D.', url:'https://www.youtube.com/watch?v=mC4KO49_LTQ' },
+      { title:'Zone 2 Training Deep Dive', source:'Inigo San Millan x Attia', url:'https://www.youtube.com/results?search_query=inigo+san+millan+zone+2+training+peter+attia+podcast' }
+    ]
+  },
+  wed: {
+    title: 'Full Body Pull',
+    exercises: [
+      { sets:'4\u00d76-8', name:'Deadlift', note:'Conventional or Romanian. Controlled down, explosive up.', tag:'Post. chain' },
+      { sets:'3\u00d78-10', name:'Barbell Row', note:'Pull to lower chest. Full stretch at bottom.', tag:'Back' },
+      { sets:'3\u00d710-12', name:'Lat Pulldown', note:'Wide grip. Full stretch, squeeze at bottom.', tag:'Lats' },
+      { sets:'3\u00d710-12', name:'Leg Curl', note:'Seated or lying. Addresses leg deficit.', tag:'Hamstrings' },
+      { sets:'3\u00d715', name:'Face Pull', note:'Rear delts and rotator cuff. Injury prevention.', tag:'Shoulders' },
+      { sets:'3\u00d710-12', name:'Bicep Curl', note:'Full range. No ego lifting.', tag:'Arms' },
+    ],
+    why: 'Legs are underdeveloped. Deadlifts and leg curls target this. Upper body lean mass is already 110\u2013111% \u2014 maintain it.',
+    coaching: 'Mid-week strength day. One Zone 2 day in front, one behind \u2014 body is primed and recovered. Progressive overload is non-negotiable.',
+    links: [
+      { title:'Scientific Back & Pull Training', source:'Dr. Mike Israetel', url:'https://www.youtube.com/results?search_query=dr+mike+israetel+renaissance+periodization+scientific+back+training+hypertrophy' },
+      { title:'Smartest Pull Workout', source:'Jeff Nippard', url:'https://www.youtube.com/results?search_query=jeff+nippard+pull+day+science+explained+back+workout' }
+    ]
+  },
+  thu: {
+    title: 'Aerobic Base',
+    exercises: [
+      { sets:'45 min', name:'Steady State Cardio', note:'Same as Tuesday. Incline walk or bike at 112\u2013130 bpm.', tag:'Zone 2' },
+      { sets:'Focus', name:'Nose-Breathe', note:'Stay at full conversation pace the entire session.', tag:'Steady' },
+    ],
+    why: 'Trunk fat is 383% of ideal. Mid-week Zone 2 maintains mitochondrial biogenesis momentum. Sets up Friday\'s functional session with fresh legs.',
+    coaching: 'Active recovery from Wednesday\'s pull session. Keep it easy.',
+    links: [
+      { title:'Exercising for Longevity: Zone 2 + Zone 5', source:'Peter Attia', url:'https://www.youtube.com/results?search_query=peter+attia+zone+2+zone+5+exercising+for+longevity' },
+      { title:'How to Build Endurance and Lose Fat', source:'Galpin x Huberman', url:'https://www.youtube.com/watch?v=oNkDA2F7CjM' }
+    ]
+  },
+  fri: {
+    title: 'Full Body Functional Strength',
+    exercises: [
+      { sets:'4\u00d78-10', name:'Goblet or Front Squat', note:'Anterior-loaded squat. Upright torso. Tempo 2-1-1.', tag:'Legs' },
+      { sets:'3\u00d78-10', name:'Romanian Deadlift', note:'Hip hinge. Long eccentric, neutral spine.', tag:'Hinge' },
+      { sets:'3\u00d76-8', name:'Push Press', note:'Barbell or dumbbell. Leg-to-shoulder power transfer.', tag:'Press' },
+      { sets:'3\u00d78-10', name:'Pull-up or 1-Arm Row', note:'Use band assist on pull-ups if needed.', tag:'Pull' },
+      { sets:'3\u00d710/leg', name:'Walking Lunge or Split Squat', note:'Unilateral leg work. Exposes side-to-side imbalance.', tag:'Unilateral' },
+      { sets:'3\u00d740 m', name:'Farmer\'s Carry', note:'Heavy DBs or trap bar. Grip, core, posture.', tag:'Carry' },
+      { sets:'3\u00d710/side', name:'Pallof Press', note:'Anti-rotation core. Spine stability under load.', tag:'Core' },
+    ],
+    why: 'Functional means transferable: hinge, squat, press, pull, carry, anti-rotate \u2014 all in one. Builds movement competency the Push/Pull split alone does not.',
+    coaching: 'Third strength day \u2014 keep loads moderate, focus on movement quality. Rest 60\u201390s between sets to bridge strength and conditioning.',
+    links: [
+      { title:'Functional Strength Workout Explained', source:'Jeff Nippard', url:'https://www.youtube.com/results?search_query=jeff+nippard+functional+strength+full+body+workout' },
+      { title:'Why Loaded Carries Are Elite', source:'Dan John', url:'https://www.youtube.com/results?search_query=dan+john+loaded+carries+farmer+walk+functional+strength' }
+    ]
+  },
+  sat: {
+    title: 'Full Rest',
+    exercises: [
+      { sets:'None', name:'No Structured Training', note:'Full recovery day.', tag:'Rest' },
+      { sets:'Daily', name:'Walk 8,000+ Steps', note:'Non-negotiable every day.', tag:'Baseline' },
+      { sets:'Optional', name:'Light Stretching or Yoga', note:'If 48hr fast falls on Saturday, ideal day for it.', tag:'Optional' },
+    ],
+    why: 'Recovery is where adaptation happens. Muscles grow at rest. Sets up Sunday\'s VO2 + Zone 2 block with fresh legs and a recovered nervous system.',
+    coaching: 'Aim for 8 hours sleep. Light stretching or yoga is fine if desired.',
+    links: []
+  },
+  sun: {
+    title: 'VO2 Max Intervals + Long Zone 2',
+    exercises: [
+      { sets:'8 min', name:'Warm-Up', note:'Progressive HR elevation. Bike preferred (joint-safe).', tag:'Prep' },
+      { sets:'4\u00d74 min', name:'Norwegian 4\u00d74 Protocol', note:'90\u201395% max HR (158\u2013177 bpm), 3 min easy recovery between.', tag:'VO2' },
+      { sets:'12 min', name:'Cooldown', note:'Drop HR below 120 bpm. Total VO2 block = 45 min.', tag:'Recovery' },
+      { sets:'45 min', name:'Zone 2 Block', note:'Steady state immediately after VO2. Walk, bike, or swim at 112\u2013130 bpm.', tag:'Zone 2' },
+      { sets:'Focus', name:'Nose-Breathe Z2', note:'Full conversation pace the entire Zone 2 block.', tag:'Steady' },
+    ],
+    why: 'VO2max is the #1 predictor of all-cause mortality. Combining VO2 + Zone 2 in one session is the most time-efficient longevity stimulus. Sunday placement means a recovered nervous system can hit true intensity.',
+    coaching: 'VO2 first while fresh, then Zone 2 to flush. Cannot speak during work intervals \u2014 want to stop. Total session ~90 min, hydrate and electrolytes.',
+    links: [
+      { title:'VO2 Max: Most Important Longevity Metric', source:'Peter Attia', url:'https://www.youtube.com/results?search_query=peter+attia+vo2+max+longevity+most+important+metric' },
+      { title:'4\u00d74 Interval Protocol Explained', source:'Peter Attia', url:'https://www.youtube.com/results?search_query=peter+attia+4x4+interval+training+protocol+vo2+max' },
+      { title:'Zone 2 + Zone 5 for Longevity', source:'Peter Attia', url:'https://www.youtube.com/results?search_query=peter+attia+zone+2+zone+5+exercising+for+longevity' }
+    ]
+  }
+};
+
+const TIMELINE = [
+  { time:'5:00', text:'Wake Up', sub:'500ml warm water + pink salt, then black coffee (no sugar/milk)', hl:true },
+  { time:'5:30', text:'Workout', sub:'See today\'s workout above', hl:true },
+  { time:'6:30', text:'Post-Workout', sub:'500ml water + electrolytes. Stay fasted.', hl:false },
+  { time:'Day', text:'Throughout Day', sub:'Water 3L+, black coffee, green tea. No food/calories/milk.', hl:false },
+  { time:'5:45', text:'Pre-Meal', sub:'1 tbsp apple cider vinegar in warm water.', hl:false },
+  { time:'6:00', text:'The One Meal', sub:'Full OMAD meal + all supplements. Eat slowly over 45\u201360 min.', hl:true },
+  { time:'7:00', text:'Window Closes', sub:'Warm water or herbal tea only. No food until tomorrow 6 PM.', hl:false },
+  { time:'9:30', text:'Sleep', sub:'7\u20138 hours minimum. Non-negotiable.', hl:true },
+];
+
+const MEAL = [
+  { num:'1', name:'Starter', desc:'1 tbsp ACV in warm water, 5 min before food', macro:'Prep' },
+  { num:'2', name:'Salad', desc:'Large mixed greens, cucumber, tomato, onion, lemon', macro:'3g P \u00b7 50 kcal' },
+  { num:'3', name:'Protein First', desc:'250g meat from 9-day rotation (see below)', macro:'50\u201362g P' },
+  { num:'4', name:'Eggs', desc:'2 boiled eggs. Every day. Non-negotiable.', macro:'12g P \u00b7 140 kcal' },
+  { num:'5', name:'Dal + Sabzi', desc:'Double dal (250g cooked) + seasonal sabzi', macro:'22g P \u00b7 330 kcal' },
+  { num:'6', name:'Carbs Last', desc:'2 whole wheat roti', macro:'8g P \u00b7 260 kcal' },
+  { num:'7', name:'Raita', desc:'250g dahi with cucumber and cumin', macro:'10g P \u00b7 125 kcal' },
+  { num:'8', name:'Whey Shake', desc:'1 scoop whey isolate + 5g creatine in water', macro:'25g P \u00b7 120 kcal' },
+];
+
+const PROTEINS = [
+  { day:'D1', name:'Grilled Chicken Breast (250g)', detail:'Tandoori or lemon-herb', stats:'62g P \u00b7 410 kcal' },
+  { day:'D2', name:'Paneer Bhurji (200g)', detail:'Vegetarian protein day', stats:'36g P \u00b7 520 kcal' },
+  { day:'D3', name:'Fish Curry (250g)', detail:'Rohu, surmai, or salmon', stats:'55g P \u00b7 420 kcal' },
+  { day:'D4', name:'Tandoori Chicken (250g)', detail:'Yogurt marinade', stats:'62g P \u00b7 420 kcal' },
+  { day:'D5', name:'Chicken Keema (250g)', detail:'Spiced mince', stats:'55g P \u00b7 430 kcal' },
+  { day:'D6', name:'Chicken Curry (250g)', detail:'Home-style bone-in', stats:'58g P \u00b7 450 kcal' },
+  { day:'D7', name:'Paneer Tikka + Egg Curry', detail:'Veg day + 2 extra eggs', stats:'48g P \u00b7 530 kcal' },
+  { day:'D8', name:'Palak Chicken (250g)', detail:'Iron from spinach + protein', stats:'60g P \u00b7 430 kcal' },
+  { day:'D9', name:'Grilled Chicken (250g)', detail:'Last meal before 48hr fast', stats:'62g P \u00b7 410 kcal' },
+];
+
+const SUPPS_OMAD = [
+  { dose:'5g', name:'Creatine Monohydrate', note:'With the meal' },
+  { dose:'2g EPA+DHA', name:'Omega-3 Fish Oil', note:'Fat-soluble, needs food' },
+  { dose:'4000 IU', name:'Vitamin D3', note:'Fat-soluble, needs food' },
+  { dose:'1000 mcg', name:'Vitamin B12', note:'With the meal' },
+  { dose:'400mg', name:'Magnesium Bisglycinate', note:'With meal or before bed' },
+  { dose:'1 scoop', name:'Whey Isolate', note:'Only if protein target not met' },
+];
+
+const SUPPS_FAST = [
+  { dose:'400mg', name:'Magnesium Bisglycinate', note:'Before bed. Won\'t break fast.' },
+  { dose:'\u00bd tsp', name:'Pink Himalayan Salt', note:'In water 2\u20133\u00d7 per day' },
+  { dose:'\u00bc tsp', name:'Potassium (Lite Salt)', note:'In water 1\u20132\u00d7 per day' },
+];
+
+const RULES = [
+  { n:'01', t:'Follow the 9+2 cycle.', s:'9 days OMAD, 2 days water fast, repeat.' },
+  { n:'02', t:'One meal per day at 6 PM.', s:'One hour window. No snacking.' },
+  { n:'03', t:'Protein first, always.', s:'Eat protein before dal, sabzi, or roti.' },
+  { n:'04', t:'Train fasted in the morning.', s:'Elevated growth hormone during the fast.' },
+  { n:'05', t:'Swap strength for walking on fast days.', s:'If 48hr fast lands on Mon/Wed/Fri, do light Zone 2.' },
+  { n:'06', t:'Zone 2 = conversation pace.', s:'If you can\'t talk, slow down.' },
+  { n:'07', t:'VO2 intervals should feel hard.', s:'90\u201395% max HR. Can\'t speak.' },
+  { n:'08', t:'Weigh weekly after 48hr fast.', s:'Same day, same morning.' },
+  { n:'09', t:'Expect ~1 kg/week average.', s:'Faster early, slower later.' },
+  { n:'10', t:'Sleep 7\u20138 hours.', s:'Poor sleep kills testosterone.' },
+  { n:'11', t:'8,000+ steps daily.', s:'Every day including fast days.' },
+  { n:'12', t:'3\u20134L water daily.', s:'More on fast days. Add electrolytes.' },
+  { n:'13', t:'No alcohol, juice, or caloric drinks.', s:'Black coffee only during fasting.' },
+  { n:'14', t:'Don\'t force a bad fast.', s:'Add salt. If still bad, break with bone broth.' },
+  { n:'15', t:'Missed a workout? Do the next one.', s:'Don\'t double up.' },
+  { n:'16', t:'Track weights in a notebook.', s:'Progressive overload is the only driver.' },
+  { n:'17', t:'Get blood work before starting.', s:'Glucose, HbA1c, lipids, testosterone, D, thyroid.' },
+];
+
+const MILESTONES = [
+  { month:'Month 1', target:'April: 95 \u2192 91 kg', note:'Body adapts to OMAD. Energy may dip week 1\u20132. Water weight drops fast.' },
+  { month:'Month 2', target:'May: 91 \u2192 87 kg', note:'Fasting becomes routine. Zone 2 endurance improves.' },
+  { month:'Month 3', target:'June: 87 \u2192 83 kg', note:'Visible changes. Visceral fat drops. Get InBody scan.' },
+  { month:'Month 4', target:'July: 83 \u2192 79 kg', note:'Zone 2 \u2192 light jogging. Energy surplus from fat adaptation.' },
+  { month:'Month 5', target:'Aug: 79 \u2192 75 kg', note:'Strong and lean. VO2 max improved. 5K under 35 min.' },
+  { month:'Month 6', target:'Sep\u2013Oct: 75 \u2192 70\u201372 kg', note:'Near target. Final InBody. Assess maintenance vs continue.' },
+];
+
+const MATH = [
+  { label:'BMR at 95 kg', val:'~1,800 kcal' },
+  { label:'TDEE (5\u20136 days training)', val:'~2,500 kcal' },
+  { label:'OMAD intake/day', val:'~1,700 kcal' },
+  { label:'48hr fast intake', val:'0 kcal' },
+  { label:'11-day cycle average', val:'~1,391 kcal/day' },
+  { label:'Average daily deficit', val:'~1,100 kcal' },
+  { label:'Monthly loss', val:'~4 kg' },
+  { label:'6-month projection', val:'22\u201327 kg loss' },
+];
+
+// ── RENDER ──
+const app = document.getElementById('app');
+
+function getToday() {
+  const d = new Date();
+  return DAYS_OF_WEEK[d.getDay()];
+}
+
+function formatDate() {
+  return new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+}
+
+let activeDay = getToday();
+
+function chevronSVG() {
+  return '<svg class="card-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"/></svg>';
+}
+
+function renderLinks(links) {
+  if (!links || !links.length) return '';
+  return links.map(function(l) { return '\
+    <a class="learn-link" href="' + l.url + '" target="_blank" rel="noreferrer">\
+      <div class="learn-link-icon">\u25B6</div>\
+      <div class="learn-link-text">\
+        <div class="learn-link-title">' + l.title + '</div>\
+        <div class="learn-link-source">' + l.source + '</div>\
+      </div>\
+      <div class="learn-link-go">Watch</div>\
+    </a>';
+  }).join('');
+}
+
+function render() {
+  var day = DAY_TYPES[activeDay];
+  var workout = WORKOUTS[activeDay];
+  var isToday = activeDay === getToday();
+
+  var html = '';
+
+  // Header
+  html += '<div class="today-header">';
+  html += '<div class="today-date">' + formatDate() + '</div>';
+  html += '<div class="today-greeting">' + (isToday ? "Today's Plan" : DAY_LABELS[activeDay] + "'s Plan") + '</div>';
+  html += '<div class="today-cycle omad"><span class="cycle-dot"></span> 9+2 Jamnadas Protocol</div>';
+  html += '<div class="mini-cycle">';
+  for (var i = 0; i < 9; i++) html += '<div class="mini-dot omad"></div>';
+  for (var i = 0; i < 2; i++) html += '<div class="mini-dot fast"></div>';
+  html += '</div></div>';
+
+  // Stats
+  html += '<div class="stats-bar">';
+  html += '<div class="stat-chip"><div class="stat-val">95</div><div class="stat-label">Current kg</div></div>';
+  html += '<div class="stat-chip"><div class="stat-val" style="color:var(--green)">68</div><div class="stat-label">Target kg</div></div>';
+  html += '<div class="stat-chip"><div class="stat-val" style="color:var(--orange)">30.7%</div><div class="stat-label">Body Fat</div></div>';
+  html += '</div>';
+
+  // Day selector
+  html += '<div class="day-selector">';
+  var dayOrder = ['mon','tue','wed','thu','fri','sat','sun'];
+  for (var d = 0; d < dayOrder.length; d++) {
+    var dk = dayOrder[d];
+    html += '<button class="day-btn ' + (dk === activeDay ? 'active' : '') + '" data-day="' + dk + '">';
+    html += '<strong>' + DAY_LABELS[dk] + '</strong>';
+    html += DAY_TYPES[dk].type.split(' ')[0];
+    html += '</button>';
+  }
+  html += '</div>';
+
+  // Workout card
+  html += '<div class="card' + (isToday ? ' open' : '') + '" id="card-workout">';
+  html += '<div class="card-tap" onclick="toggle(\'card-workout\')">';
+  html += '<div class="card-icon workout">' + day.icon + '</div>';
+  html += '<div class="card-info"><div class="card-label">' + day.type + ' \u00b7 ' + day.time + '</div>';
+  html += '<div class="card-title">' + workout.title + '</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  for (var e = 0; e < workout.exercises.length; e++) {
+    var ex = workout.exercises[e];
+    html += '<div class="ex-row"><div class="ex-sets">' + ex.sets + '</div>';
+    html += '<div style="flex:1"><div class="ex-name">' + ex.name + '</div><div class="ex-note">' + ex.note + '</div></div>';
+    html += '<div class="ex-tag">' + ex.tag + '</div></div>';
+  }
+  if (workout.coaching) html += '<div class="why-box"><div class="why-label">Coaching</div><div class="why-text">' + workout.coaching + '</div></div>';
+  if (workout.why) html += '<div class="why-box"><div class="why-label">Why This Matters</div><div class="why-text">' + workout.why + '</div></div>';
+  html += renderLinks(workout.links);
+  html += '</div></div>';
+
+  // Timeline card
+  html += '<div class="card" id="card-timeline"><div class="card-tap" onclick="toggle(\'card-timeline\')">';
+  html += '<div class="card-icon timeline">\u23F1</div>';
+  html += '<div class="card-info"><div class="card-label">Daily Timeline</div>';
+  html += '<div class="card-title">5 AM Wake \u2192 7 PM Window Closes</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  for (var t = 0; t < TIMELINE.length; t++) {
+    var tl = TIMELINE[t];
+    html += '<div class="tl-row ' + (tl.hl ? 'highlight' : '') + '">';
+    html += '<div class="tl-time">' + tl.time + '</div>';
+    html += '<div style="flex:1"><div class="tl-text">' + tl.text + '</div><div class="tl-sub">' + tl.sub + '</div></div></div>';
+  }
+  html += '</div></div>';
+
+  // Meal card
+  html += '<div class="card" id="card-meal"><div class="card-tap" onclick="toggle(\'card-meal\')">';
+  html += '<div class="card-icon meal">\u{1F37D}</div>';
+  html += '<div class="card-info"><div class="card-label">OMAD \u00b7 6:00\u20137:00 PM</div>';
+  html += '<div class="card-title">~1,700 kcal \u00b7 ~155g Protein</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  for (var m = 0; m < MEAL.length; m++) {
+    var ml = MEAL[m];
+    html += '<div class="meal-step"><div class="meal-num">' + ml.num + '</div>';
+    html += '<div style="flex:1"><div class="meal-name">' + ml.name + '</div><div class="meal-desc">' + ml.desc + '</div></div>';
+    html += '<div class="meal-macro">' + ml.macro + '</div></div>';
+  }
+  html += '<div class="why-box"><div class="why-label">Meal Rule</div><div class="why-text">This is your only meal. Eat protein first, then dal/sabzi, roti last. All supplements taken with this meal.</div></div>';
+  html += '</div></div>';
+
+  // Protein rotation card
+  html += '<div class="card" id="card-protein"><div class="card-tap" onclick="toggle(\'card-protein\')">';
+  html += '<div class="card-icon meal">\u{1F969}</div>';
+  html += '<div class="card-info"><div class="card-label">9-Day Rotation</div>';
+  html += '<div class="card-title">Protein Source for Tonight</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  for (var p = 0; p < PROTEINS.length; p++) {
+    var pr = PROTEINS[p];
+    html += '<div class="protein-day"><div class="protein-badge">' + pr.day + '</div>';
+    html += '<div class="protein-info"><div class="protein-name">' + pr.name + '</div><div class="protein-detail">' + pr.detail + '</div></div>';
+    html += '<div class="protein-stats">' + pr.stats + '</div></div>';
+  }
+  html += '</div></div>';
+
+  // Supplements card
+  html += '<div class="card" id="card-supps"><div class="card-tap" onclick="toggle(\'card-supps\')">';
+  html += '<div class="card-icon supps">\u{1F48A}</div>';
+  html += '<div class="card-info"><div class="card-label">Supplements</div>';
+  html += '<div class="card-title">Take with 6 PM Meal</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  html += '<div style="margin-bottom:6px;font-size:12px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em">OMAD Days \u2014 With Meal</div>';
+  for (var s = 0; s < SUPPS_OMAD.length; s++) {
+    var sp = SUPPS_OMAD[s];
+    html += '<div class="supp-row2"><div class="supp-dose2">' + sp.dose + '</div>';
+    html += '<div style="flex:1"><div class="supp-name">' + sp.name + '</div><div class="supp-note">' + sp.note + '</div></div></div>';
+  }
+  html += '<div style="margin:14px 0 6px;font-size:12px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em">48hr Fast Days \u2014 Non-Caloric Only</div>';
+  for (var s = 0; s < SUPPS_FAST.length; s++) {
+    var sp = SUPPS_FAST[s];
+    html += '<div class="supp-row2"><div class="supp-dose2">' + sp.dose + '</div>';
+    html += '<div style="flex:1"><div class="supp-name">' + sp.name + '</div><div class="supp-note">' + sp.note + '</div></div></div>';
+  }
+  html += '</div></div>';
+
+  // 48hr fast card
+  html += '<div class="card" id="card-fast"><div class="card-tap" onclick="toggle(\'card-fast\')">';
+  html += '<div class="card-icon fast-icon">\u{1F525}</div>';
+  html += '<div class="card-info"><div class="card-label">Days 10\u201311</div>';
+  html += '<div class="card-title">48-Hour Water Fast Protocol</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  html += '<div class="why-box" style="border-color:rgba(251,191,36,.2);background:rgba(251,191,36,.05)">';
+  html += '<div class="why-label" style="color:var(--orange)">Triggers autophagy, resets insulin, accelerates fat loss</div>';
+  html += '<div class="why-text">The Jamnadas protocol. Water only + electrolytes. Light Zone 2 only. No strength training.</div></div>';
+  html += '<div style="margin-top:12px;font-size:12px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em">Day 10</div>';
+  html += '<ul class="fast-timeline">';
+  html += '<li>Last meal was Day 9 at 7 PM</li>';
+  html += '<li>Morning: salt water + black coffee</li>';
+  html += '<li><strong>Training:</strong> Light Zone 2 walk only, 30\u201345 min, HR &lt; 120</li>';
+  html += '<li>All day: water + electrolytes, salt in every glass</li>';
+  html += '<li>Evening: herbal tea + magnesium before bed</li></ul>';
+  html += '<div style="margin-top:12px;font-size:12px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em">Day 11 \u2014 Break the Fast</div>';
+  html += '<ul class="fast-timeline">';
+  html += '<li>Morning: salt water + black coffee</li>';
+  html += '<li>Training: light walk or full rest</li>';
+  html += '<li><strong>5 PM:</strong> Break fast with warm bone broth or warm salt water</li>';
+  html += '<li><strong>Wait 30 min</strong>, then eat regular OMAD meal (smaller portions)</li>';
+  html += '<li>Eat slowly. Don\'t overeat.</li></ul>';
+  html += '<div style="margin-top:12px;font-size:12px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em">Allowed vs Not Allowed</div>';
+  html += '<ul class="fast-timeline">';
+  html += '<li><strong>OK:</strong> Water, black coffee, green tea, herbal tea, electrolytes, ACV in water</li>';
+  html += '<li><strong>NO:</strong> Any food, milk, cream, butter coffee, chai with sugar, whey, collagen, juice, coconut water</li></ul>';
+  html += '</div></div>';
+
+  // Rules card
+  html += '<div class="card" id="card-rules"><div class="card-tap" onclick="toggle(\'card-rules\')">';
+  html += '<div class="card-icon rules">\u{1F4CB}</div>';
+  html += '<div class="card-info"><div class="card-label">17 Rules</div>';
+  html += '<div class="card-title">Rules & Reminders</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  for (var r = 0; r < RULES.length; r++) {
+    var ru = RULES[r];
+    html += '<div class="rule-item"><div class="rule-num">' + ru.n + '</div>';
+    html += '<div class="rule-text"><strong>' + ru.t + '</strong><span>' + ru.s + '</span></div></div>';
+  }
+  html += '</div></div>';
+
+  // ── BOTTOM: Math & Plan ──
+  html += '<div class="section-break" style="margin-top:36px">Plan & Numbers</div>';
+
+  // Math card
+  html += '<div class="bottom-section"><div class="card" id="card-math"><div class="card-tap" onclick="toggle(\'card-math\')">';
+  html += '<div class="card-icon" style="background:rgba(255,255,255,.05)">\u{1F4CA}</div>';
+  html += '<div class="card-info"><div class="card-label">The Math</div>';
+  html += '<div class="card-title">27 kg Fat Loss in 6 Months</div>';
+  html += '<div class="card-sub">Aggressive. Expected slowing as weight drops.</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  for (var m = 0; m < MATH.length; m++) {
+    var mt = MATH[m];
+    html += '<div class="metric-row"><div class="metric-label2">' + mt.label + '</div><div class="metric-val">' + mt.val + '</div></div>';
+  }
+  html += '<div class="why-box"><div class="why-label">Honest Note</div><div class="why-text">Months 1\u20133 will be faster at 4+ kg/month. Months 4\u20136 will slow to 3\u20133.5 kg. Realistic landing: 68\u201373 kg. If needed, extend to month 7\u20138.</div></div>';
+  html += '<div class="why-box" style="border-color:rgba(251,191,36,.15)"><div class="why-label">Monitoring Rule</div><div class="why-text">This is aggressive. Monitor energy, sleep, mood. If any deteriorate, add a refeed week every 4th cycle.</div></div>';
+  html += '</div></div></div>';
+
+  // Training distribution card
+  html += '<div class="bottom-section" style="margin-top:12px"><div class="card" id="card-training-dist"><div class="card-tap" onclick="toggle(\'card-training-dist\')">';
+  html += '<div class="card-icon" style="background:var(--blue-bg)">\u{1F4C8}</div>';
+  html += '<div class="card-info"><div class="card-label">Weekly Summary</div>';
+  html += '<div class="card-title">~6.75 hrs / 6 Training Days</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  html += '<div class="dist-row"><div class="dist-label">Zone 2 Cardio (Tue/Thu/Sun)</div><div class="dist-val">135 min</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">VO2 Max Intervals (Sun)</div><div class="dist-val">45 min</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">Strength (Mon Push / Wed Pull)</div><div class="dist-val">120 min</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">Functional Strength (Fri)</div><div class="dist-val">60 min</div></div>';
+  html += '</div></div></div>';
+
+  // Milestones card
+  html += '<div class="bottom-section" style="margin-top:12px"><div class="card" id="card-milestones"><div class="card-tap" onclick="toggle(\'card-milestones\')">';
+  html += '<div class="card-icon" style="background:var(--orange-bg)">\u{1F3AF}</div>';
+  html += '<div class="card-info"><div class="card-label">6-Month Glide Path</div>';
+  html += '<div class="card-title">Monthly Milestones</div></div>';
+  html += chevronSVG() + '</div><div class="card-divider"></div><div class="card-body">';
+  for (var ms = 0; ms < MILESTONES.length; ms++) {
+    var mi = MILESTONES[ms];
+    html += '<div class="milestone-row2"><div class="milestone-month">' + mi.month + '</div>';
+    html += '<div class="milestone-target">' + mi.target + '</div>';
+    html += '<div class="milestone-note">' + mi.note + '</div></div>';
+  }
+  html += '</div></div></div>';
+
+  // Footer
+  html += '<footer class="app-footer">';
+  html += 'Based on InBody \u2014 Aug 28, 2025 \u2014 90.3 kg \u2014 30.7% BF \u2014 BMR 1722 kcal<br>';
+  html += 'Current: 95 kg (April 2026)<br>';
+  html += 'Protocol: Dr. Pradip Jamnadas 9+2<br>';
+  html += 'Reassess month 3 with InBody scan</footer>';
+
+  app.innerHTML = html;
+
+  // Bind day selector
+  var dayBtns = document.querySelectorAll('.day-btn');
+  for (var b = 0; b < dayBtns.length; b++) {
+    dayBtns[b].addEventListener('click', function() {
+      activeDay = this.dataset.day;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+}
+
+function toggle(id) {
+  var card = document.getElementById(id);
+  if (card) card.classList.toggle('open');
+}
+
+render();
+</script>
+</body>
+</html>
