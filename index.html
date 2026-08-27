@@ -194,7 +194,7 @@ input[type=checkbox]{accent-color:var(--green);width:16px;height:16px}
   <div class="top" id="top"></div>
   <div id="main"></div>
   <div class="foot">
-    Plan updated August 17, 2026 &middot; BMI 33.8; goal &minus;20&nbsp;kg over 26 weeks (~0.77&nbsp;kg/week)<br>
+    Plan updated August 27, 2026 &middot; BMI 33.8; goal &minus;20&nbsp;kg over 26 weeks (~0.77&nbsp;kg/week)<br>
     Based on clinician-caveated guidance &middot; the calorie target is a two-week experiment<br>
     Reassess at week 13 (midpoint) with measurements and the adjustment rules
   </div>
@@ -206,44 +206,45 @@ const LABEL={mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Su
 const FULL={mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'};
 
 const PLAN={
-mon:{focus:'Chest',short:'Chest',time:'45 min',color:'blue',icon:'◈',
- ex:[{id:'press-chest',s:'4 × 5–8',n:'Chest press OR dumbbell press',d:'1–2 warm-up sets, then 4 challenging working sets.',log:1,top:8},
-     {s:'30 min',n:'Zone 2 cardio',d:'Conversation pace. Strength first, then Zone 2.'}],
- co:'One dedicated heavy chest session this week. Choose ONE press variation and retain it for 8–12 weeks. Finish compound sets with 1–2 good reps remaining; rest 2–3 minutes between heavy sets.'},
-tue:{focus:'Shoulders',short:'Shoulders',time:'45 min',color:'blue',icon:'△',
- ex:[{id:'press-shoulder',s:'4 × 5–8',n:'Military press OR shoulder press',d:'1–2 warm-up sets, then 4 challenging working sets.',log:1,top:8},
-     {s:'30 min',n:'Zone 2 cardio',d:'Conversation pace. Strength first, then Zone 2.'}],
- co:'One dedicated heavy shoulder session this week. Same press-selection rule — keep the variation for 8–12 weeks. Strength before Zone 2.'},
-wed:{focus:'Arms',short:'Arms',time:'45 min',color:'blue',icon:'◎',
- ex:[{id:'curl',s:'3 × 6–10',n:'Barbell curl',d:'Superset with pushdowns. Rest 60–90 seconds.',log:1,top:10},
-     {id:'pushdown',s:'3 × 8–12',n:'Triceps pushdown',d:'Superset with curls. Rest 60–90 seconds.',log:1,top:12},
-     {s:'30 min',n:'Zone 2 cardio',d:'Conversation pace. Strength first, then Zone 2.'}],
- co:'Rest 60–90 seconds for curls and pushdowns. Strength before Zone 2.'},
-thu:{focus:'Legs',short:'Legs',time:'45 min',color:'blue',icon:'◇',
- ex:[{id:'squat',s:'4 × 6–10',n:'Heavy dumbbell / goblet squat',d:'1–2 warm-up sets, then controlled heavy working sets.',log:1,top:10},
-     {s:'30 min',n:'Zone 2 cardio',d:'Conversation pace. Strength first, then Zone 2.'}],
- co:'Controlled heavy squats — explosive squat bursts are not combined with heavy loading. Strength before Zone 2.'},
-fri:{focus:'Full rest',short:'Rest',time:'—',color:'grey',icon:'·',
- ex:[{s:'—',n:'Normal walking only',d:'Full recovery day; no training.'}],
- co:'This is the recovery day. Walk normally; no training.'},
-sat:{focus:'Back / posterior chain',short:'Back',time:'60 min',color:'blue',icon:'▣',
- ex:[{id:'deadlift',s:'3 × 4–6',n:'Deadlift',d:'Never take deadlifts to failure.',log:1,top:6},
-     {id:'row',s:'3 × 6–10',n:'Barbell row',d:'Controlled reps.',log:1,top:10},
-     {s:'30 min',n:'Zone 2 cardio',d:'Conversation pace. Strength first, then Zone 2.'}],
- co:'Never take deadlifts to failure. Strength before Zone 2.'},
-sun:{focus:'VO₂ block',short:'VO₂',time:'60 min',color:'gold',icon:'⚡',
- ex:[{s:'10 min',n:'Zone 2 warm-up',d:'Easy pace.'},
-     {s:'5 rounds',n:'2 min hard + 2 min easy',d:'Hard intervals at RPE 8–9/10, sustained — not sprints.'},
-     {s:'20 min',n:'Zone 2',d:'Included in the 30-minute Zone 2 block.'},
-     {s:'10 min',n:'Easy cooldown',d:'Return to an easy pace.'}],
- co:'Use a bike, elliptical or incline treadmill — not all-out running sprints. The hard intervals are sustained at RPE 8–9/10.'}
+wed:{focus:'Upper body + VO₂',short:'Upper',time:'≈ 2:15',color:'blue',icon:'◈',
+ ex:[{s:'5 min',n:'Warm-up',d:'Easy cardio and shoulder circles.'},
+     {id:'press-chest',s:'4 × 8–10',n:'Chest press',d:'Dumbbell or barbell. 1–2 warm-up sets, then 4 challenging working sets.',log:1,top:10},
+     {id:'press-shoulder',s:'3 × 8–10',n:'Shoulder press',d:'Military or dumbbell.',log:1,top:10},
+     {id:'row',s:'4 × 8–10',n:'Bar row',d:'Controlled reps.',log:1,top:10},
+     {id:'pushdown',s:'3 × 12–15',n:'Tricep pull-down',d:'Superset with bicep curls. Rest 60–90 seconds.',log:1,top:15},
+     {id:'curl',s:'3 × 12–15',n:'Bicep curl',d:'Dumbbell or bar.',log:1,top:15},
+     {s:'≈ 38 min',n:'VO₂ max 4×4',d:'4 min hard (90–95% max HR) / 3 min easy, bike or row, × 4 rounds. Sustained, not sprints.'},
+     {s:'30 min',n:'Zone 2 finisher',d:'Easy incline walk or bike, conversation pace.'}],
+ co:'Chest, shoulders, biceps, triceps and rows all land here as one upper-body day — each lift gets its weekly set without needing a fourth session. VO₂ 4×4 runs on the day with the freshest legs: upper-body work does not tax them, so interval quality is better. Strength first, then intervals, then Zone 2.'},
+sat:{focus:'Deadlift + long burn',short:'Deadlift',time:'≈ 2:05',color:'blue',icon:'▣',
+ ex:[{s:'10 min',n:'Warm-up',d:'Hip hinge drills, light glute activation.'},
+     {id:'deadlift',s:'5 × 5',n:'Deadlift',d:'Never take deadlifts to failure. 1–2 warm-up sets, then 5 controlled working sets.',log:1,top:5},
+     {s:'90 min',n:'Zone 2 cardio',d:'Long steady state — the week\'s main fat-burn engine.'}],
+ co:'Deadlift gets its own day so it\'s never lifted fatigued. After the lifting, the week\'s biggest Zone 2 block — 90 minutes of conversation-pace work.'},
+sun:{focus:'Pull volume + recovery burn',short:'Pull',time:'≈ 1:35',color:'blue',icon:'◎',
+ ex:[{s:'8 min',n:'Warm-up',d:'Easy cardio and shoulder prep.'},
+     {s:'6 × 6–8',n:'Pull-ups',d:'Banded or assisted if needed — 36–48 reps toward the weekly 50.'},
+     {s:'10 min',n:'Core / mobility',d:'Optional — open slot.'},
+     {s:'60 min',n:'Zone 2 cardio',d:'Conversation pace.'}],
+ co:'Pull volume toward the weekly 50-rep target, then an hour of easy Zone 2 to close the week. Keep the core/mobility slot optional — recovery is the point of this day.'},
+mon:{focus:'Daily habit',short:'Habit',time:'5 min',color:'green',icon:'△',
+ ex:[{s:'15 / 15',n:'Push-ups + bodyweight squats',d:'Split into 2–3 mini-sets across the day (e.g. on the hour, or between reading blocks). Top up pull-ups with 2–3 reps on a doorway bar.'}],
+ co:'No gym today. The habit does the work: 15 push-ups and 15 squats spread through the day, plus a few doorway pull-ups toward the weekly 50.'},
+tue:{focus:'Daily habit',short:'Habit',time:'5 min',color:'green',icon:'△',
+ ex:[{s:'15 / 15',n:'Push-ups + bodyweight squats',d:'Split into 2–3 mini-sets across the day (e.g. on the hour, or between reading blocks). Top up pull-ups with 2–3 reps on a doorway bar.'}],
+ co:'No gym today. The habit does the work: 15 push-ups and 15 squats spread through the day, plus a few doorway pull-ups toward the weekly 50.'},
+thu:{focus:'Daily habit',short:'Habit',time:'5 min',color:'green',icon:'△',
+ ex:[{s:'15 / 15',n:'Push-ups + bodyweight squats',d:'Split into 2–3 mini-sets across the day (e.g. on the hour, or between reading blocks). Top up pull-ups with 2–3 reps on a doorway bar.'}],
+ co:'No gym today. The habit does the work: 15 push-ups and 15 squats spread through the day, plus a few doorway pull-ups toward the weekly 50.'},
+fri:{focus:'Daily habit',short:'Habit',time:'5 min',color:'green',icon:'△',
+ ex:[{s:'15 / 15',n:'Push-ups + bodyweight squats',d:'Split into 2–3 mini-sets across the day (e.g. on the hour, or between reading blocks). Top up pull-ups with 2–3 reps on a doorway bar.'}],
+ co:'No gym today. The habit does the work: 15 push-ups and 15 squats spread through the day, plus a few doorway pull-ups toward the weekly 50.'}
 };
 
 const CAREFUL=[['Almonds','max 15–20 g — not an unrestricted handful'],['Grapes','150 g portion; apples are generally easier for appetite control'],['Butter','ideally omit; otherwise measure 5 g'],['Bread','substitute for roti, not in addition to it'],['Oatmeal','40–50 g dry, as a substitute for roti/dal calories'],['Cooking fat','measure it — unmeasured oil or butter can erase the deficit quickly']];
-const SUPPS=[['With meal 1','Multivitamin','1 with the first meal.'],['With meal 1','Vitamin B12','As per label, with the first meal.'],['With meal 1','Omega-3','As per label, with food.'],['With meal 1','Vitamin D3','Top up to at most 4,000 IU/day TOTAL — check the multivitamin’s D3 first.'],['4:30 p.m.','Creatine 3–5 g','In water, pre-workout. Not a fat-burner.']];
-const RULES=['“Heavy” means challenging 5–8 repetitions — not one-rep-maximum attempts.','Finish compound sets with 1–2 good reps remaining.','Rest 2–3 minutes between heavy sets; 60–90 seconds for curls and pushdowns.','At the top of the rep range on every working set for two consecutive weeks: increase weight by about 2.5–5%.','Never take deadlifts to failure.','Strength before Zone 2 in combined sessions.','Choose one press variation and retain it for 8–12 weeks before switching.','Each muscle group still gets only one dedicated session — some indirect overlap is unavoidable.','Zone 2 means conversation pace. If you cannot talk, slow down.','Eat in the 11:30 a.m.–10 p.m. window. Stop fasting if it makes the 10 p.m. snack worse.','The night shake replaces the old heavy snack — not in addition to it.','Measure the foods on the careful list.','Weigh daily, judge on weekly averages: 0.5–0.9 kg/week is on track.','Build toward 8,000–10,000 steps daily; 5-min walking break each work hour; 10-min brisk walk after dinner.','Sleep ~7.25 hours. No caffeine after roughly 1–2 p.m.','2–3 L water daily. No juice, no caloric drinks, no sugary chai.','If I miss a workout, just do the next one. Do not double up.','Track strength sessions (weight, reps) — progressive overload is the driver.'];
-const WEEKTBL=[['Monday','Chest press or dumbbell press 4×5–8','45 min'],['Tuesday','Military or shoulder press 4×5–8','45 min'],['Wednesday','Barbell curl 3×6–10 + triceps pushdown 3×8–12','45 min'],['Thursday','Rest — nothing scheduled','—'],['Friday','Full rest — normal walking only','—'],['Saturday','Deadlift 3×4–6 + barbell row 3×6–10','60 min'],['Sunday','30-min VO₂ interval block','60 min']];
-WEEKTBL[3]=['Thursday','Heavy dumbbell / goblet squat 4×6–10','45 min'];
+const SUPPS=[['With meal 1','Multivitamin','1 with the first meal.'],['With meal 1','Vitamin B12','As per label, with the first meal.'],['With meal 1','Omega-3','As per label, with food.'],['With meal 1','Vitamin D3','Top up to at most 4,000 IU/day TOTAL — check the multivitamin’s D3 first.'],['4:30 p.m.','Creatine 3–5 g','In water, same time daily. Not a fat-burner.']];
+const RULES=['Strength is once a week per lift — full coverage across the three sessions. Do not add a fourth.','"Heavy" means challenging with 1–2 good reps remaining — not one-rep-maximum attempts.','Rest 2–3 minutes between heavy compound sets; 60–90 seconds for curls and pull-downs.','At the top of the rep range on every working set for two consecutive weeks: increase weight by about 2.5–5%.','Never take deadlifts to failure.','Strength before cardio — VO₂ 4×4 after the upper-body lifts, Zone 2 last.','VO₂ 4×4 hard minutes are sustained at 90–95% max HR — not sprints.','Zone 2 means conversation pace. If you cannot talk, slow down.','Every day: 15 push-ups and 15 bodyweight squats, split into 2–3 mini-sets rather than one set.','Pull-ups: aim for 50 across the week — Sunday\'s session gives 36–48, top up with 2–3 reps on a doorway bar on 4–5 other days.','Eat in the 11:30 a.m.–10 p.m. window. Stop fasting if it makes the 10 p.m. snack worse.','The night shake replaces the old heavy snack — not in addition to it.','Measure the foods on the careful list.','Weigh daily, judge on weekly averages: 0.5–0.9 kg/week is on track.','Build toward 8,000–10,000 steps daily; 5-min walking break each work hour; 10-min brisk walk after dinner.','Sleep ~7½ hours (10:30 p.m.–6:00 a.m.). No caffeine after roughly 1–2 p.m.','2–3 L water daily. No juice, no caloric drinks, no sugary chai.','If I miss a session, just do the next one. Do not double up.','Track the six lifts (weight, reps) — progressive overload is the driver.'];
+const WEEKTBL=[['Monday','Daily habit — 15 push-ups + 15 squats, doorway pull-up top-ups','5 min'],['Tuesday','Daily habit — 15 push-ups + 15 squats, doorway pull-up top-ups','5 min'],['Wednesday','Upper body + VO₂ 4×4 + Zone 2 (4–7 p.m. block)','≈ 2:15'],['Thursday','Daily habit — 15 push-ups + 15 squats, doorway pull-up top-ups','5 min'],['Friday','Daily habit — 15 push-ups + 15 squats, doorway pull-up top-ups','5 min'],['Saturday','Deadlift 5×5 + 90-min Zone 2 (7–10 a.m. block)','≈ 2:05'],['Sunday','Pull-ups 6×6–8 + Zone 2 (7–10 a.m. block)','≈ 1:35']];
 
 /* ============================ STORE ============================ */
 const K='bt26:';
@@ -252,7 +253,7 @@ const S={
  set(k,v){try{localStorage.setItem(K+k,JSON.stringify(v))}catch(e){}},
  del(k){try{localStorage.removeItem(K+k)}catch(e){}}
 };
-let CFG=Object.assign({train:'17:00',start:'2026-08-17'},S.get('cfg',{}));
+let CFG=Object.assign({wed:'16:00',wkend:'07:00',start:'2026-08-17'},S.get('cfg',{}));
 function saveCfg(){S.set('cfg',CFG)}
 
 /* ============================ TIME ============================ */
@@ -264,29 +265,40 @@ function fmt(m){m=((m%1440)+1440)%1440;let h=Math.floor(m/60),mm=String(m%60).pa
 function dur(m){if(m<1)return 'now';if(m<60)return m+' min';const h=Math.floor(m/60),r=m%60;return r?h+'h '+r+'m':h+'h'}
 function weekNo(){const s=new Date(CFG.start+'T00:00:00'),n=new Date(ymd(nowD())+'T00:00:00');const d=Math.floor((n-s)/864e5);return Math.max(1,Math.min(26,Math.floor(d/7)+1))}
 
-/* schedule for a given day key */
+/* schedule for a given day key — calendar is the source of truth */
 function schedule(dk){
- const p=PLAN[dk],rest=dk==='fri';
- const tr=mins(CFG.train);
+ const p=PLAN[dk],gym=dk==='wed'||dk==='sat'||dk==='sun';
+ const work=dk==='mon'||dk==='tue'||dk==='wed'||dk==='thu'||dk==='fri';
+ const rcic=dk==='mon'||dk==='tue'||dk==='thu'||dk==='fri';
+ const tr=gymT(dk);
  const it=[
-  {id:'wake',t:330,kind:'fast',c:'violet',title:'Fasted morning',big:'Fasting — water and black coffee',d:'Water; black coffee or a measured splash of milk. Skip butter in coffee. The fast runs until 11:30 a.m.'},
+  {id:'wake',t:360,kind:'fast',c:'violet',title:'Wake — still fasting',big:'Up. Fasting until 11:30 a.m.',d:'Sleep ran 10:30 p.m.–6:00 a.m. Water; black coffee or a measured splash of milk. Skip butter in coffee.'},
+  work?{id:'work',t:390,kind:'work',c:'blue',title:'Work',big:'Work — 6:30 a.m. to 3:30 p.m.',d:'9-hour work block. Meal 1 still opens at 11:30 a.m. inside this window.'}:null,
+  gym&&tr<690?{id:'train',t:tr,kind:'train',c:p.color,title:p.focus,big:'Train: '+p.focus,d:p.time+' · '+TRAINBLURB[dk]}:null,
   {id:'meal1',t:690,kind:'meal',c:'green',title:'First meal — window opens',big:'Eat meal 1',d:'2 eggs · 1 cup dal · 1 medium roti · 2 cups sabzi/broccoli · 150 g plain low-fat curd. Take the multivitamin, B12, omega-3 and D3 with it.'},
-  {id:'snack',t:915,kind:'meal',c:'green',title:rest?'Apple':'Pre-gym banana',big:rest?'Eat the apple':'Eat the pre-gym banana',d:rest?'Rest day — an apple instead of the pre-gym banana.':'A small banana before the gym.'},
-  {id:'creatine',t:990,kind:'supp',c:'gold',title:'Creatine 3–5 g',big:'Creatine + water',d:'3–5 g in water, pre-workout. Supports the strength work; it is not a fat-burner.'},
-  {id:'train',t:tr,kind:'train',c:rest?'grey':(p.color),title:rest?'Full rest — walk only':p.focus+' + Zone 2',big:rest?'Rest day — walk, do not train':'Train: '+p.focus,d:rest?'Normal walking only. No training today.':p.time+' · heavy '+p.focus.toLowerCase()+' first, then 30 minutes of Zone 2 at conversation pace.'},
-  {id:'meal2',t:1110,kind:'meal',c:'green',title:'Dinner',big:'Eat dinner',d:'150–180 g cooked chicken breast · ~300 g broccoli · 1 roti · 150 g curd. Then a 10-minute brisk walk.'},
+  {id:'habit',t:840,kind:'train',c:'green',title:'Daily habit — 15 push-ups + 15 squats',big:'Daily habit: push-ups + squats',d:'15 push-ups and 15 bodyweight squats, split into 2–3 mini-sets across the day. Top up pull-ups with 2–3 reps on a doorway bar toward the weekly 50.'},
+  {id:'snack',t:915,kind:'meal',c:'green',title:dk==='wed'?'Pre-gym banana':'Apple',big:dk==='wed'?'Eat the pre-gym banana':'Eat the apple',d:dk==='wed'?'A small banana before the 4 p.m. session.':'Daily fruit — an apple with the afternoon.'},
+  {id:'creatine',t:990,kind:'supp',c:'gold',title:'Creatine 3–5 g',big:'Creatine + water',d:'3–5 g in water, same time daily. Supports the strength work; it is not a fat-burner.'},
+  rcic?{id:'rcic',t:960,kind:'work',c:'green',title:'RCIC',big:'RCIC — 4 to 7 p.m.',d:'Study / practice block. Habit mini-sets fit between reading blocks.'}:null,
+  gym&&tr>=690?{id:'train',t:tr,kind:'train',c:p.color,title:p.focus,big:'Train: '+p.focus,d:p.time+' · '+TRAINBLURB[dk]}:null,
+  {id:'meal2',t:dk==='sat'?1200:1110,kind:'meal',c:'green',title:'Dinner',big:'Eat dinner',d:'150–180 g cooked chicken breast · ~300 g broccoli · 1 roti · 150 g curd. Then a 10-minute brisk walk.'+ (dk==='sat'?' Saturday: after GuruGhar.':'')},
+  dk==='sat'?{id:'family-am',t:600,kind:'family',c:'grey',title:'Family',big:'Family — 10 a.m. to 6 p.m.',d:'After the morning session, until GuruGhar.'}:null,
+  dk==='sat'?{id:'gurughar',t:1080,kind:'family',c:'grey',title:'GuruGhar',big:'GuruGhar — 6 to 8 p.m.',d:'Saturday evening block. Dinner follows at 8 p.m.'}:null,
+  {id:'family',t:dk==='sat'?1205:dk==='sun'?600:1170,kind:'family',c:'grey',title:'Family',big:dk==='sun'?'Family — 10 a.m. to 10 p.m.':dk==='sat'?'Family — 8 to 10 p.m.':'Family — 7:30 to 10 p.m.',d:dk==='sun'?'Weekend family block after the morning session.':dk==='sat'?'After GuruGhar and dinner, until sleep.':'Evenings after work / RCIC / gym.'},
   {id:'meal3',t:1290,kind:'meal',c:'green',title:'Night shake — window closes',big:'Night shake, then close the window',d:'1 scoop whey + 250 mL low-fat milk + 1 apple. This REPLACES the old heavy snack — it does not accompany it. Window closes at 10 p.m.'},
-  {id:'sleep',t:1380,kind:'sleep',c:'violet',title:'Sleep',big:'Wind down — sleep by 11',d:'Protect ~7¼ hours. The fast is running again.'}
- ];
+  {id:'sleep',t:1350,kind:'sleep',c:'violet',title:'Sleep',big:'Sleep by 10:30 p.m.',d:'Calendar block. Protect ~7½ hours. The fast is running again.'}
+ ].filter(Boolean);
  return it.sort((a,b)=>a.t-b.t);
 }
 const EAT_OPEN=690,EAT_CLOSE=1320;
+function gymT(dk){return dk==='wed'?mins(CFG.wed||'16:00'):mins(CFG.wkend||'07:00')}
+const TRAINBLURB={wed:'Upper-body lifts first, then VO₂ 4×4, then a 30-min Zone 2 finisher. 4–7 p.m. block.',sat:'Deadlift 5×5, then the week\'s biggest Zone 2 block — 90 min. 7–10 a.m. block.',sun:'Pull-ups 6×6–8, then 60 min easy Zone 2. 7–10 a.m. block.'};
 
 function nowState(){
  const d=nowD(),m=d.getHours()*60+d.getMinutes(),dk=dkey(d),sc=schedule(dk);
  let cur=null,nxt=null;
  for(let i=0;i<sc.length;i++){if(sc[i].t<=m)cur=sc[i];else{nxt=sc[i];break}}
- if(!cur){cur={id:'asleep',t:0,kind:'sleep',c:'violet',title:'Asleep',big:'Asleep — the fast is running',d:'Up at 6:15 for water and black coffee. Nothing to eat until 11:30 a.m.'};nxt=sc[0]}
+ if(!cur){cur={id:'asleep',t:0,kind:'sleep',c:'violet',title:'Asleep',big:'Asleep — the fast is running',d:'Up at 6:00. Water and black coffee. Nothing to eat until 11:30 a.m.'};nxt=sc[0]}
  const end=nxt?nxt.t:1440;
  const pct=Math.max(0,Math.min(100,((m-cur.t)/Math.max(1,end-cur.t))*100));
  return {m,dk,sc,cur,nxt,pct,left:end-m,eating:m>=EAT_OPEN&&m<EAT_CLOSE};
@@ -305,7 +317,7 @@ function avgWindow(off){const w=weights(),base=new Date(ymd(nowD())+'T00:00:00')
  for(let i=0;i<7;i++){const d=new Date(base);d.setDate(d.getDate()-(i+off*7));const v=w[ymd(d)];if(typeof v==='number'){s+=v;n++}}
  return n?{avg:s/n,n:n}:null}
 function dateOfWeekday(dk,ref){const r=ref||nowD();const cur=(r.getDay()+6)%7,tgt=DAYS.indexOf(dk);const d=new Date(r);d.setDate(d.getDate()+(tgt-cur));return d}
-function dayComplete(d){const l=S.get('done:'+ymd(d),[]);const need=dkey(d)==='fri'?['meal1','meal2','meal3']:['train'];return need.every(x=>l.indexOf(x)>-1)}
+function dayComplete(d){const l=S.get('done:'+ymd(d),[]);const dk=dkey(d);const need=(dk==='wed'||dk==='sat'||dk==='sun')?['train','habit']:['habit'];return need.every(x=>l.indexOf(x)>-1)}
 function streak(){let c=0;const d=nowD();if(!dayComplete(d))d.setDate(d.getDate()-1);
  for(let i=0;i<400;i++){if(!dayComplete(d))break;c++;d.setDate(d.getDate()-1)}return c}
 
@@ -338,7 +350,7 @@ function renderNow(){
  ${nxtTxt}
  <div class="now-act">
    <button class="btn ${done?'done':'pri'}" onclick="markNow('${st.cur.id}')">${done?'✓ Done':'Mark done'}</button>
-   ${st.cur.kind==='train'&&st.dk!=='fri'?`<button class="btn" onclick="jump('sessionCard')">Open session</button>`:`<button class="btn" onclick="jump('tlCard')">See the day</button>`}
+   ${st.cur.kind==='train'?`<button class="btn" onclick="jump('sessionCard')">Open session</button>`:`<button class="btn" onclick="jump('tlCard')">See the day</button>`}
  </div>`;
 }
 
@@ -373,14 +385,14 @@ function exBlock(dk){
 
 function renderSession(){
  const st=nowState(),dk=sel||st.dk,p=PLAN[dk],isToday=dk===st.dk;
- const done=isToday&&isDone('train');
- return `<div class="hdr"><h2>${isToday?'Today’s session':FULL[dk]}</h2><small>${isToday?fmt(mins(CFG.train)):'preview'}</small></div>
+ const done=isToday&&isDone((dk==='wed'||dk==='sat'||dk==='sun')?'train':'habit');
+ return `<div class="hdr"><h2>${isToday?'Today’s session':FULL[dk]}</h2><small>${isToday?((dk==='wed'||dk==='sat'||dk==='sun')?fmt(gymT(dk)):'anytime'):'preview'}</small></div>
  ${renderWeek()}
  <div class="sess" id="sessionCard">
   <div class="sess-h">
    <div class="sess-ic" style="background:${ACCBG(p.color)};color:${ACC(p.color)}">${p.icon}</div>
-   <div><div class="sess-f">${p.focus}</div><div class="sess-m">${dk==='fri'?'Recovery day':'Heavy strength, then Zone 2'}</div></div>
-   <div class="sess-t"><b>${p.time}</b>${isToday?`<div style="margin-top:5px"><button class="mini" style="border:1px solid var(--bd);background:${done?'var(--green-bg)':'rgba(255,255,255,.04)'};color:${done?'var(--green)':'var(--t2)'};border-radius:9px;padding:6px 9px;font-size:10.5px;font-weight:800;cursor:pointer" onclick="markNow('train')">${done?'✓ Logged':'Log it'}</button></div>`:''}</div>
+   <div><div class="sess-f">${p.focus}</div><div class="sess-m">${dk==='wed'?'4–7 p.m. block':(dk==='sat'||dk==='sun')?'7–10 a.m. block':'Daily habit — no gym'}</div></div>
+   <div class="sess-t"><b>${p.time}</b>${isToday?`<div style="margin-top:5px"><button class="mini" style="border:1px solid var(--bd);background:${done?'var(--green-bg)':'rgba(255,255,255,.04)'};color:${done?'var(--green)':'var(--t2)'};border-radius:9px;padding:6px 9px;font-size:10.5px;font-weight:800;cursor:pointer" onclick="markNow('${(dk==='wed'||dk==='sat'||dk==='sun')?'train':'habit'}')">${done?'✓ Logged':'Log it'}</button></div>`:''}</div>
   </div>
   ${exBlock(dk)}
   <div class="coach"><div class="lb">Coaching note</div><p>${p.co}</p></div>
@@ -455,14 +467,14 @@ function refCard(id,ic,color,title,sub,body){
 
 function renderRef(){
  const week=`<table class="wk">${WEEKTBL.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table>
- <div class="box"><div class="box-lb">Weekly totals</div><div class="box-tx">Zone 2 180 min · VO₂ 30 min · heavy strength 90 min · full rest Friday. About 5.5 hours across 7 days.</div></div>`;
+ <div class="box"><div class="box-lb">Weekly totals</div><div class="box-tx">3 gym sessions · Zone 2 180 min · one VO₂ 4×4 block · every lift covered weekly. Daily habit: 15 push-ups + 15 squats, all 7 days. Gym blocks: Wed 4–7 p.m., Sat/Sun 7–10 a.m.</div></div>`;
  const rules=RULES.map((r,i)=>`<div class="rule"><div class="bar" style="background:${i%3===0?'var(--blue)':i%3===1?'var(--green)':'var(--gold)'}"></div><div>${r}</div></div>`).join('');
  const meals=schedule('mon').filter(x=>x.kind==='meal'||x.id==='wake').map(x=>`<div class="row"><div class="tag">${fmt(x.t)}</div><div><div class="row-n">${x.title}</div><div class="row-d">${x.d}</div></div></div>`).join('')
- +`<div class="row"><div class="tag">11:00 pm</div><div><div class="row-n">Sleep</div><div class="row-d">Protect ~7¼ hours.</div></div></div>`;
+ +`<div class="row"><div class="tag">10:30 pm</div><div><div class="row-n">Sleep</div><div class="row-d">Calendar block. Protect ~7½ hours.</div></div></div>`;
  const careful=CAREFUL.map(c=>`<div class="row"><div class="tag">${c[0]}</div><div class="row-d" style="padding-top:2px">${c[1]}</div></div>`).join('');
  const supps=SUPPS.map(s=>`<div class="row"><div class="tag gold">${s[0]}</div><div><div class="row-n">${s[1]}</div><div class="row-d">${s[2]}</div></div></div>`).join('');
  const math=`<div class="box-tx">The engine is a modest daily calorie deficit plus daily movement — fasting is a schedule tool, not a metabolic advantage.</div>
- <div class="box"><div class="box-lb">Why it works</div><div class="box-tx">1,750–1,900 kcal/day with 130–150 g protein protects muscle while losing fat (protein above ~1.3 g/kg/day helps). Daily Zone 2 (180 min/week) + one VO₂ block (30 min) + 90 min heavy strength per week. Expected loss 0.5–0.9 kg/week; ~20 kg over 26 weeks is ambitious but within the commonly recommended range.</div></div>
+ <div class="box"><div class="box-lb">Why it works</div><div class="box-tx">1,750–1,900 kcal/day with 130–150 g protein protects muscle while losing fat (protein above ~1.3 g/kg/day helps). Zone 2 180 min/week + one VO₂ 4×4 block + full strength coverage in 3 sessions. Expected loss 0.5–0.9 kg/week; ~20 kg over 26 weeks is ambitious but within the commonly recommended range.</div></div>
  <div class="box gold"><div class="box-lb">Honest note</div><div class="box-tx">As weight drops, maintenance calories drop too — months 1–3 will feel faster, months 4–6 will slow. Monitor energy, sleep and mood; if any deteriorate, eat a bit more and keep training consistent rather than cutting harder. Creatine temporarily increases water weight — waist measurement and the four-week trend matter more than individual readings.</div></div>`;
  return `<div class="hdr"><h2>The plan</h2><small>reference</small></div>
  ${refCard('week','▦','blue','The full week','All 7 days',week)}
@@ -478,7 +490,8 @@ function renderSettings(){
  if(!showSet)return '';
  return `<div class="settings">
   <div class="lb">Settings</div>
-  <div class="frow"><label>Training time<small>Your plan pins the pre-gym banana at 3:15 p.m. and creatine at 4:30 p.m. but does not name a gym time — set yours here.</small></label><input type="time" value="${CFG.train}" onchange="setTrain(this.value)"></div>
+   <div class="frow"><label>Wednesday gym time<small>Defaults to 4:00 p.m. — your block is 4–7 p.m.</small></label><input type="time" value="${CFG.wed||'16:00'}" onchange="setWed(this.value)"></div>
+   <div class="frow"><label>Weekend gym time<small>Defaults to 7:00 a.m. — your Sat/Sun blocks are 7–10 a.m.</small></label><input type="time" value="${CFG.wkend||'07:00'}" onchange="setWkend(this.value)"></div>
   <div class="frow"><label>Week 1 start<small>Defaults to the plan date, 17 Aug 2026.</small></label><input type="date" value="${CFG.start}" onchange="setStart(this.value)"></div>
   <div class="frow"><label>Your data<small>Checkmarks, weights and lift loads are saved in this browser only.</small></label><button class="mini" onclick="exportData()">Export</button><button class="mini" onclick="resetData()">Reset</button></div>
  </div>`;
@@ -496,13 +509,14 @@ function pick(d){sel=(sel===d)?null:d;render();document.getElementById('sessionC
 function jump(id){const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
 function toggleRef(id){openRef[id]=!openRef[id];render()}
 function toggleSet(){showSet=!showSet;render()}
-function setTrain(v){CFG.train=v;saveCfg();render()}
+function setWed(v){CFG.wed=v;saveCfg();render()}
+function setWkend(v){CFG.wkend=v;saveCfg();render()}
 function setStart(v){CFG.start=v;saveCfg();render()}
 function saveLift(id){const w=parseFloat(document.getElementById('w_'+id).value);if(isNaN(w))return;pushLift(id,w,document.getElementById('t_'+id).checked);render()}
 function saveWeight(){const v=document.getElementById('wIn').value;setWeight(v===''?null:parseFloat(v));render()}
 function exportData(){const d={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.indexOf(K)===0)d[k.slice(K.length)]=JSON.parse(localStorage.getItem(k))}
  const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='transformation-data-'+todayKey()+'.json';a.click()}
-function resetData(){if(!confirm('Clear all saved checkmarks, weights and lift loads in this browser?'))return;const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.indexOf(K)===0)ks.push(k)}ks.forEach(k=>localStorage.removeItem(k));CFG={train:'17:00',start:'2026-08-17'};render()}
+function resetData(){if(!confirm('Clear all saved checkmarks, weights and lift loads in this browser?'))return;const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.indexOf(K)===0)ks.push(k)}ks.forEach(k=>localStorage.removeItem(k));CFG={wed:'16:00',wkend:'07:00',start:'2026-08-17'};render()}
 
 render();
 setInterval(()=>{renderNow();renderTop()},20000);
