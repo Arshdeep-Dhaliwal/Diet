@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#faf9f7">
+<title>Six-month plan</title>
+<style>
+:root{
+  --bg:#faf9f7; --card:#ffffff; --bd:#e7e4de; --bd2:#d5d1c8;
+  --text:#1c1b19; --t2:#6e6b64; --t3:#9c9890;
+  --acc:#2f6f5e; --acc-bg:#eaf3f0;
+  --warn:#9a6b1f; --warn-bg:#fbf3e3;
+  --alert:#a14545; --alert-bg:#fbeded;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#141413;--card:#1c1c1a;--bd:#2c2b28;--bd2:#3a3934;--text:#f0eee9;--t2:#a3a099;--t3:#76736c;
+        --acc:#6cbfa6;--acc-bg:#1d2a26;
+        --warn:#d7a75a;--warn-bg:#2a2418;--alert:#e08f8f;--alert-bg:#2b1c1c;}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;
+     padding:0 0 calc(env(safe-area-inset-bottom) + 56px)}
+button,input,select,textarea{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
+.app{max-width:480px;margin:auto;padding:0 18px}
+
+/* header */
+.top{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--bd);
+     margin:0 -18px;padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;display:flex;align-items:center;gap:12px}
+.top h1{font-size:17px;font-weight:600;letter-spacing:-.015em}
+.top p{font-size:12.5px;color:var(--t3);margin-top:2px}
+.gear{margin-left:auto;width:34px;height:34px;border-radius:9px;border:1px solid var(--bd);
+      background:var(--card);color:var(--t2);font-size:15px;cursor:pointer;flex-shrink:0}
+.gear:active{background:var(--bg)}
+
+/* today */
+.today{margin-top:20px;padding:20px;border:1px solid var(--bd);border-radius:14px;background:var(--card)}
+.kicker{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3)}
+.today h2{font-size:23px;line-height:1.2;font-weight:600;letter-spacing:-.02em;margin-top:8px}
+.today .sub{color:var(--t2);font-size:14px;margin-top:8px}
+.meta{display:flex;gap:16px;margin-top:14px;font-size:12.5px;color:var(--t3)}
+.acts{display:flex;gap:8px;margin-top:16px}
+.btn{flex:1;border:1px solid var(--bd2);background:var(--card);border-radius:10px;padding:11px;
+     font-size:14px;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.btn:active{background:var(--bg)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.ok{background:var(--acc-bg);border-color:var(--acc);color:var(--acc)}
+.next{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bd);
+      font-size:13px;color:var(--t2)}
+.next b{color:var(--text);font-weight:500}
+.next .t{color:var(--t3);min-width:58px}
+.next .in{margin-left:auto;color:var(--t3);font-size:12px;white-space:nowrap}
+
+/* week strip */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.wd{border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:9px 2px;text-align:center;
+    cursor:pointer;-webkit-tap-highlight-color:transparent}
+.wd b{display:block;font-size:12px;font-weight:600;color:var(--t2)}
+.wd span{display:block;font-size:10px;color:var(--t3);margin-top:3px}
+.wd i{display:block;width:5px;height:5px;border-radius:50%;margin:6px auto 0;background:var(--bd2)}
+.wd.today{border-color:var(--bd2)}
+.wd.today b{color:var(--text)}
+.wd.sel{border-color:var(--acc);background:var(--acc-bg)}
+.wd.sel b,.wd.sel span{color:var(--acc)}
+.wd.logged i{background:var(--acc)}
+
+/* section heading */
+.hdr{display:flex;align-items:baseline;gap:10px;margin:30px 2px 10px}
+.hdr h3{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--t3)}
+.hdr small{margin-left:auto;font-size:12px;color:var(--t3)}
+
+/* session */
+.panel{border:1px solid var(--bd);border-radius:14px;background:var(--card);overflow:hidden}
+.panel-h{padding:16px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px}
+.panel-h .f{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.panel-h .m{font-size:12.5px;color:var(--t3);margin-top:2px}
+.panel-h .r{margin-left:auto}
+.mini{border:1px solid var(--bd2);background:var(--card);border-radius:8px;padding:7px 11px;
+      font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+.mini:active{background:var(--bg)}
+.mini.ok{background:var(--acc-bg);border-color:var(--acc);color:var(--acc)}
+.ex{padding:14px 18px;border-bottom:1px solid var(--bd)}
+.ex:last-of-type{border-bottom:0}
+.ex-cat{font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3)}
+.ex-n{font-size:15px;font-weight:600;margin-top:3px;letter-spacing:-.01em}
+.ex-s{font-size:13px;color:var(--acc);font-weight:500;margin-top:2px}
+.ex-d{font-size:13px;color:var(--t2);margin-top:5px}
+.last{font-size:12.5px;color:var(--t3);margin-top:8px}
+.last b{color:var(--text);font-weight:600}
+.set-log{margin-top:12px}
+.set-head,.set-row{display:grid;grid-template-columns:30px minmax(0,1fr) minmax(0,1fr) 38px;gap:8px;align-items:center}
+.set-head{font-size:12px;color:var(--t2);margin-bottom:5px}
+.set-row{margin-bottom:8px}
+.set-row input{width:100%;min-width:0;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:10px 8px;font-size:14px}
+.set-row input:focus{outline:2px solid var(--acc);outline-offset:1px}
+.set-row .mini{padding:9px 0}
+.set-number{font-size:13px;color:var(--t2)}
+.log-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.log-top{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--t2);margin-top:12px}
+.log-status{font-size:12.5px;color:var(--acc);margin-top:8px}
+.log-status.error{color:var(--alert)}
+input[type=checkbox]{accent-color:var(--acc);width:16px;height:16px}
+.note{margin:14px 18px 16px;padding:12px 14px;border-radius:10px;background:var(--bg);font-size:13px;color:var(--t2)}
+.note.up{background:var(--warn-bg);color:var(--warn)}
+.note b{color:var(--text);font-weight:600}
+@media (prefers-color-scheme:dark){.note.up b{color:var(--warn)}}
+
+/* day list */
+.day{border:1px solid var(--bd);border-radius:14px;background:var(--card);overflow:hidden}
+.di{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--bd);
+    cursor:pointer;-webkit-tap-highlight-color:transparent}
+.di:last-child{border-bottom:0}
+.di:active{background:var(--bg)}
+.di .t{font-size:12.5px;color:var(--t3);min-width:58px;padding-top:2px;font-variant-numeric:tabular-nums}
+.di .n{font-size:14px;font-weight:500}
+.di .d{font-size:12.5px;color:var(--t2);margin-top:2px}
+.chk{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--bd2);flex-shrink:0;margin-top:2px;
+     display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+.di.done .chk{background:var(--acc);border-color:var(--acc);color:#fff}
+.di.done .n,.di.done .d{color:var(--t3)}
+.di.done .n{text-decoration:line-through}
+.di.past .n,.di.past .d,.di.past .t{opacity:.5}
+.di.now{background:var(--acc-bg)}
+.di.now .t{color:var(--acc)}
+
+/* progress */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--bd);border-radius:12px;background:var(--card);padding:14px}
+.stat .lb{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t3)}
+.stat .v{font-size:22px;font-weight:600;margin-top:6px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .s{font-size:12px;color:var(--t3);margin-top:3px}
+.inrow{display:flex;gap:8px;margin-top:8px}
+.inrow input{flex:1;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px 13px;
+     font-size:15px;font-variant-numeric:tabular-nums}
+.inrow input:focus{outline:0;border-color:var(--acc)}
+.inrow .btn{flex:0 0 auto;padding:12px 18px}
+.spark{margin-top:10px;border:1px solid var(--bd);border-radius:12px;background:var(--card);padding:14px}
+.spark svg{width:100%;height:56px;display:block}
+.spark .cap{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-top:6px}
+.verdict{margin-top:8px;padding:15px;border-radius:12px;border:1px solid var(--bd);background:var(--card)}
+.verdict.ok{border-color:var(--acc);background:var(--acc-bg)}
+.verdict.slow{border-color:var(--warn);background:var(--warn-bg)}
+.verdict.fast{border-color:var(--alert);background:var(--alert-bg)}
+.verdict .h{font-size:14.5px;font-weight:600;margin-top:4px}
+.verdict p{font-size:13px;color:var(--t2);margin-top:5px}
+@media (prefers-color-scheme:dark){.verdict.ok p,.verdict.slow p,.verdict.fast p{color:inherit;opacity:.85}}
+.mile{margin-top:8px;border:1px solid var(--bd);border-radius:12px;background:var(--card);padding:15px}
+.track{height:5px;border-radius:4px;background:var(--bd);margin:12px 0 8px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--acc);border-radius:4px}
+.mrow{display:flex;justify-content:space-between;font-size:11.5px;color:var(--t3)}
+
+/* collapsible reference */
+.ref{border:1px solid var(--bd);border-radius:12px;background:var(--card);margin-top:8px;overflow:hidden}
+.ref-h{display:flex;align-items:center;gap:10px;padding:15px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ref-h .n{font-size:14.5px;font-weight:500;flex:1}
+.ref-h .c{color:var(--t3);font-size:11px;transition:.2s}
+.ref.open .ref-h .c{transform:rotate(180deg)}
+.ref-b{display:none;padding:0 16px 16px}
+.ref.open .ref-b{display:block}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl td{padding:9px 0;border-bottom:1px solid var(--bd);color:var(--t2);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{font-weight:500;color:var(--text);white-space:nowrap;padding-right:12px}
+.tbl td:last-child{text-align:right;color:var(--t3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl tr.hl td{color:var(--acc)}
+.li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:13.5px;color:var(--t2)}
+.li:last-child{border-bottom:0}
+.li:before{content:'';width:4px;height:4px;border-radius:50%;background:var(--bd2);margin-top:8px;flex-shrink:0}
+.box{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--bg);font-size:13px;color:var(--t2)}
+.box.warn{background:var(--warn-bg);color:var(--warn)}
+.box.alert{background:var(--alert-bg);color:var(--alert)}
+.box .lb{font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;opacity:.8}
+
+/* settings */
+.set{margin-top:12px;border:1px solid var(--bd);border-radius:14px;background:var(--card);padding:6px 16px}
+.frow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--bd)}
+.frow:last-child{border-bottom:0}
+.frow label{flex:1;font-size:13.5px;font-weight:500}
+.frow small{display:block;color:var(--t3);font-size:11.5px;font-weight:400;margin-top:2px}
+.frow input{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;font-size:13px}
+.foot{color:var(--t3);font-size:11.5px;line-height:1.65;text-align:center;margin:34px 4px 0}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top" id="top"></div>
+  <div id="main"></div>
+  <div class="foot" id="foot"></div>
+</div>
+<script>
+/* =================== PLAN DATA — from the six-month plan =================== */
+const DAYS=["mon","tue","wed","thu","fri","sat","sun"];
+const LABEL={mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",sun:"Sun"};
+const FULL={mon:"Monday",tue:"Tuesday",wed:"Wednesday",thu:"Thursday",fri:"Friday",sat:"Saturday",sun:"Sunday"};
+
+const ACCESSORY={id:"accessory",log:1,cat:"Optional accessory",n:"Pick one, only if time and recovery permit",
+  s:"1–2 × 10–15",d:"Biceps curl, cable triceps, lateral raise (12–20) or adductor machine. Omit front raises while pressing is in the plan. Drop this first when time is short."};
+
+const STRENGTH={
+ mon:[
+  {id:"deadlift",cat:"Lower pull",n:"Deadlift",s:"2 × 5–8",log:1,
+   d:"First, while fresh. Reset each rep and keep technique controlled. No maximal lifts, no failure sets."},
+  {id:"press-chest",cat:"Upper push",n:"Chest press",s:"2 × 8–12",log:1,
+   d:"Dumbbell or barbell, controlled tempo."},
+  {id:"row",cat:"Upper pull",n:"Seated cable row",s:"2 × 8–12",log:1,
+   d:"Chosen over the barbell row when the lower back is tired."},
+  {id:"squat-db",cat:"Lower push",n:"Dumbbell squat",s:"2 × 8–12",log:1,
+   d:"Use bodyweight squats wherever the dumbbell version is too demanding."},
+  ACCESSORY],
+ wed:[
+  {id:"squat-db",cat:"Lower push",n:"Bodyweight or dumbbell squat",s:"2 × 8–12",log:1,
+   d:"Squat first on Wednesday and Friday."},
+  {id:"press-shoulder",cat:"Upper push",n:"Overhead dumbbell / military press",s:"2 × 8–12",log:1,
+   d:"Lateral raises fit here if an accessory is used."},
+  {id:"pulldown",cat:"Upper pull",n:"Lat pulldown",s:"2 × 8–12",log:1,
+   d:"Controlled, full range."},
+  {id:"ham-curl",cat:"Lower pull",n:"Hamstring curl",s:"2 × 10–15",log:1,
+   d:"Leg curl and hamstring curl are the same exercise family — not two exercises."},
+  ACCESSORY],
+ fri:[
+  {id:"squat-db",cat:"Lower push",n:"Dumbbell squat",s:"2 × 8–12",log:1,
+   d:"After Thursday intervals, keep Friday legs comfortably submaximal."},
+  {id:"press-incline",cat:"Upper push",n:"Incline dumbbell press or push-ups",s:"2 × 8–12 · push-ups 2 × 6–15",log:1,
+   d:"Raise the hands on a stable bench if full push-ups are too hard."},
+  {id:"row",cat:"Upper pull",n:"Seated cable row or barbell row",s:"2 × 8–12",log:1,
+   d:"Seated cable row if the lower back is tired."},
+  {id:"ham-curl",cat:"Lower pull",n:"Hamstring curl",s:"2 × 10–15",log:1,
+   d:"Same family as the leg curl."},
+  ACCESSORY]
+};
+
+const STRENGTH_NOTE="Start with two working sets per exercise, or one if very deconditioned; warm-up sets are extra. Finish each set with about 2–3 good repetitions still possible (3–4 in the first fortnight). Rest 90–150 s between compound sets, 2–3 min after deadlifts, 60–90 s for accessories. Warm up 5–8 min and aim to finish in 45–55 min.";
+
+/* cardio phases: [firstWeek, lastWeek, tue, thu, sat, extraWalkMin, extraWalkDays, moderateTotal] */
+const PHASES=[
+ {w:[1,2],tue:20,thu:20,sat:25,walk:0,days:0,total:65,label:"Weeks 1–2"},
+ {w:[3,4],tue:25,thu:25,sat:35,walk:10,days:5,total:135,label:"Weeks 3–4"},
+ {w:[5,8],tue:30,thu:30,sat:40,walk:10,days:5,total:150,label:"Weeks 5–8"},
+ {w:[9,12],tue:40,thu:40,sat:50,walk:10,days:5,total:180,label:"Weeks 9–12"},
+ {w:[13,18],tue:40,thu:40,sat:60,walk:15,days:5,total:215,label:"Weeks 13–18"},
+ {w:[19,26],tue:45,thu:45,sat:60,walk:20,days:5,total:250,label:"Weeks 19–26"}
+];
+function phaseFor(w){for(const p of PHASES){if(w>=p.w[0]&&w<=p.w[1])return p}return PHASES[PHASES.length-1]}
+
+const INTERVALS={
+ 2:{blocks:4,hard:2,easy:3,total:35},
+ 3:{blocks:4,hard:3,easy:3,total:39},
+ 4:{blocks:4,hard:4,easy:3,total:43}
+};
+
+const MEALS=[
+ ["On waking","Water","Plain or mineral water after waking. Do not interrupt sleep for it."],
+ ["08:00","Breakfast — 30–40 g protein","2 eggs, 170–200 g plain high-protein Greek yogurt, 1 slice whole-grain toast, fruit. Roughly 450 kcal."],
+ ["12:00","Lunch","120–150 g cooked chicken, or an adequate fish/legume portion. Plenty of vegetables, one whole-grain wrap or equivalent starch. Measure dressing or oil, 5–10 mL. Roughly 550 kcal."],
+ ["14:00","Snack","40 g dry oats, one fruit, 20–25 g nuts combined — not an unmeasured portion of each. Water or counted milk. Roughly 350 kcal."],
+ ["17:30","Whey, if needed","A serving supplying 20–30 g protein only to close the day's protein gap. Creatine can go here. Water is enough during most one-hour sessions. Roughly 120 kcal."],
+ ["19:00","Dinner","A clear protein anchor: 150 g chicken or fish, or about one cup dal plus tofu. Vegetables, one or two small rotis or rice as calories allow, 150–200 mL plain kefir. Roughly 650 kcal."],
+ ["21:00","Bedtime","200–250 mL milk and a kiwi if wanted. Culinary amounts of spices. Collagen is optional and does not replace main protein foods. Roughly 180 kcal."]
+];
+
+const SUPPS=[
+ ["Keep","Whey","Use enough to close the protein gap, commonly 20–30 g protein per serving. Food convenience, not a fertility treatment."],
+ ["Optional","Creatine","3–5 g/day monohydrate is a common regimen for a healthy adult; no loading needed. Taken on rest days too. Water weight can mask fat loss temporarily."],
+ ["Review first","Iron","Do not take extra iron for fertility or energy. If prescribed for confirmed deficiency, continue pending prescriber review. If self-started, get a pharmacist or clinician review."],
+ ["Conditional","Centrum","Identify the exact formulation and serving. It may duplicate D, B12 and zinc. Optional when the diet is adequate."],
+ ["Usually skip","Separate zinc","Add food, Centrum and separate zinc together before deciding. Adult male reference 11 mg/day, upper limit 40 mg/day total."],
+ ["Review dose","D3 + K2","Check total D from all products. Upper limit 4,000 IU/day total unless medically directed. Vitamin K interacts with warfarin."],
+ ["Conditional","B12","Eggs, dairy, fish and chicken already supply B12, but intake alone cannot exclude an absorption problem."],
+ ["Conditional","Omega-3","Prioritise fish. Read EPA + DHA, not total fish-oil milligrams. Do not escalate the dose."],
+ ["Conditional","Magnesium glycinate","Check elemental magnesium, including Centrum. Supplemental upper limit 350 mg/day for adults."],
+ ["Uncertain","CoQ10","Confirm whether the label means 200 mg. Do not increase it as a default fertility measure. Interacts with warfarin and insulin."],
+ ["Low priority","Liquid collagen","No demonstrated need here. Omit, or keep for a separate reason after counting its calories."]
+];
+
+const RULES=[
+ "Three full-body strength sessions, two Zone 2 sessions and a third cardio session that can later become intervals. Sunday is recovery.",
+ "Weeks 1–2: lift Monday and Friday only, with short Zone 2 on Tuesday, Thursday and Saturday. Add Wednesday from week 3 if recovery is good.",
+ "Progression: when every set reaches the top of the rep range with good form on two sessions, add the smallest available load and return to the lower end.",
+ "From weeks 5–8, an optional third set on one or two main exercises is enough if recovery is good.",
+ "Zone 2 means you can speak full sentences. Adjust incline and speed to hold that, not a heart-rate number.",
+ "Increase one cardio variable at a time: duration, incline, speed or vest load. Establish comfortable unweighted walking before adding a vest.",
+ "Intervals only after roughly eight weeks, and only if 40 minutes of steady cardio is comfortable with good recovery and no symptoms.",
+ "One vigorous minute counts as about two moderate-equivalent minutes. Easy recovery blocks count for nothing unless they truly reach moderate intensity.",
+ "Weigh on several mornings after the bathroom and before breakfast; judge weekly averages, never single days. Measure the waist weekly at the same tape location.",
+ "Change one thing at a time, and only after 2–3 consistent weeks of data.",
+ "If time is tight, preserve two full-body sessions and consistent manageable aerobic activity before adding accessories or intervals.",
+ "Stop for sharp or increasing pain. Chest pain, collapse or severe breathing difficulty needs urgent help.",
+ "Do not start testosterone, anabolic steroids or hormone boosters while pursuing fertility. Tell a prescriber if testosterone is already prescribed.",
+ "Skip prolonged hot tubs and saunas as a practical precaution while pursuing fertility.",
+ "If the deficit is causing persistent fatigue, poor sleep, falling strength or reduced libido, protect recovery and eat more — do not push through with stimulants or supplements."
+];
+
+const CHECKPOINTS=[
+ ["Weeks 1–2","Establish a seven-day weight average; remeasure the waist; trial portions. Learn technique on two strength days, record baseline cardio tolerance. Clarify the iron indication and supplement labels. Discuss semen assessment if relevant."],
+ ["Weeks 3–8","Review every 2–3 weeks; the first 5% checkpoint is about 89.3 kg. Add the third strength day as tolerated and build toward 150 aerobic minutes. Assess recovery before increasing volume."],
+ ["Weeks 9–13","Continue if progress is sustainable; do not accelerate a plan that is working. Review strength and the walking test. Review any indicated semen results around three months, on clinician timing."],
+ ["Weeks 14–18","Reassess around 10% loss, about 84.6 kg. Maintain strength while increasing comfortable cardio. Optional intervals only if tolerated. Revise intake if recovery deteriorates."],
+ ["Weeks 19–26","Review the 16.7 kg aspiration against actual health and progress. Maintain a repeatable routine and agree a maintenance strategy. Further fertility assessment follows clinical need, not a supplement deadline."]
+];
+
+/* =================== STORE (keys kept from the previous app) =================== */
+const K="bt26:";
+const S={
+ get(k,d){try{const v=localStorage.getItem(K+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+ set(k,v){try{localStorage.setItem(K+k,JSON.stringify(v));return true}catch(e){return false}}
+};
+const DEF={start:"2026-09-14",train:"16:30",wake:"06:30",wakeEnd:"06:00",sleep:"22:30",
+           intervals:false,block:2,startWt:94,height:171};
+let CFG=Object.assign({},DEF,S.get("cfg",{}));
+function saveCfg(){S.set("cfg",CFG);render()}
+
+/* =================== TIME =================== */
+function nowD(){return new Date()}
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function dkey(d){return DAYS[(d.getDay()+6)%7]}
+function mins(t){const p=String(t||"0:00").split(":");return (+p[0])*60+(+p[1])}
+function fmt(m){m=((m%1440)+1440)%1440;let h=Math.floor(m/60);const mm=String(m%60).padStart(2,"0");
+ const ap=h<12?"am":"pm";h=h%12||12;return h+":"+mm+" "+ap}
+function dur(m){if(m<1)return "now";if(m<60)return m+" min";const h=Math.floor(m/60),r=m%60;return r?h+" h "+r+" m":h+" h"}
+function weekNo(){const s=new Date(CFG.start+"T00:00:00"),n=new Date(ymd(nowD())+"T00:00:00");
+ const d=Math.floor((n-s)/864e5);return Math.max(1,Math.min(26,Math.floor(d/7)+1))}
+function weekStart(ref){const r=ref||nowD();const d=new Date(ymd(r)+"T00:00:00");d.setDate(d.getDate()-((d.getDay()+6)%7));return d}
+function dateOfWeekday(dk,ref){const r=ref||nowD();const cur=(r.getDay()+6)%7,tgt=DAYS.indexOf(dk);
+ const d=new Date(r);d.setDate(d.getDate()+(tgt-cur));return d}
+
+/* =================== SESSION MODEL =================== */
+function isStrengthDay(dk,w){
+ if(dk!=="mon"&&dk!=="wed"&&dk!=="fri")return false;
+ if(dk==="wed"&&w<3)return false;
+ return true;
+}
+function intervalDay(dk,w){return dk==="thu"&&CFG.intervals&&w>=9}
+
+function session(dk,w){
+ w=w||weekNo();
+ const ph=phaseFor(w);
+ if(isStrengthDay(dk,w)){
+  return {kind:"strength",title:"Full-body strength",sub:"All four categories: upper push, upper pull, lower push, lower pull.",
+   time:"45–55 min",ex:STRENGTH[dk],note:STRENGTH_NOTE,mod:0};
+ }
+ if(dk==="wed"&&w<3){
+  return {kind:"rest",title:"Easy day",sub:"Wednesday strength starts in week 3. Until then: rest, or an easy walk if you want one.",
+   time:"optional",ex:[],note:"Weeks 1–2 lift Monday and Friday only. Add Wednesday from week 3 if you are recovering well.",mod:0};
+ }
+ if(intervalDay(dk,w)){
+  const iv=INTERVALS[CFG.block]||INTERVALS[2];
+  return {kind:"intervals",title:"Treadmill intervals",
+   sub:"10 min easy, then "+iv.blocks+" × ("+iv.hard+" min hard + "+iv.easy+" min easy), then 5 min easy.",
+   time:iv.total+" min",ex:[],mod:iv.blocks*iv.hard*2,vig:iv.blocks*iv.hard,
+   note:"Hard means controlled effort around 7–8/10, only a few words comfortable. Do not sprint or chase a heart-rate number. No vest initially. Lengthen the hard blocks only after at least two well-tolerated sessions at the current length. If intervals impair Friday training or sleep, return to steady cardio."};
+ }
+ if(dk==="tue"||dk==="thu"||dk==="sat"){
+  const m=dk==="tue"?ph.tue:dk==="thu"?ph.thu:ph.sat;
+  return {kind:"cardio",title:dk==="sat"?"Long Zone 2":"Zone 2 cardio",
+   sub:"Inclined treadmill walking at a steady, conversational effort — "+m+" working minutes.",
+   time:m+" min",ex:[],mod:m,
+   note:"Add about five easy minutes before and after; those do not count automatically. Adjust incline and speed so you can speak full sentences. Vest optional and only once unweighted walking is comfortable — keep its load stable while building duration."+(dk==="sat"?" Saturday: start 16:30 and finish by 17:45 for GuruGhar at 18:30.":"")};
+ }
+ return {kind:"rest",title:"Recovery",sub:"Rest, or an optional easy walk. No hard session.",
+  time:"rest",ex:[],mod:0,note:"Sunday is protected. Moderate progress with good recovery beats forcing a deadline."};
+}
+
+/* =================== DAY TIMELINE =================== */
+function schedule(dk,w){
+ w=w||weekNo();
+ const weekend=dk==="sat"||dk==="sun";
+ const se=session(dk,w);
+ const tr=mins(CFG.train);
+ const it=[
+  {id:"wake",t:mins(weekend?CFG.wakeEnd:CFG.wake),n:"Wake — water",
+   d:"Plain or mineral water on waking. Do not interrupt sleep for it."},
+  weekend?{id:"rcic",t:390,n:"RCIC study",d:"Weekend study block from 06:30."}:null,
+  {id:"breakfast",t:480,n:"Breakfast — 30–40 g protein",
+   d:"2 eggs, 170–200 g Greek yogurt, 1 slice whole-grain toast, fruit. Prepare it earlier or split it if 08:00 does not work."},
+  {id:"lunch",t:720,n:"Lunch",d:"120–150 g chicken or an equivalent fish/legume portion, vegetables, one whole-grain wrap. Measure the oil."},
+  {id:"snack",t:840,n:"Snack",d:"40 g dry oats, one fruit, 20–25 g nuts combined. Reduce the nuts before training if it feels heavy."},
+  se.kind==="rest"&&dk==="sun"?null:{id:"train",t:tr,n:se.title,d:se.sub},
+  dk==="sat"?null:{id:"whey",t:1050,n:"Whey and creatine, if needed",
+   d:"20–30 g protein only if the day's protein needs closing. Creatine 3–5 g if suitable, taken consistently."},
+  dk==="sat"?{id:"dinner",t:1065,n:"Dinner before GuruGhar",
+   d:"17:45–18:15 if travel permits, or split it before and after — without adding another meal. Whey can move here."}:
+             {id:"dinner",t:1140,n:"Dinner",
+   d:"A clear protein anchor: 150 g chicken or fish, or a cup of dal plus tofu. Vegetables, one or two small rotis, 150–200 mL kefir."},
+  dk==="sat"?{id:"gurughar",t:1110,n:"GuruGhar",d:"18:30."}:null,
+  {id:"night",t:1260,n:"Bedtime milk and kiwi",d:"200–250 mL milk and a kiwi if wanted. Count any added sugars."},
+  {id:"sleep",t:mins(CFG.sleep),n:"Sleep",
+   d:weekend?"22:30–06:00 before the 06:30 study block. Sleep earlier if needed.":"22:30–06:30, about 8 hours. Protect sleep rather than adding exercise."}
+ ].filter(Boolean);
+ return it.sort((a,b)=>a.t-b.t);
+}
+
+function nowState(){
+ const d=nowD(),m=d.getHours()*60+d.getMinutes(),dk=dkey(d),sc=schedule(dk);
+ let cur=null,nxt=null;
+ for(let i=0;i<sc.length;i++){if(sc[i].t<=m)cur=sc[i];else{nxt=sc[i];break}}
+ if(!cur){cur={id:"asleep",t:0,n:"Asleep",d:"The next block starts at "+fmt(sc[0].t)+"."};nxt=sc[0]}
+ const end=nxt?nxt.t:1440;
+ const pct=Math.max(0,Math.min(100,((m-cur.t)/Math.max(1,end-cur.t))*100));
+ return {m,dk,sc,cur,nxt,pct,left:end-m};
+}
+
+/* =================== LOGS =================== */
+function todayKey(){return ymd(nowD())}
+function doneList(k){return S.get("done:"+(k||todayKey()),[])}
+function isDone(id,k){return doneList(k).indexOf(id)>-1}
+function toggleDone(id){const k="done:"+todayKey();const l=S.get(k,[]);const i=l.indexOf(id);
+ i>-1?l.splice(i,1):l.push(id);S.set(k,l)}
+function lifts(id){return S.get("lift:"+id,[])}
+// Legacy lift entries were kilograms. Convert for display without rewriting history.
+function liftLb(value,unit){return Math.round(Number(value)*(unit==="lb"?1:2.2046226218)*100)/100}
+function liftSummary(entry){
+ if(Array.isArray(entry.sets))return entry.sets.map((set,i)=>`Set ${i+1}: ${set.reps} reps × ${liftLb(set.w,entry.unit)} lb`).join(" · ");
+ return `${liftLb(entry.w,entry.unit)} lb · reps not recorded${entry.unit!=="lb"?" (converted from kg)":""}`;
+}
+const liftDrafts={},liftMessages={};
+function liftKey(id,date){return date+":"+id}
+function liftDraft(id,date){
+ const key=liftKey(id,date);
+ if(!liftDrafts[key]){
+  const entry=lifts(id).find(x=>x.d===date);
+  liftDrafts[key]={top:!!(entry&&entry.top),sets:entry?(Array.isArray(entry.sets)?entry.sets.map(set=>({w:String(liftLb(set.w,entry.unit)),reps:String(set.reps)})):[{w:String(liftLb(entry.w,entry.unit)),reps:""}]):[{w:"",reps:""},{w:"",reps:""}]};
+ }
+ return liftDrafts[key];
+}
+function editLift(id,date,index,field,value){
+ liftDraft(id,date).sets[index][field]=value;
+ delete liftMessages[liftKey(id,date)];
+ const status=document.getElementById("status_"+id);if(status)status.textContent="Unsaved changes";
+}
+function editLiftTop(id,date,value){liftDraft(id,date).top=value;delete liftMessages[liftKey(id,date)];
+ const status=document.getElementById("status_"+id);if(status)status.textContent="Unsaved changes"}
+function addLiftSet(id,date){liftDraft(id,date).sets.push({w:"",reps:""});delete liftMessages[liftKey(id,date)];render()}
+function removeLiftSet(id,date,index){const draft=liftDraft(id,date);draft.sets.splice(index,1);
+ if(!draft.sets.length)draft.sets.push({w:"",reps:""});delete liftMessages[liftKey(id,date)];render()}
+function inputValue(v){return String(v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function renderLiftLog(id,date){
+ const key=liftKey(id,date),draft=liftDraft(id,date),message=liftMessages[key];
+ return `<div class="set-log">
+  <div class="set-head"><span>Set</span><span>Reps</span><span>Weight (lb)</span><span></span></div>
+  ${draft.sets.map((set,i)=>`<div class="set-row">
+   <span class="set-number num">${i+1}</span>
+   <input type="number" min="1" step="1" inputmode="numeric" aria-label="Set ${i+1} reps" placeholder="Reps" value="${inputValue(set.reps)}" oninput="editLift('${id}','${date}',${i},'reps',this.value)">
+   <input type="number" min="0" step="any" inputmode="decimal" aria-label="Set ${i+1} weight in lb" placeholder="lb" value="${inputValue(set.w)}" oninput="editLift('${id}','${date}',${i},'w',this.value)">
+   <button class="mini" aria-label="Remove set ${i+1}" onclick="removeLiftSet('${id}','${date}',${i})">×</button>
+  </div>`).join("")}
+  <label class="log-top"><input type="checkbox" ${draft.top?"checked":""} onchange="editLiftTop('${id}','${date}',this.checked)"> topped the range on all working sets</label>
+  <div class="log-actions"><button class="mini" onclick="addLiftSet('${id}','${date}')">+ Add set</button>
+   <button class="mini ok" onclick="saveLift('${id}','${date}')">Save sets</button></div>
+  <div id="status_${id}" class="log-status ${message&&message.error?"error":""}" role="status">${message?message.text:""}</div>
+ </div>`;
+}
+function weights(){return S.get("wt",{})}
+function setWeight(v){const w=weights(),t=todayKey();
+ if(v===null||v==="")delete w[t];else w[t]=Number(v);S.set("wt",w)}
+function waists(){return S.get("waist",{})}
+function setWaist(v){const w=waists(),t=todayKey();
+ if(v===null||v==="")delete w[t];else w[t]=Number(v);S.set("waist",w)}
+function walks(){return S.get("walk",{})}
+function addWalk(n){const w=walks(),t=todayKey();w[t]=(w[t]||0)+n;if(w[t]<=0)delete w[t];S.set("walk",w)}
+
+function avgWindow(off){const w=weights(),base=new Date(ymd(nowD())+"T00:00:00");let s=0,n=0;
+ for(let i=0;i<7;i++){const d=new Date(base);d.setDate(d.getDate()-(i+off*7));
+  const v=w[ymd(d)];if(typeof v==="number"){s+=v;n++}}
+ return n?{avg:s/n,n:n}:null}
+function latest(map){const ks=Object.keys(map).sort();return ks.length?{d:ks[ks.length-1],v:map[ks[ks.length-1]]}:null}
+
+function weekMinutes(){
+ const ws=weekStart(),wk=weekNo(),wl=walks();let mod=0,vig=0,walked=0;
+ for(let i=0;i<7;i++){
+  const d=new Date(ws);d.setDate(d.getDate()+i);
+  const k=ymd(d),dk=DAYS[i],se=session(dk,wk);
+  if(isDone("train",k)&&se.mod){mod+=se.mod;if(se.vig)vig+=se.vig}
+  walked+=(wl[k]||0);
+ }
+ return {mod:mod+walked,vig:vig,walked:walked};
+}
+function dayComplete(d){
+ const l=S.get("done:"+ymd(d),[]),dk=dkey(d),se=session(dk,weekNo());
+ if(se.kind==="rest")return l.length>=3;
+ return l.indexOf("train")>-1;
+}
+function streak(){let c=0;const d=nowD();if(!dayComplete(d))d.setDate(d.getDate()-1);
+ for(let i=0;i<400;i++){if(!dayComplete(d))break;c++;d.setDate(d.getDate()-1)}return c}
+
+/* =================== RENDER =================== */
+let sel=null,openRef={},showSet=false;
+const $=s=>document.querySelector(s);
+
+function renderTop(){
+ const st=nowState(),d=nowD(),w=weekNo(),ph=phaseFor(w),sk=streak();
+ $("#top").innerHTML=`<div>
+  <h1>${FULL[st.dk]}, ${d.toLocaleDateString(undefined,{month:"long",day:"numeric"})}</h1>
+  <p class="num">Week ${w} of 26 · ${ph.label}${sk>1?" · "+sk+"-day streak":""}</p>
+ </div><button class="gear" onclick="toggleSet()" aria-label="Settings">⚙</button>`;
+}
+
+function renderToday(){
+ const st=nowState(),w=weekNo(),se=session(st.dk,w),done=isDone("train");
+ const trained=se.kind!=="rest";
+ const nxt=st.nxt?`<div class="next"><span class="t num">${fmt(st.nxt.t)}</span><b>${st.nxt.n}</b><span class="in num">in ${dur(st.nxt.t-st.m)}</span></div>`:"";
+ return `<div class="today">
+  <div class="kicker">Today</div>
+  <h2>${se.title}</h2>
+  <div class="sub">${se.sub}</div>
+  <div class="meta num"><span>${trained?fmt(mins(CFG.train)):"—"}</span><span>${se.time}</span>${se.mod?`<span>${se.mod} moderate min</span>`:""}</div>
+  <div class="acts">
+   <button class="btn ${done?"ok":"pri"}" onclick="mark('train')">${done?"✓ Logged":trained?"Log the session":"Mark the day"}</button>
+   <button class="btn" onclick="jump('dayCard')">The day</button>
+  </div>
+  ${nxt}
+ </div>`;
+}
+
+function renderWeek(){
+ const st=nowState(),cur=sel||st.dk,w=weekNo();
+ return `<div class="week">${DAYS.map(d=>{
+  const se=session(d,w),dt=dateOfWeekday(d),lg=dt<=nowD()&&dayComplete(dt);
+  const short=se.kind==="strength"?"Lift":se.kind==="intervals"?"Intervals":se.kind==="cardio"?"Zone 2":"Rest";
+  return `<div class="wd ${d===st.dk?"today":""} ${d===cur?"sel":""} ${lg?"logged":""}" onclick="pick('${d}')">
+   <b>${LABEL[d]}</b><span>${short}</span><i></i></div>`}).join("")}</div>`;
+}
+
+function renderSession(){
+ const st=nowState(),dk=sel||st.dk,isToday=dk===st.dk,w=weekNo(),se=session(dk,w);
+ const done=isToday&&isDone("train");
+ const body=se.ex.length?se.ex.map(e=>{
+  let extra="";
+  if(e.log){
+   const date=ymd(dateOfWeekday(dk)),L=lifts(e.id).filter(x=>x.d<date),last=L[L.length-1],prev=L[L.length-2];
+   const current=lifts(e.id).find(x=>x.d===date);
+   if(last)extra+=`<div class="last num">Previous (${last.d}): <b>${liftSummary(last)}</b>${last.top?" · topped the range":""}</div>`;
+   if(current)extra+=`<div class="last num">Saved (${date}): <b>${liftSummary(current)}</b></div>`;
+   if(!last&&!current)extra+=`<div class="last">No sets logged yet. Use 0 lb for bodyweight.</div>`;
+   if(last&&prev&&last.top&&prev.top)
+    extra+=`<div class="note up" style="margin:10px 0 0">Top of the range on two sessions. <b>Add the smallest available load</b> and return to the lower end of the range.</div>`;
+   if(date<=todayKey())extra+=renderLiftLog(e.id,date);
+
+  }
+  return `<div class="ex"><div class="ex-cat">${e.cat}</div><div class="ex-n">${e.n}</div>
+   <div class="ex-s num">${e.s}</div><div class="ex-d">${e.d}</div>${extra}</div>`;
+ }).join(""):"";
+ const sledNote=(se.kind==="strength"&&dk==="wed")?
+  `<div class="note">Sled-push option: replace Wednesday's squat with 3 × 20–30 s of controlled pushing, resting 90–120 s. Keep Monday and Friday squats. Use only a treadmill with a manufacturer-approved push mode.</div>`:"";
+ return `<div class="hdr"><h3>${isToday?"Session":FULL[dk]}</h3><small>${isToday?(se.kind==="rest"?"anytime":fmt(mins(CFG.train))):ymd(dateOfWeekday(dk))}</small></div>
+ ${renderWeek()}
+ <div class="panel" style="margin-top:12px" id="sessionCard">
+  <div class="panel-h"><div><div class="f">${se.title}</div><div class="m num">${se.time}${se.mod?" · "+se.mod+" moderate min":""}</div></div>
+   ${isToday?`<div class="r"><button class="mini ${done?"ok":""}" onclick="mark('train')">${done?"✓ Logged":"Log it"}</button></div>`:""}</div>
+  ${body}
+  ${se.note?`<div class="note">${se.note}</div>`:""}
+  ${sledNote}
+ </div>`;
+}
+
+function renderDay(){
+ const st=nowState(),dk=sel||st.dk,isToday=dk===st.dk,sc=schedule(dk);
+ return `<div class="hdr"><h3>${isToday?"The day":FULL[dk]+" — the day"}</h3><small class="num">${fmt(mins(CFG.wake))} – ${fmt(mins(CFG.sleep))}</small></div>
+ <div class="day" id="dayCard">${sc.map(it=>{
+  const done=isToday&&isDone(it.id);
+  const isNow=isToday&&it.id===st.cur.id;
+  const past=isToday&&it.t<st.m&&!isNow;
+  return `<div class="di ${done?"done":""} ${isNow?"now":""} ${past&&!done?"past":""}" onclick="${isToday?`mark('${it.id}')`:""}">
+   <span class="t">${fmt(it.t)}</span>
+   <div style="flex:1;min-width:0"><div class="n">${it.n}</div><div class="d">${it.d}</div></div>
+   ${isToday?`<div class="chk">✓</div>`:""}</div>`}).join("")}</div>`;
+}
+
+function verdict(){
+ const a0=avgWindow(0),a1=avgWindow(1),a2=avgWindow(2);
+ if(!a0||!a1||a0.n<3||a1.n<3)
+  return {cls:"",h:"Establish a seven-day average",p:"Weigh on several mornings after the bathroom and before breakfast. Once there are at least three readings in each of the last two weeks, this compares weekly averages against the plan's adjustment rules. Ignore the first few days, when water changes dominate."};
+ const d1=a1.avg-a0.avg;
+ const d2=(a2&&a2.n>=3)?a2.avg-a1.avg:null;
+ const n=v=>v.toFixed(2);
+ if(d1>=0.4&&d1<=0.7)
+  return {cls:"ok",h:"On track — continue",p:"Losing "+n(d1)+" kg/week on the seven-day average, inside the 0.4–0.7 band. Change nothing while recovery is good."};
+ if(d1>0.9&&weekNo()>2)
+  return {cls:"fast",h:"Faster than planned",p:"Losing "+n(d1)+" kg/week after the initial water phase. If hunger is persistent, or sleep, strength or libido are down, add 100–200 kcal/day and/or reduce training stress. Do not keep cutting to force 16.7 kg."};
+ if(d1<0.4){
+  if(d2!==null&&d2<0.4)
+   return {cls:"slow",h:"Two slow weeks — check before changing",p:n(d1)+" kg this week and "+n(d2)+" kg last week. First check portions, weekend meals and actual activity. If the waist is still falling and strength is stable, continue another fortnight. Otherwise make one change: reduce 100–150 kcal/day, or add a manageable amount of activity."};
+  return {cls:"slow",h:"Slow week — hold",p:n(d1)+" kg/week. One slow week is not a signal. Creatine and hydration move the scale. Recheck next week before changing anything."};
+ }
+ return {cls:"ok",h:"Close enough — hold",p:"Losing "+n(d1)+" kg/week. Between the bands. Keep everything the same and judge on the four-week trend, waist and strength."};
+}
+
+function sparkline(){
+ const w=weights(),base=new Date(ymd(nowD())+"T00:00:00"),pts=[];
+ for(let i=27;i>=0;i--){const d=new Date(base);d.setDate(d.getDate()-i);
+  const v=w[ymd(d)];pts.push(typeof v==="number"?v:null)}
+ const vals=pts.filter(v=>v!==null);
+ if(vals.length<2)return "";
+ const mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),rg=(mx-mn)||1;
+ const W=300,H=56,step=W/27;let path="",started=false;
+ pts.forEach((v,i)=>{if(v===null)return;const x=i*step,y=H-5-((v-mn)/rg)*(H-14);
+  path+=(started?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)+" ";started=true});
+ return `<div class="spark"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+  <path d="${path}" fill="none" stroke="var(--acc)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+  <div class="cap num"><span>28 days ago</span><span>${mn.toFixed(1)}–${mx.toFixed(1)} kg</span><span>today</span></div></div>`;
+}
+
+function milestones(){
+ const s=Number(CFG.startWt)||94, w=weights(), lw=latest(w), cur=lw?lw.v:s;
+ const marks=[{v:s*0.95,l:"5% · "+(s*0.95).toFixed(1)+" kg"},
+              {v:s*0.90,l:"10% · "+(s*0.90).toFixed(1)+" kg"},
+              {v:s-16.7,l:"Aspiration · "+(s-16.7).toFixed(1)+" kg"}];
+ const next=marks.find(m=>cur>m.v)||marks[marks.length-1];
+ const span=s-next.v, gone=Math.max(0,s-cur);
+ const pct=Math.max(0,Math.min(100,span>0?(gone/span)*100:100));
+ return `<div class="mile">
+  <div class="kicker">Next milestone</div>
+  <div class="verdict-h" style="font-size:14.5px;font-weight:600;margin-top:6px">${next.l}</div>
+  <div class="track"><i style="width:${pct.toFixed(0)}%"></i></div>
+  <div class="mrow num"><span>${s.toFixed(1)} kg start</span><span>${lw?cur.toFixed(1)+" kg now":"no weight logged"}</span><span>${next.v.toFixed(1)} kg</span></div>
+  <div class="box">16.7 kg over 26 weeks averages 0.64 kg/week — an ambitious, adjustable aspiration, not a deadline. Neither the scale nor a target weight proves the loss was fat.</div>
+ </div>`;
+}
+
+function renderProgress(){
+ const a0=avgWindow(0),a1=avgWindow(1),v=verdict(),w=weights(),t=w[todayKey()];
+ const d1=(a0&&a1&&a0.n>=3&&a1.n>=3)?(a1.avg-a0.avg):null;
+ const s=Number(CFG.startWt)||94, lw=latest(w);
+ const total=lw?(s-lw.v):null;
+ const wa=waists(),lwa=latest(wa),wt=wa[todayKey()];
+ const whtr=lwa?(lwa.v/(Number(CFG.height)||171)):null;
+ const wk=weekMinutes(),ph=phaseFor(weekNo());
+ return `<div class="hdr"><h3>Progress</h3><small class="num">week ${weekNo()} / 26</small></div>
+ <div class="grid">
+  <div class="stat"><div class="lb">7-day average</div><div class="v">${a0?a0.avg.toFixed(1)+" kg":"—"}</div>
+   <div class="s num">${a0?a0.n+" of 7 days logged":"log a morning weight"}</div></div>
+  <div class="stat"><div class="lb">This week</div>
+   <div class="v" style="color:${d1===null?"inherit":(d1>=0.4&&d1<=0.7)?"var(--acc)":"var(--warn)"}">${d1===null?"—":(d1>0?"−":"+")+Math.abs(d1).toFixed(2)+" kg"}</div>
+   <div class="s">target 0.4–0.7 kg/week</div></div>
+  <div class="stat"><div class="lb">Total change</div><div class="v">${total===null?"—":(total>0?"−":"+")+Math.abs(total).toFixed(1)+" kg"}</div>
+   <div class="s num">from ${s.toFixed(1)} kg</div></div>
+  <div class="stat"><div class="lb">Waist</div><div class="v">${lwa?lwa.v.toFixed(1)+" cm":"—"}</div>
+   <div class="s">${whtr?"ratio "+whtr.toFixed(3)+" · 85.5 cm = 0.50":"measure weekly, same spot"}</div></div>
+  <div class="stat"><div class="lb">Aerobic minutes</div><div class="v">${wk.mod}</div>
+   <div class="s num">of ${ph.total} this phase${wk.vig?" · "+wk.vig+" vigorous":""}</div></div>
+  <div class="stat"><div class="lb">Daily fuel</div><div class="v" style="font-size:19px">2,300</div>
+   <div class="s">kcal · 160–180 g protein</div></div>
+ </div>
+ <div class="inrow">
+  <input type="number" step="0.1" inputmode="decimal" id="wIn" placeholder="Morning weight (kg)" value="${t!==undefined?t:""}">
+  <button class="btn" onclick="saveWeight()">Save</button></div>
+ <div class="inrow">
+  <input type="number" step="0.1" inputmode="decimal" id="waIn" placeholder="Waist (cm) — weekly" value="${wt!==undefined?wt:""}">
+  <button class="btn" onclick="saveWaist()">Save</button></div>
+ <div class="inrow">
+  <button class="btn" onclick="addWalk(10)">+10 min walk</button>
+  <button class="btn" onclick="addWalk(15)">+15</button>
+  <button class="btn" onclick="addWalk(20)">+20</button>
+  <button class="btn" onclick="addWalk(-10)">−10</button></div>
+ ${sparkline()}
+ <div class="verdict ${v.cls}"><div class="kicker" style="color:inherit;opacity:.75">Adjustment rule</div>
+  <div class="h">${v.h}</div><p>${v.p}</p></div>
+ ${milestones()}`;
+}
+
+function refCard(id,title,sub,body){
+ return `<div class="ref ${openRef[id]?"open":""}">
+  <div class="ref-h" onclick="toggleRef('${id}')"><div class="n">${title}<div style="font-size:12px;color:var(--t3);font-weight:400">${sub}</div></div><div class="c">▾</div></div>
+  <div class="ref-b">${body}</div></div>`;
+}
+
+function renderRef(){
+ const w=weekNo();
+ const weekTbl=`<table class="tbl">
+  <tr><td>Monday</td><td>All four strength categories</td><td>16:30</td></tr>
+  <tr><td>Tuesday</td><td>Zone 2 cardio</td><td>16:30</td></tr>
+  <tr><td>Wednesday</td><td>Strength (from week 3)</td><td>16:30</td></tr>
+  <tr><td>Thursday</td><td>Zone 2; optional intervals from week 9</td><td>16:30</td></tr>
+  <tr><td>Friday</td><td>All four strength categories</td><td>16:30</td></tr>
+  <tr><td>Saturday</td><td>Longer Zone 2 — finish by 17:45</td><td>16:30</td></tr>
+  <tr><td>Sunday</td><td>Recovery — rest or an easy walk</td><td>—</td></tr></table>
+  <div class="box">First two weeks: lift Monday and Friday only, with short Zone 2 on Tuesday, Thursday and Saturday. Add Wednesday from week 3 if recovering well. Week 1 means whenever you start.</div>`;
+
+ const cardio=`<table class="tbl">
+  <tr><td>Weeks</td><td>Tue / Thu / Sat</td><td>Total</td></tr>
+  ${PHASES.map(p=>`<tr class="${w>=p.w[0]&&w<=p.w[1]?"hl":""}"><td>${p.w[0]}–${p.w[1]}</td>
+   <td>${p.tue} / ${p.thu} / ${p.sat} min${p.walk?" + "+p.walk+" min walks × "+p.days+" days":""}</td>
+   <td>${p.total}</td></tr>`).join("")}</table>
+  <div class="box">These are moderate working minutes. Add about five easy minutes before and after each session; do not count those automatically. Count extra walks only when actually completed at moderate effort. One vigorous minute counts as about two moderate-equivalent minutes.</div>
+  <div class="box">Intervals: after roughly eight weeks, if 40 minutes of steady cardio is comfortable and recovery is good, replace Thursday Zone 2 with 10 min easy, 4 × (2 min hard + 3 min easy), 5 min easy — 35 minutes. Lengthen the hard blocks to 3 then 4 minutes only after at least two well-tolerated sessions at each step.</div>`;
+
+ const diet=`<table class="tbl">
+  <tr><td>Energy</td><td>About 2,300 kcal/day, training and rest days alike</td><td></td></tr>
+  <tr><td>Protein</td><td>160–180 g across meals; about 170 g is the anchor</td><td></td></tr>
+  <tr><td>Fat</td><td>About 65–80 g, mostly nuts, olive oil and fish</td><td></td></tr>
+  <tr><td>Carbohydrate</td><td>The remainder — oats, fruit, roti/rice, legumes</td><td></td></tr>
+  <tr><td>Fibre</td><td>Build gradually toward 30–38 g/day</td><td></td></tr>
+  <tr><td>Fluid</td><td>Drink regularly, more with heat or sweat</td><td></td></tr></table>
+  <div class="box">Allocation guide, not a nutrient analysis: breakfast 450, lunch 550, snack 350, whey 120, dinner 650, bedtime 180 — 2,300 kcal. Real meals can move calories between slots.</div>
+  <div class="box">The 2,300 kcal figure is a two-week trial, not a measured energy requirement. The weight trend decides whether it is a useful deficit. Do not reuse the old 1,722 kcal BMR as an eating target.</div>
+  <div class="box warn"><div class="lb">The three changes that matter most</div>Increase breakfast protein, measure nuts and cooking fat, and add a protein anchor to vegetable-based dinners. Sabzi with roti alone will not deliver the intended meal protein.</div>`;
+
+ const meals=MEALS.map(m=>`<div class="ex" style="padding:12px 0;border-bottom:1px solid var(--bd)">
+  <div class="ex-cat num">${m[0]}</div><div class="ex-n">${m[1]}</div><div class="ex-d">${m[2]}</div></div>`).join("")
+  +`<div class="box">Meat and fish weights are cooked, oats are dry, and a small roti means about 30 g dry flour before cooking. Oil, ghee, sauces, milk, kefir and shakes all count.</div>`;
+
+ const supps=SUPPS.map(s=>`<div class="ex" style="padding:12px 0;border-bottom:1px solid var(--bd)">
+  <div class="ex-cat">${s[0]}</div><div class="ex-n">${s[1]}</div><div class="ex-d">${s[2]}</div></div>`).join("")
+  +`<div class="box alert"><div class="lb">Before any of this is a routine</div>Doses are unconfirmed. Read the label amount per daily serving — record D in IU, K2 and B12 in micrograms, iron, zinc and magnesium as elemental milligrams, and fish oil as EPA and DHA separately. "Magnesium glycinate 1,000 mg" is not 1,000 mg of elemental magnesium.</div>
+  <div class="box warn"><div class="lb">Totals to add up first</div>Vitamin D 600 IU reference, 4,000 IU/day upper limit. Zinc 11 mg reference, 40 mg upper limit. Iron 8 mg reference, 45 mg upper limit. Supplemental magnesium 350 mg upper limit. Upper limits are boundaries, not goals.</div>
+  <div class="box">Do not add selenium, high-dose folic acid, vitamin E, herbal testosterone boosters or a second fertility multivitamin by default. Vitamin K and CoQ10 need review with warfarin; iron, zinc and magnesium can interfere with some medicines.</div>`;
+
+ const fert=`<div class="box"><div class="lb">Baseline</div>If conception is a current priority, discuss a laboratory semen analysis with your clinician. It measures several characteristics; appearance and volume establish nothing. Follow the lab's collection and abstinence instructions, and do not diagnose yourself from one number.</div>
+  <div class="box">Review an abnormal result with a clinician. Confirmation is usually around three months later, but severe abnormalities — absent sperm or a very low count — need earlier assessment. Do not wait for this programme to end.</div>
+  <div class="box">Seek evaluation of both partners after 12 months without conception when the partner who would carry the pregnancy is under 35, or after six months at 35 or older.</div>
+  <div class="box warn"><div class="lb">Daily choices with the best rationale</div>No testosterone, anabolic steroids or hormone boosters. Eat enough to sustain training and keep sleep consistent. Stop smoking and recreational drugs; avoid heavy drinking. Skip prolonged hot tubs and saunas. If trying through intercourse, every 1–2 days during the fertile window — prolonged abstinence is not a strategy.</div>
+  <div class="box">Antioxidant supplements have uncertain fertility benefit; WHO's 2025 guideline could not recommend for or against them. Weight loss was associated with better sperm concentration and count in one small study of men with obesity — motility and volume did not improve, and it does not predict your response.</div>`;
+
+ const checks=CHECKPOINTS.map(c=>`<div class="ex" style="padding:12px 0;border-bottom:1px solid var(--bd)">
+  <div class="ex-n">${c[0]}</div><div class="ex-d">${c[1]}</div></div>`).join("")
+  +`<div class="box"><div class="lb">The weekly log</div>Average body weight, waist, completed strength sessions, actual moderate and vigorous minutes, one repeatable strength result, average sleep, and a brief note on hunger, energy and libido.</div>
+  <div class="box">Compare a familiar route, speed or machine workload at similar effort every four weeks. Get a current blood-pressure reading and ask whether glucose/HbA1c and lipids are due.</div>`;
+
+ const rules=RULES.map(r=>`<div class="li">${r}</div>`).join("");
+
+ return `<div class="hdr"><h3>The plan</h3><small>reference</small></div>
+ ${refCard("week","The week","Seven days, six categories",weekTbl)}
+ ${refCard("cardio","Cardio build","Duration before intensity",cardio)}
+ ${refCard("diet","Diet targets","2,300 kcal · 170 g protein",diet)}
+ ${refCard("meals","Your meals","Optimised portions",meals)}
+ ${refCard("supps","Supplements","Decisions, not a stack",supps)}
+ ${refCard("fert","Fertility","What can actually be assessed",fert)}
+ ${refCard("checks","Checkpoints","Six months, five phases",checks)}
+ ${refCard("rules","Rules","Keep the plan repeatable",rules)}
+ ${refCard("safe","Still to personalise","Limits of this plan",
+  `<div class="box alert">This is a personalised educational training and nutrition framework — not a diagnosis, fertility treatment, or confirmation that any supplement combination is safe. A relevant medical restriction overrides these defaults.</div>
+   <div class="box">Unconfirmed: current training volume, working weights, treadmill and vest setup, injuries, health conditions and medications, exact supplement labels and prescribed indications, fertility history, and whether 36 inches was measured at the anatomical waist.</div>
+   <div class="box warn"><div class="lb">Stop and seek help</div>Sharp or increasing pain, persistent symptoms after training, chest pain, collapse or severe breathing difficulty. Persistent low semen volume, pain or a testicular concern merits clinical assessment.</div>`)}`;
+}
+
+function renderSettings(){
+ if(!showSet)return "";
+ const w=weekNo();
+ return `<div class="set">
+  <div class="frow"><label>Training time<small>All sessions, 16:30–17:30.</small></label>
+   <input type="time" value="${CFG.train}" onchange="setCfg('train',this.value)"></div>
+  <div class="frow"><label>Wake — weekday<small>22:30–06:30 is about 8 hours.</small></label>
+   <input type="time" value="${CFG.wake}" onchange="setCfg('wake',this.value)"></div>
+  <div class="frow"><label>Wake — weekend<small>Before the 06:30 study block.</small></label>
+   <input type="time" value="${CFG.wakeEnd}" onchange="setCfg('wakeEnd',this.value)"></div>
+  <div class="frow"><label>Sleep<small>Protect sleep rather than adding exercise.</small></label>
+   <input type="time" value="${CFG.sleep}" onchange="setCfg('sleep',this.value)"></div>
+  <div class="frow"><label>Week 1 start<small>Monday of your first week.</small></label>
+   <input type="date" value="${CFG.start}" onchange="setCfg('start',this.value)"></div>
+  <div class="frow"><label>Starting weight<small>Used for the 5% and 10% milestones.</small></label>
+   <input type="number" step="0.1" style="width:92px" value="${CFG.startWt}" onchange="setCfg('startWt',parseFloat(this.value)||94)"></div>
+  <div class="frow"><label>Thursday intervals<small>${w<9?"Available from week 9, and only if 40 min steady cardio is comfortable.":"Only if 40 min steady cardio is comfortable and recovery is good."}</small></label>
+   <input type="checkbox" ${CFG.intervals?"checked":""} onchange="setCfg('intervals',this.checked)"></div>
+  <div class="frow"><label>Hard block length<small>Minutes. Lengthen only after two well-tolerated sessions.</small></label>
+   <select onchange="setCfg('block',parseInt(this.value,10))" style="background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 10px">
+    ${[2,3,4].map(b=>`<option value="${b}" ${CFG.block===b?"selected":""}>${b} min</option>`).join("")}</select></div>
+  <div class="frow"><label>Your data<small>Saved in this browser only.</small></label>
+   <button class="mini" onclick="exportData()">Export</button><button class="mini" onclick="resetData()">Reset</button></div>
+ </div>`;
+}
+
+function render(){
+ renderTop();
+ $("#main").innerHTML=renderSettings()+renderToday()+renderSession()+renderDay()+renderProgress()+renderRef();
+ $("#foot").innerHTML="Plan prepared 13 September 2026 · start 94 kg, waist 36 in · 2,300 kcal and 160–180 g protein as a two-week trial<br>"+
+  "Educational framework, not medical advice. Supplement doses and medical context remain unconfirmed.<br>"+
+  "Review at roughly three months, and again at weeks 14–18 around 10% loss.";
+}
+
+/* =================== ACTIONS =================== */
+function mark(id){toggleDone(id);render()}
+function pick(d){sel=(sel===d)?null:d;render();
+ const e=document.getElementById("sessionCard");if(e)e.scrollIntoView({behavior:"smooth",block:"center"})}
+function jump(id){const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})}
+function toggleRef(id){openRef[id]=!openRef[id];render()}
+function toggleSet(){showSet=!showSet;render()}
+function setCfg(k,v){CFG[k]=v;saveCfg()}
+function saveLift(id,date){
+ if(date>todayKey())return;
+ const key=liftKey(id,date),draft=liftDraft(id,date),sets=[];
+ for(const [index,set] of draft.sets.entries()){
+  if(set.w===""&&set.reps==="")continue;
+  const w=Number(set.w),reps=Number(set.reps);
+  if(set.w.trim()===""||set.reps.trim()===""||!Number.isFinite(w)||w<0||!Number.isSafeInteger(reps)||reps<1){
+   liftMessages[key]={error:true,text:`Set ${index+1}: enter whole reps above 0 and a weight of 0 lb or more.`};render();return;
+  }
+  sets.push({w,reps});
+ }
+ if(!sets.length){liftMessages[key]={error:true,text:"Enter reps and weight for at least one set."};render();return}
+ const entries=lifts(id).filter(x=>x.d!==date);
+ entries.push({d:date,unit:"lb",sets,top:draft.top});entries.sort((a,b)=>a.d.localeCompare(b.d));
+ if(!S.set("lift:"+id,entries)){liftMessages[key]={error:true,text:"Could not save in this browser. Your entries are still here; try again."};render();return}
+ delete liftDrafts[key];liftMessages[key]={text:`Saved ${sets.length} ${sets.length===1?"set":"sets"} · ${date}`};render();
+}
+function saveWeight(){const v=document.getElementById("wIn").value;setWeight(v===""?null:parseFloat(v));render()}
+function saveWaist(){const v=document.getElementById("waIn").value;setWaist(v===""?null:parseFloat(v));render()}
+function exportData(){const d={};
+ for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);
+  if(k.indexOf(K)===0)d[k.slice(K.length)]=JSON.parse(localStorage.getItem(k))}
+ const b=new Blob([JSON.stringify(d,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(b);
+ a.download="six-month-plan-"+todayKey()+".json";a.click()}
+function resetData(){if(!confirm("Clear all saved check marks, weights, waist readings and lift loads in this browser?"))return;
+ const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.indexOf(K)===0)ks.push(k)}
+ ks.forEach(k=>localStorage.removeItem(k));Object.keys(liftDrafts).forEach(k=>delete liftDrafts[k]);Object.keys(liftMessages).forEach(k=>delete liftMessages[k]);CFG=Object.assign({},DEF);render()}
+
+render();
+setInterval(()=>{if(!document.activeElement||!document.activeElement.matches("input,select,textarea"))render()},60000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});
+</script>
+</body>
+</html>
