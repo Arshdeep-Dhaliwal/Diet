@@ -1,0 +1,1835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">
+<title>Four Pillars</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAGcklEQVR42u3dwWtcxx3A8fnNzryn3bWULcit29AUFIgDanDik9MKYnxrDQkxDoYecguUQiN6K4T8A04uPSShPieYnuq0h9L2pmtNid2iCixXtd0kyLSRttZ6N/ve+/1y2Bx8iLYb6806G3+/+GiNrNmP582b90BybPVlR/RFeaaAwEHgIHAQOAgcBA4CB4GDwEHgIAIHgYPAQeAgcBA4CBwEDgIHgYMIHAQOAgeBg8BB4CBwEDgIHAQOInAQOAgcBA4CBz3QQupvIE6cMM9JMrMZxtHwvqhKrUzwUS8L58RJDMHM0hFJi2O3t7e40MljTG384Vw2trs7eYgjIjOGo1JdPX32pZVTeSOYM9aOelcO59za+tU337/Y7fUS+UiCo+H9bm9v9fTZV58/p+VwtPNg6ah75dAXnz15eH7hlXfeiGk+x/oHFZGiKhcXOudWTpVFUValZ8eRpuHg7sry08eXjl6+vtGea6rqDKwcZpbHmIXgxXkRAUe6cwiRdp5rmj1HqnOOpLtoujdNNs8cghE4vta3LTOGw8xERLmypL2gaNLbwJCCRWzE7e4na+tXXjhxctDviRfHEXrtMlSbzfbWx7c+2LrWyvKZOecwZ3nMzl+62Dk0/9zyM467lSTXE9n86OZr717YG/TbeVNNa/8ekug3NYlIUZaV6vHHn2hlc5bgn/5QJ07Nrm5t3kkmw6U7PjezGEJ07vLmhqqyeKSoleXpZLikz1ZGV8F23mS/kWqGVTXlkpz8fQ41vfd+a5LXO+57b8XgM4bj3l2IFymqUnXfJ7Sfv6bQCJ+rYvCDDT4bOLzIsCz7w08PL3Sysa93mNnt7o6In/yRAYPPMA4vMiiKbz3S+dmPzvzgye83Yzbm9Y7K7O+3/nXhj5f++s9rk+y2GDzhYp/6lw6LSFEWiwud937x+qOLR6wqzGzsuZ75kJVV+dO3z6+tXznUbI15Es3gs71yeJH+cPjzH595dPFI7+6d0YVzfOVwr9Vs//LMT/5yfUO1GnO6yuBpP7vky0ZVHl7o/PDJp6qyiI0gExRDGA4HS9/+7lOPLfWHQ+89g08++MzgGO2kshjzGL+Uc3POe9/K/s/mi8FnG4c7wIs/k0wBg882DprRwEHgIHAQOAgcBA4CB4GDwEHgIHAQgYPAQeAgcBA4CBwEDgIHgYPAQQQOAgeBg8BB4CBwEDgIHAQOAgcROAgcBA4CB4GDwEHgIHAQOAgcBA4icBA4CBwEDgIHgYPAQeAgcBA4iMBB4CBwEDgIHAQOAgeBY0xmZmaJvorBZxWHmcVGuN3dWf/3DR9iVVWTfFWl2vDhv92df3x4oxmz/eaCwWd/5RDxXt76w2+rqmi22mqmpmq2/x/NQggx/vpPv9vu7sQQxs0Cg6esceTEsdSLRxbizf/c/tuN60e/89g3H/lGiFkYUyNs/2/3V7//zXtrf25lc+OngMHT/r8+tvryNK5eInuDfivLl7+31MryfX82EVXd+PDG9u7OfLPF4AcZfGZwOOe896raH36qak7G/c25mGUhVKoMfsDBD1iY2ndSVedcO2+On4LRkvtlp4DBZwaHONnvRzVnboLLpYjcx/d9mAdPsQupH0fD+6IqtbL7miW6D1hOnIzuX+olUj+O3d7e4kInj3FqZzVkZtvdnTzEem9xa8ZRqa6ePvvSyqm8EcwZa8d0Vg7n3Nr61Tffv9jt9Wr0URuOhve7vb3V02dfff6clsPRzoOlY1orh7747MnD8wuvvPNGrO8zrWcgESmqcnGhc27lVFkUZVV6dhzTbTi4u7L89PGlo5evb7TnmlrHfU2oD6/lMWYheHFeRMAx3bxzTqSd51rfnqPOZyvTfGBIX3xqUuv88z4HgeOhuW35iuIwMxFRriwP5oKitd8ehrpYxEbc7n6ytn7lhRMnB/2eeHGOPem0ZKg2m+2tj299sHVt3NPdB3a34iyP2flLFzuH5p9bfsZxtzLV64lsfnTztXcv7A367bypVs/zuTof2YtIUZaV6vHHn2hlc2bK5zaNxKnZ1a3NO7XKcPUen5tZDCE6d3lzQ1VZPKZZK8vrleFqf7YyutpN8nYC1Tzzqlr3Up3kfQ41ddyycM5B4CBwEIGDwEHgIHAQOAgcBA4CB4GDwEEEDgIHgYPAQeAgcBA4CBwEDgIHgYMIHAQOAgeBg8BB4CBwEDgIHAQOonv7DGTQp5Bl76gBAAAAAElFTkSuQmCC">
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#faf9f7;--card:#fff;--bd:#e7e4de;--bd2:#d5d1c8;
+  --text:#1c1b19;--t2:#67645d;--t3:#8c897f;
+  --acc:#2f6f5e;--acc-bg:#e8f2ee;--on-acc:#fff;--today:#f1f6f3;
+  --warn:#7d5615;--warn-bg:#fbf2e1;--alert:#a14545;--alert-bg:#f9ecec;--loose:#6a4cb5;--loose-bg:#f1edfb;
+  --shade:rgba(28,27,25,.42);--toast:#1c1b19;--toast-t:#f4f2ee;--toast-a:#8fd3bd;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --topH:56px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#141413;--card:#1d1d1b;--bd:#2d2c29;--bd2:#3e3d38;--text:#f0eee9;--t2:#a6a39b;--t3:#85827a;
+        --acc:#6cbfa6;--acc-bg:#1d2b26;--on-acc:#0f201b;--today:#17211d;
+        --warn:#dcae62;--warn-bg:#2b2519;--alert:#e39494;--alert-bg:#301e1e;--loose:#b9a3f0;--loose-bg:#262036;
+        --shade:rgba(0,0,0,.6);--toast:#f0eee9;--toast-t:#1c1b19;--toast-a:#2f6f5e}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation;background:var(--bg)}
+html.lock,html.lock body{overflow:hidden}
+body{background:var(--bg);color:var(--text);font:16px/1.45 var(--sans);-webkit-font-smoothing:antialiased;
+     padding-bottom:calc(env(safe-area-inset-bottom) + 80px)}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+button:disabled{cursor:default}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.app{max-width:640px;margin:0 auto;padding:0 max(12px,env(safe-area-inset-right)) 0 max(12px,env(safe-area-inset-left))}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;background:var(--bg);
+     height:calc(env(safe-area-inset-top) + var(--topH));padding-top:env(safe-area-inset-top)}
+.top h1{font-size:21px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.top p{font-size:13px;color:var(--t2);line-height:1.3}
+.nav{margin-left:auto;display:flex;gap:6px}
+.nb{height:40px;min-width:40px;padding:0 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--t2);font-size:19px;line-height:1}
+.nb.txt{font-size:14px;font-weight:600;color:var(--acc)}
+.nb:disabled{opacity:.35}
+
+/* page */
+.pg{display:flex;flex-direction:column;gap:12px}
+.goal{font-size:13.5px;color:var(--t2);line-height:1.4;padding:0 2px}
+.dh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:6px 2px 0}
+.dh h2{font-size:19px;font-weight:700;letter-spacing:-.015em}
+.dh h3{font-size:15px;font-weight:600}
+.dh span{font-size:13.5px;color:var(--t2);text-align:right}
+.note{font-size:13px;color:var(--t2);line-height:1.4;padding:0 2px}
+.list .note{padding:10px 14px}
+.hint{font-size:13px;color:var(--t2);line-height:1.4}
+
+/* day strip */
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.wd{display:flex;flex-direction:column;align-items:center;min-width:0;border:1px solid var(--bd);background:var(--card);border-radius:12px;
+    padding:6px 0;font-size:12px;color:var(--t2);line-height:1.25}
+.wd b{font-size:17px;font-weight:600;color:var(--text)}
+.wd.fu{border-style:dashed;background:transparent}
+.wd.td>span,.wd.td b{color:var(--acc)}
+.wd[aria-pressed="true"]{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.bar{display:block;width:62%;height:4px;border-radius:2px;background:var(--bd);margin-top:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc)}
+.mk{display:block;width:8px;height:8px;border-radius:50%;margin-top:4px;border:1.5px solid transparent}
+.mk.done{background:var(--acc);border-color:var(--acc)}
+.mk.due{border-color:var(--acc);border-style:dashed}
+.mk.bl{background:var(--alert);border-color:var(--alert)}
+
+/* cards and lists */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px}
+.list{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+.list>*+*{border-top:1px solid var(--bd)}
+.list>.gh+*{border-top:0}
+.gh{font-size:13px;font-weight:600;color:var(--t2);padding:12px 14px 2px}
+.row{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:10px 14px;text-align:left;background:none;border:0;color:inherit}
+button.row:active{background:var(--bg)}
+.row:disabled{opacity:.6}
+.rt{flex:1;min-width:0}
+.nm{display:block;font-size:16px;font-weight:500;line-height:1.3;overflow-wrap:anywhere}
+.sb{display:block;font-size:13.5px;color:var(--t2);line-height:1.35;margin-top:1px;overflow-wrap:anywhere}
+.tm{display:block;font-size:12.5px;font-weight:600;color:var(--acc);line-height:1.4;margin-bottom:1px}
+.bx{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1.6px solid var(--bd2);display:grid;place-items:center;
+    font-size:14px;font-weight:700;color:transparent}
+.row.on .bx{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
+.row.on .nm{color:var(--t2)}
+.row.neg.on .bx{background:var(--alert);border-color:var(--alert);color:var(--card)}
+.row.neg.on .nm{color:var(--alert)}
+.chev{flex-shrink:0;font-size:24px;line-height:1;color:var(--t3)}
+.pill{display:inline-block;margin-left:4px;padding:0 7px;border-radius:99px;background:var(--acc-bg);color:var(--acc);
+      font-size:11.5px;font-weight:600;line-height:1.6;vertical-align:1px}
+.pill.mute{background:var(--bg);color:var(--t2)}
+.qrow{display:flex;align-items:stretch}
+.qrow .row{flex:1}
+.ed{width:58px;flex-shrink:0;border:0;border-left:1px solid var(--bd);background:none;color:var(--acc);font-size:14px;font-weight:600}
+.ed:disabled{color:var(--t3)}
+
+/* diet steps */
+.stepr{display:flex;align-items:stretch}
+.stepr .row{flex:1;padding-right:4px}
+.why{width:48px;flex-shrink:0;border:0;background:none;color:var(--t3);display:grid;place-items:center}
+.why span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1.5px solid currentColor;
+          font:italic 700 13px/1 Georgia,"Times New Roman",serif}
+.why[aria-expanded="true"]{color:var(--acc)}
+.whyp{margin:0 14px 12px 54px;padding:8px 10px;border-radius:8px;background:var(--bg);font-size:13.5px;color:var(--t2);line-height:1.45}
+.step.next{box-shadow:inset 3px 0 0 var(--acc)}
+.step.skip .nm,.step.off .nm{color:var(--t2)}
+.step.skip .bx,.step.off .bx{border-style:dashed}
+.step.off .row{opacity:.75}
+
+/* switch row */
+.swrow{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:10px 14px;text-align:left;
+       background:var(--card);border:1px solid var(--bd);border-radius:14px}
+.swrow:disabled{opacity:.55}
+.tgl{flex-shrink:0;position:relative;width:51px;height:31px;border-radius:16px;background:var(--bd2);transition:background .2s}
+.tgl i{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.swrow[aria-checked="true"] .tgl{background:var(--acc)}
+.swrow[aria-checked="true"] .tgl i{transform:translateX(20px)}
+
+/* bowel movements */
+.bmh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
+.bmh h3{font-size:16px;font-weight:600}
+.bmh span{font-size:13.5px;color:var(--t2)}
+.bmrow{display:flex;flex-wrap:wrap;gap:8px}
+.bmc{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border:1px solid transparent;border-radius:11px;
+     font-size:14px;font-weight:500;background:var(--bg)}
+.bmc b{font-weight:700}
+.bmc.opt{background:var(--acc-bg);color:var(--acc)}
+.bmc.constip{background:var(--warn-bg);color:var(--warn)}
+.bmc.loose{background:var(--loose-bg);color:var(--loose)}
+.bmc.alert{background:var(--alert-bg);color:var(--alert)}
+.bmc .fl{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--alert);color:var(--card);font-size:12px;font-weight:700}
+.bmc.add{border:1.5px dashed var(--acc);background:transparent;color:var(--acc);font-weight:600;padding:0 16px}
+
+/* forms */
+.fld{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:6px 0}
+.fld+.fld,.fld+.field{border-top:1px solid var(--bd)}
+.fld>label{font-size:16px;font-weight:500;line-height:1.3}
+.fld>label small{display:block;font-size:12.5px;font-weight:400;color:var(--t2)}
+.fld .inp{width:140px;flex-shrink:0;text-align:right}
+.tbox{position:relative;display:block;flex-shrink:0}
+/* iPhone shows an empty time field as a blank box, so label it (iOS only; other browsers draw their own --:--) */
+@supports (-webkit-touch-callout:none){
+  .tbox[data-empty]::after{content:"Set";position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:16px;pointer-events:none}
+}
+.inp{display:block;width:100%;min-width:0;min-height:44px;background:var(--bg);border:1px solid var(--bd);border-radius:10px;
+     padding:8px 12px;font-size:16px;-webkit-appearance:none;appearance:none}
+.inp::-webkit-date-and-time-value{text-align:inherit}
+.inp:disabled{opacity:.55}
+.inp:focus,.ta:focus{outline:2px solid var(--acc);outline-offset:1px}
+.tin{display:flex;gap:6px;flex-shrink:0}
+.fld .tin .inp{width:118px}
+.nowb{min-height:44px;padding:0 12px;border:1px solid var(--bd2);border-radius:10px;background:var(--card);font-size:14px;font-weight:600;color:var(--acc)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field>label,.lbl{font-size:14px;font-weight:600;color:var(--t2)}
+.card .field{padding-top:10px}
+.ta{width:100%;min-height:84px;resize:vertical;background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;font-size:16px;line-height:1.45}
+.pg>.field .ta{background:var(--card)}
+.dur{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;background:var(--acc-bg);
+     color:var(--acc);font-size:14px;font-weight:600}
+.dur b{display:block;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.dur small{display:block;font-size:12.5px;font-weight:500}
+.dur.short{background:var(--warn-bg);color:var(--warn)}
+.bdg{display:inline-block;margin-left:6px;padding:0 7px;border-radius:6px;font-size:12px;font-weight:600;line-height:1.6;vertical-align:1px}
+.bdg.high{background:var(--acc-bg);color:var(--acc)}
+.bdg.mid{background:var(--warn-bg);color:var(--warn)}
+.bdg.low{background:var(--alert-bg);color:var(--alert)}
+.up{padding:10px 12px;border-radius:10px;background:var(--warn-bg);color:var(--warn);font-size:13.5px;line-height:1.4}
+.st{font-size:13.5px;color:var(--acc);line-height:1.4}
+.st.err{color:var(--alert)}
+.st:empty{display:none}
+.card .st{padding-top:8px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{border:1px solid var(--bd);border-radius:12px;background:var(--card);padding:10px 12px;min-width:0}
+.stat b{display:block;font-size:20px;font-weight:650;letter-spacing:-.01em;white-space:nowrap}
+.stat b small{font-size:13px;font-weight:500;color:var(--t2)}
+.stat b.met{color:var(--acc)}
+.stat b.bad{color:var(--alert)}
+.stat span{display:block;font-size:12.5px;color:var(--t2);line-height:1.3;margin-top:2px}
+
+/* sleep week */
+.sltab{border:1px solid var(--bd);border-radius:14px;background:var(--card);overflow:hidden;font-size:13px}
+.sltab .r{display:grid;grid-template-columns:78px repeat(4,minmax(0,1fr));align-items:center}
+.sltab .r+.r{border-top:1px solid var(--bd)}
+.sltab .r>div{padding:8px 3px;min-width:0;white-space:nowrap}
+.sltab .r>div:first-child{padding-left:10px;padding-right:6px}
+.sltab .hd{font-size:12.5px;font-weight:600;color:var(--t2);background:var(--bg)}
+@media (max-width:359px){.sltab{overflow-x:auto}.sltab .r{min-width:340px}}
+.sltab .r.today{background:var(--today)}
+.sltab .r.sel{box-shadow:inset 3px 0 0 var(--acc)}
+.sltab .dc b{display:block;font-size:12.5px;font-weight:600;white-space:nowrap}
+.sltab .dc span{display:block;font-size:12px;color:var(--t2)}
+.sltab b{font-weight:600}
+.sltab b.met{color:var(--acc)}
+
+/* workout week matrix: days down, categories across; fixed tracks keep every row's columns lined up */
+.mx{--mxc:46px 64px 64px minmax(0,1fr) minmax(0,1fr);border:1px solid var(--bd);border-radius:14px;background:var(--card);overflow:clip}
+.mx .r{display:grid;grid-template-columns:var(--mxc)}
+.mx .r+.r{border-top:1px solid var(--bd)}
+.mx .r>*{min-width:0;padding:5px 3px}
+.mx .r>*+*{border-left:1px solid var(--bd)}
+.mx .hd{position:sticky;top:calc(env(safe-area-inset-top) + var(--topH));z-index:10;background:var(--card);box-shadow:0 1px 0 var(--bd2)}
+.mx .hd+.r{border-top:0}
+.mx .hd>*{display:flex;flex-direction:column;justify-content:flex-end;padding:8px 5px 7px;font-size:12px;font-weight:600;line-height:1.2;color:var(--t2)}
+.mx .hd small{font-size:11px;font-weight:400}
+.mx .r.today{background:var(--today)}
+.mx .r>.rh{padding:0}
+.dcb{display:flex;flex-direction:column;align-items:flex-start;width:100%;height:100%;padding:7px 2px 7px 7px;border:0;background:none;
+     text-align:left;font-size:12.5px;line-height:1.25;color:var(--t2)}
+.dcb b{font-size:14px;font-weight:650;color:var(--text)}
+.dcb small{margin-top:3px;font-size:11px;line-height:1.2}
+.mx .r.today .dcb b,.mx .r.today .dcb span{color:var(--acc)}
+.cell{display:flex;flex-direction:column;gap:4px}
+.ch{display:block;width:100%;min-height:44px;padding:5px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);
+    text-align:left;font-size:12.5px;line-height:1.25;color:var(--text)}
+.ch:active{border-color:var(--bd2)}
+.ch .n{display:block;font-weight:500;overflow-wrap:break-word}
+.ch .s{display:block;margin-top:1px;font-size:11.5px;color:var(--t2);overflow-wrap:break-word}
+.ch.done{background:var(--acc-bg);border-color:var(--acc);color:var(--acc)}
+.ch.done .s{color:var(--acc)}
+.mx .r.fu .ch{background:transparent;border-style:dashed}
+.mx .em{padding:8px 6px;font-size:12px;color:var(--t3)}
+.mx .rest{grid-column:span 3;display:flex;align-items:center;padding:6px 10px;font-size:12.5px;line-height:1.35;color:var(--t2)}
+/* very narrow screens: scroll sideways instead of squeezing (a sticky header can't work inside a scroller) */
+@media (max-width:359px){.mx{overflow-x:auto}.mx .r{min-width:340px}.mx .hd{position:static}}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+/* segmented control */
+.seg{display:flex;gap:2px;padding:2px;border-radius:10px;background:var(--bd)}
+.seg button{flex:1;min-height:36px;border:0;border-radius:8px;background:transparent;font-size:14px;font-weight:500;color:var(--t2)}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--text);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+
+/* fertility */
+.fst{border:1px solid var(--bd);border-radius:14px;background:var(--card);padding:12px 14px}
+.fst h3{font-size:16px;font-weight:650;letter-spacing:-.01em}
+.fst p{font-size:14px;color:var(--t2);margin-top:2px;line-height:1.4}
+.fst.due,.fst.ok{border-color:var(--acc);background:var(--today)}
+.fst.due h3,.fst.ok h3{color:var(--acc)}
+.fst.bad{border-color:var(--alert);background:var(--alert-bg)}
+.fst.bad h3{color:var(--alert)}
+.lg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--t2);padding:0 2px}
+.lg .mk{display:inline-block;margin:0 5px 0 0;vertical-align:-1px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow{font-size:12px;font-weight:600;color:var(--t2);text-align:center;padding:2px 0}
+.cd{display:flex;flex-direction:column;align-items:center;min-width:0;min-height:52px;border:1px solid var(--bd);background:var(--card);
+    border-radius:10px;padding:6px 0;font-size:15px;font-weight:600;line-height:1.3}
+.cd.td{color:var(--acc)}
+.cd.fu{border-style:dashed;background:transparent}
+.cd[aria-pressed="true"]{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+
+/* backup footer */
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 10px;margin:22px 0 6px;font-size:13px;color:var(--t2)}
+.foot span{flex-basis:100%;text-align:center}
+.foot.stale span{color:var(--warn);font-weight:600}
+.foot button{min-height:40px;border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:0 16px;font-size:14px;color:var(--t2)}
+
+/* tab bar */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--bd);
+      padding:2px max(4px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(4px,env(safe-area-inset-left))}
+.tabs button{flex:1;max-width:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:54px;
+             border:0;background:none;font-size:11.5px;font-weight:500;line-height:1.15;color:var(--t2)}
+.tabs svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tabs button[aria-current="page"]{color:var(--acc);font-weight:600}
+
+/* bottom sheet */
+.shade{position:fixed;inset:0;background:var(--shade);z-index:40}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-width:560px;margin:0 auto;background:var(--card);border-radius:18px 18px 0 0;
+       max-height:90vh;max-height:90dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+       padding:8px 18px calc(env(safe-area-inset-bottom) + 18px);box-shadow:0 -8px 30px rgba(0,0,0,.15);animation:up .22s ease-out}
+.sheet:focus{outline:none}
+@keyframes up{from{transform:translateY(30px);opacity:.6}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}.tgl,.tgl i{transition:none}}
+.grab{width:38px;height:5px;border-radius:3px;background:var(--bd2);margin:0 auto 12px}
+.sh{display:flex;align-items:flex-start;gap:12px}
+.sh h2{font-size:19px;font-weight:700;letter-spacing:-.015em;line-height:1.25}
+.sh p{font-size:13.5px;color:var(--t2);margin-top:2px}
+.x{margin-left:auto;width:40px;height:40px;flex-shrink:0;border:0;border-radius:50%;background:var(--bg);color:var(--t2);font-size:22px;line-height:1}
+.flash{margin-top:10px;padding:8px 12px;border-radius:10px;background:var(--acc-bg);color:var(--acc);font-size:13.5px;font-weight:600}
+.tgt{margin-top:12px;font-size:15px;font-weight:600;color:var(--acc)}
+.last{margin-top:6px;font-size:13.5px;color:var(--t2)}
+.last b{color:var(--text);font-weight:500}
+.sheet .up{margin-top:10px}
+.more{margin-top:6px;font-size:14px;color:var(--t2)}
+.more summary{cursor:pointer;font-weight:600;color:var(--acc);min-height:36px;display:flex;align-items:center}
+.more p{margin-top:2px;line-height:1.45}
+.sets{margin-top:10px}
+.sr{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,1fr) 44px;gap:8px;align-items:center;margin-bottom:8px}
+.sets.noload .sr{grid-template-columns:28px minmax(0,1fr) 44px}
+.sr.h{font-size:12.5px;color:var(--t2);margin-bottom:4px}
+.sr input{width:100%;min-width:0;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px;font-size:17px}
+.sr input:focus{outline:2px solid var(--acc);outline-offset:1px}
+.sn{font-size:14px;color:var(--t2);text-align:center}
+.rm{height:44px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--t2);font-size:19px}
+.quiet{margin-top:2px;padding:8px 0;border:0;background:none;color:var(--t2);font-size:13.5px;text-decoration:underline}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{min-height:48px;border:1px solid var(--bd2);background:var(--card);border-radius:12px;padding:0 16px;font-size:15px;font-weight:600}
+.btn:active{background:var(--bg)}
+.btn.pri{flex:1;background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
+.btn.pri:disabled{background:var(--bg);border-color:var(--bd);color:var(--t2)}
+.btn.danger{background:var(--alert);border-color:var(--alert);color:var(--card)}
+.btn.del{color:var(--alert)}
+.sheet .st{margin-top:10px}
+.wait{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--bg);font-size:14px;color:var(--t2)}
+.asktx{margin-top:8px;font-size:15px;line-height:1.45;color:var(--t2)}
+.sheet .fld{border-bottom:1px solid var(--bd);margin-top:6px}
+.sheet .lbl{margin:14px 0 8px}
+.sheet .field{margin-top:14px}
+.bris{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.bris button{min-height:48px;border:1px solid var(--bd2);border-radius:10px;background:var(--card);font-size:18px;font-weight:600;color:var(--t2)}
+.bris button[aria-checked="true"]{color:var(--card)}
+.bris button.opt[aria-checked="true"]{background:var(--acc);border-color:var(--acc)}
+.bris button.constip[aria-checked="true"]{background:var(--warn);border-color:var(--warn)}
+.bris button.loose[aria-checked="true"]{background:var(--loose);border-color:var(--loose)}
+.bris button.alert[aria-checked="true"]{background:var(--alert);border-color:var(--alert)}
+.bdesc{margin-top:8px;font-size:14px;font-weight:500}
+.bdesc.opt{color:var(--acc)}.bdesc.constip{color:var(--warn)}.bdesc.loose{color:var(--loose)}.bdesc.alert{color:var(--alert)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 18px;border:1px solid var(--bd2);border-radius:10px;background:var(--card);font-size:15px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--alert-bg);border-color:var(--alert);color:var(--alert);font-weight:600}
+
+/* 16-week block: pelvic floor count in the week matrix, Sunday check-in, block rules */
+.stat.wide{grid-column:1/-1}
+.dcb .pfx{margin-top:2px;color:var(--t3)}
+.dcb .pfx.ok{color:var(--acc);font-weight:600}
+.card .lbl{margin:12px 0 8px}
+.lbl small{display:block;font-size:12.5px;font-weight:400}
+.ck{display:flex;flex-wrap:wrap;gap:6px}
+.ck button{min-height:44px;min-width:52px;padding:0 14px;border:1px solid var(--bd2);border-radius:10px;background:var(--card);font-size:15px;font-weight:500}
+.ck button[aria-checked="true"]{background:var(--acc);border-color:var(--acc);color:var(--on-acc);font-weight:600}
+.ck button:disabled{opacity:.55}
+.ckh{display:flex;align-items:center;gap:6px;flex-shrink:0;color:var(--t2)}
+.fld .ckh .inp{width:70px}
+.cktab .r{grid-template-columns:52px repeat(5,minmax(0,1fr))}
+.cktab .hd>div{white-space:normal;line-height:1.25}
+.rules{padding-top:4px;padding-bottom:4px}
+.rules .more{margin-top:0}
+.rules .more+.more{border-top:1px solid var(--bd)}
+.rl{margin:0 0 10px 18px;line-height:1.45}
+.rl li+li{margin-top:5px}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 70px);z-index:60;display:flex;align-items:center;gap:14px;
+       width:max-content;max-width:calc(100% - 24px);min-height:48px;padding:6px 8px 6px 16px;border-radius:12px;background:var(--toast);color:var(--toast-t);
+       font-size:14.5px;box-shadow:0 8px 24px rgba(0,0,0,.22);transform:translate(-50%,16px);opacity:0;visibility:hidden;
+       transition:opacity .18s,transform .18s,visibility 0s .18s}
+.toast.show{opacity:1;visibility:visible;transform:translate(-50%,0);transition:opacity .18s,transform .18s}
+.toast button{min-height:36px;padding:0 12px;border:0;border-radius:8px;background:none;color:var(--toast-a);font-size:14.5px;font-weight:700}
+</style>
+</head>
+<body>
+<div id="app" class="app">
+  <header class="top" id="top"></header>
+  <main id="main"></main>
+  <nav class="tabs" aria-label="Sections">
+    <button type="button" data-t="sleep" onclick="setTab('sleep')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>Sleep</button>
+    <button type="button" data-t="gut" onclick="setTab('gut')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h11.2a2.8 2.8 0 0 1 0 5.7H6.8a2.8 2.8 0 0 0 0 5.6h10.4a2.8 2.8 0 0 1 0 5.7H9"/></svg>Gut</button>
+    <button type="button" data-t="workout" onclick="setTab('workout')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 7v10M17.5 7v10M3.5 10v4M20.5 10v4M6.5 12h11"/></svg>Workout</button>
+    <button type="button" data-t="fert" onclick="setTab('fert')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></svg>Fertility</button>
+  </nav>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="sheetRoot"></div>
+<input id="imp" type="file" hidden onchange="importData(this)">
+<script>
+"use strict";
+/* =================== WORKOUT PLAN =================== */
+const DAYS=["mon","tue","wed","thu","fri","sat","sun"];
+const DNAME={mon:"Monday",tue:"Tuesday",wed:"Wednesday",thu:"Thursday",fri:"Friday",sat:"Saturday",sun:"Sunday"};
+const DSHORT={mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",sun:"Sun"};
+const TAG={mon:"Heavy",tue:"Zone 2",wed:"Heavy",thu:"VO2",fri:"Light",sat:"Long",sun:"Rest"};
+/* listed in the order you do them: warm-up doses, lifting, intervals, then Zone 2 */
+const ORDER=[["me","Mobility & endurance"],["st","Strength"],["vo2","VO2 max"],["z2","Zone 2"]];
+const HEAVY="Heavy, on the machine: 1–2 lighter warm-up sets, then stop each working set with 2–3 good reps left. Breathe out on the effort instead of holding your breath.";
+const LIGHT="Light free weights: stop each set with 3–4 good reps left, lowering slowly. Breathe out on the effort.";
+/* the 16-week block pairs its lifts to fit each session into an hour */
+const PAIRS_H=" Pairs: one set of each exercise in the pair back to back, then rest 60–90 s.";
+const PAIRS_L=" Pairs: one set of each exercise back to back, then rest 60 s.";
+const QUICK=new Set(["pushups","hindu","stretch","pf-am","pf-work","pf-pm","rocker","circuit"]);
+const NO_LOAD=new Set(["pushups","hindu","stretch","plank","hang","balance","pf-am","pf-work","pf-pm","rocker","circuit","pf-bridge","walk"]);
+const PF_CUE="The squeeze: draw the penis in and lift the scrotum, as if stopping urine and holding in gas at the same time. Buttocks, thighs and belly stay relaxed; keep breathing. Slow holds: squeeze, hold, then let go fully for as long as you held. Quick flicks: hard 1-second squeezes with a full let-go between each. Finish with 5 slow belly breaths, letting the pelvic floor drop. End the set when the squeeze weakens or your buttocks, belly or breath take over. Log the number of good holds.";
+
+const EX={
+ "zone2":{n:"Incline walk",f:"Zone 2 incline walk",m:"time",u:"min",wl:"Vest lb",wf:w=>w+" lb vest",
+   c:"Easy enough to talk in full sentences. Start around 5–8% incline at 4.5–5 km/h and adjust. Don't hold the rails."},
+ "sled":{n:"Sled intervals",f:"Sled-push treadmill intervals",m:"time",u:"min",wl:"Level",wf:w=>"level "+w,
+   c:"Hard means about 8/10, only a few words. Use the built-in sled mode only, at a resistance where your breathing, not leg burn, stops you. Start at 4 × 2 min; go to 3, then 4 min after two good sessions at each length, and cap it at 4 × 4. Log each hard interval as a set."},
+ "pushups":{n:"Push-ups",f:"Push-ups",m:"reps",
+   c:"Daily dose, in the warm-up. Split into two mini-sets, or put your hands on a bench, if 15–20 in a row isn't comfortable yet."},
+ "hindu":{n:"Hindu squats",f:"Hindu squats",m:"reps",
+   c:"Daily dose, in the warm-up. Breathe out and lift the pelvic floor on the way up. Add about 5 reps a week at most; high reps load the knees."},
+ "pullups":{n:"Pull-ups",f:"Assisted pull-ups (machine)",m:"reps",wl:"Assist lb",wf:w=>w+" lb assist",
+   c:"Stop with 2–3 clean reps left. Lower the assistance as you get stronger."},
+ "stretch":{n:"Stretch",f:"Full-body stretch",m:"time",u:"min",c:"Finish with 5 slow belly breaths, letting the pelvic floor drop and soften."},
+ "plank":{n:"Side plank",f:"Side plank",m:"time",u:"sec",c:"Log each side as its own set if you like."},
+ "hang":{n:"Dead hang",f:"Dead hang",m:"time",u:"sec",c:"For grip and shoulders. Stop before your grip gives out."},
+ "carry":{n:"Farmer's carry",f:"Farmer's carry",m:"time",u:"sec",wl:"lb per hand",wf:w=>w+" lb per hand",
+   c:"30–40 m per set, walking tall. Pick dumbbells you can carry without leaning."},
+ "balance":{n:"Balance",f:"Single-leg balance",m:"time",u:"sec",c:"Stand near a rail or wall. Log each leg as its own set if you like."},
+ "leg-press":{n:"Leg press",f:"Leg press (machine)",m:"reps",top:10,
+   c:"Breathe out and lift the pelvic floor as you press. Lower only as far as your low back stays on the pad, and don't lock the knees hard at the top."},
+ "chest-machine":{n:"Chest press",f:"Chest press (machine)",m:"reps",top:10,c:"Set the seat so the handles line up with mid-chest."},
+ "row":{n:"Seated row",f:"Seated cable row",m:"reps",top:12,c:"Tall chest, pull to the lower ribs."},
+ "ham-curl":{n:"Leg curl",f:"Seated leg curl",m:"reps",top:15,c:"Same exercise as the hamstring curl."},
+ "adductor":{n:"Adductor",f:"Adductor machine",m:"reps",top:15},
+ "smith-rdl":{n:"Smith RDL",f:"Smith-machine Romanian deadlift",m:"reps",top:8,
+   c:"Flat back, push the hips back, and stop when the hamstrings are tight, about mid-shin. Breathe out and lift the pelvic floor as you stand."},
+ "shoulder-machine":{n:"Shoulder press",f:"Shoulder press (machine)",m:"reps",top:10,
+   c:"Covers the military and overhead press. Use the neutral grip if your shoulders complain."},
+ "cs-row":{n:"Supported row",f:"Chest-supported row (machine)",m:"reps",top:12,c:"Chest stays on the pad, so your low back rests after the RDLs."},
+ "decline-machine":{n:"Decline press",f:"Decline press (machine)",m:"reps",top:10,c:"On the machine, or a Smith machine with the safety stops set."},
+ "abductor":{n:"Abductor",f:"Abductor machine",m:"reps",top:15},
+ "squat-db":{n:"Goblet squat",f:"Goblet squat (light dumbbell)",m:"reps",top:15,c:"Breathe out and lift the pelvic floor as you stand. Keep it light; Friday follows Thursday's intervals."},
+ "press-incline":{n:"Incline DB press",f:"Incline dumbbell press (light)",m:"reps",top:15},
+ "db-rdl":{n:"DB RDL",f:"Dumbbell Romanian deadlift (light)",m:"reps",top:12,c:"Same flat-back hinge as Wednesday, with light dumbbells. Breathe out and lift the pelvic floor as you stand."},
+ "barbell-curl":{n:"Barbell curl",f:"Barbell curl",m:"reps",top:15,c:"An EZ bar is easier on the wrists."},
+ "pushdown":{n:"Pushdown",f:"Cable triceps pushdown",m:"reps",top:15},
+ /* added for the 16-week block; bw = bodyweight, so the heavy/light machine cue doesn't apply */
+ "pf-am":{n:"Morning set",f:"Pelvic floor: morning set",m:"reps",c:PF_CUE},
+ "pf-work":{n:"Work set",f:"Pelvic floor: work set",m:"reps",c:PF_CUE},
+ "pf-pm":{n:"Evening set",f:"Pelvic floor: evening set",m:"reps",c:PF_CUE},
+ "pf-bridge":{n:"PF bridge",f:"Pelvic floor bridge with ball squeeze",m:"reps",bw:true,
+   c:"On your back, knees bent, a soft ball or rolled towel between the knees. Squeeze the pelvic floor, press through your heels to lift the hips, squeeze the ball and hold 5 s, then lower slowly. Replaces the adductor machine."},
+ "lat-lunge":{n:"Lateral lunge",f:"Lateral (side-step) lunge",m:"reps",top:8,bw:true,
+   c:"Step wide to one side, bend that knee and sit back while the other leg stays straight, then push back to start. Log reps per side. Bodyweight first; once 2 × 8 is easy, hold a light dumbbell at your chest. Replaces the abductor machine."},
+ "rocker":{n:"Pelvic rocker",f:"Pelvic rocker",m:"reps",
+   c:"On your back, knees bent: roll the tailbone up toward your stomach so the low back flattens, then roll it back down into the floor. Slow."},
+ "circuit":{n:"Hip & PF circuit",f:"Hip & pelvic floor circuit",m:"time",u:"min",
+   c:"In order, at an easy pace. Pelvic rocker. Pelvic floor bridge (Dr. Rowe's testicular bridge): squeeze the pelvic floor, lift the hips and hold 5 s; from Week 9, single-leg. Lateral lunge. Side plank. Single-leg balance near a rail or wall."},
+ "walk":{n:"Easy walk",f:"Easy outdoor walk",m:"time",u:"min",
+   c:"Easier than Zone 2, outdoors if you can. It doesn't count toward Zone 2 minutes. Skip it and rest completely if you need to."}
+};
+
+/* t = full target; b and i = short label and note for the week matrix */
+const DOSE=[{id:"pushups",t:"15–20 reps, daily dose",i:"15–20 reps",s:1},{id:"hindu",t:"15–20 reps, daily dose",i:"15–20 reps",s:1}];
+const PULL={id:"pullups",t:"3 × 5–8",s:3};
+const STRETCH={id:"stretch",t:"5 min: hips, hamstrings, chest and lats",i:"5 min",s:1};
+/* Zone 2 short labels are minutes; the matrix column header carries the unit */
+const PLAN={
+ mon:{z2:[{id:"zone2",t:"15 min after lifting",b:"15",i:"",s:1}],vo2:[],
+      me:[...DOSE,PULL,STRETCH],
+      st:[{id:"leg-press",t:"3 × 8–10",s:3},{id:"chest-machine",t:"3 × 8–10",s:3},{id:"row",t:"3 × 10–12",s:3},
+          {id:"ham-curl",t:"3 × 10–15",s:3},{id:"adductor",t:"2 × 12–15",s:2}]},
+ tue:{z2:[{id:"zone2",t:"40–45 min",b:"40–45",i:"",s:1}],vo2:[],
+      me:[...DOSE,{id:"plank",t:"2 × 30 s per side",i:"2 × 30 s",s:2},{id:"hang",t:"2 × 20–40 s",s:2},STRETCH],st:[]},
+ wed:{z2:[{id:"zone2",t:"15 min after lifting",b:"15",i:"",s:1}],vo2:[],
+      me:[...DOSE,PULL,STRETCH],
+      st:[{id:"smith-rdl",t:"3 × 8",s:3},{id:"shoulder-machine",t:"3 × 8–10",s:3},{id:"cs-row",t:"3 × 10–12",s:3},
+          {id:"decline-machine",t:"3 × 8–10",s:3},{id:"abductor",t:"2 × 12–15",s:2}]},
+ thu:{z2:[{id:"zone2",t:"15 min cool-down after the intervals",b:"15",i:"",s:1}],
+      vo2:[{id:"sled",t:"8 min easy build-up, then 4 × 4 min hard with 3 min easy walking between",b:"Sled",i:"4 × 4",s:4}],
+      me:[...DOSE,{id:"stretch",t:"5 min: calves, quads and hip flexors",i:"5 min",s:1}],st:[]},
+ fri:{z2:[{id:"zone2",t:"15–20 min after lifting",b:"15–20",i:"",s:1}],vo2:[],
+      me:[...DOSE,PULL,{id:"carry",t:"3 × 30–40 m",s:3},STRETCH],
+      st:[{id:"squat-db",t:"3 × 12–15",s:3},{id:"press-incline",t:"3 × 10–15",s:3},{id:"db-rdl",t:"3 × 10–12",s:3},
+          {id:"barbell-curl",t:"2 × 10–15",s:2},{id:"pushdown",t:"2 × 10–15",s:2}]},
+ sat:{z2:[{id:"zone2",t:"55–60 min",b:"55–60",i:"",s:1}],vo2:[],
+      me:[...DOSE,{id:"stretch",t:"10 min, full body",i:"10 min",s:1},{id:"balance",t:"2 × 30 s per leg",i:"2 × 30 s",s:2}],st:[]},
+ sun:{z2:[{id:"zone2",t:"Optional easy walk",b:"Walk",i:"optional",f:"Easy walk",s:1}],rest:true}
+};
+
+/* =================== 16-WEEK FERTILITY BLOCK =================== */
+/* Starts Monday 19 Oct 2026. Days before it keep the plan above, so earlier logs still line up. */
+const WORK_FROM="2026-10-19";
+/* same day labels as before, so the week matrix's day column looks the same */
+const NEW_TAG={mon:"Heavy",tue:"Zone 2",wed:"Heavy",thu:"VO2",fri:"Light",sat:"Long",sun:"Rest"};
+const NEW_ORDER=[["pf","Pelvic floor · 3 sets through the day"],...ORDER];
+const PF_SETS=[["pf-am"],["pf-work"],["pf-pm"]];
+/* [last week, slow holds, quick flicks] — one dose per phase, the same for all three sets */
+const PF_DOSE=[[2,"Up to 5 × 3–5 s holds","5 quick flicks, gentle"],[4,"8 × 5–6 s holds","10 quick flicks"],
+ [8,"10 × 8–10 s holds","2 × 10 quick flicks"],[12,"10–12 × 10 s holds","2 × 10 quick flicks"],[Infinity,"12 × 10 s holds","3 × 10 quick flicks"]];
+const inBlock=date=>date>=WORK_FROM;
+const blockWeek=date=>Math.floor(dayDiff(WORK_FROM,date)/7)+1;
+const tagOf=date=>(inBlock(date)?NEW_TAG:TAG)[dkOf(date)];
+/* where and when each of the three daily sets happens; positions get more upright as the block goes on */
+function pfPos(k,w){
+ if(k===0)return w<=4?"lying in bed, before getting up":w<=8?"sitting on the edge of the bed, first thing":"standing, first thing in the morning";
+ if(k===1)return (w<=8?"seated":"standing")+", during a sitting break at work";
+ return w<=4?"lying in bed, before sleep":"standing, before bed";
+}
+/* one day of the block; it depends only on the weekday and the block week (w), so it's built once and kept */
+function blockDay(dk,w){
+ const de=w===8,late=w>=9,dz=PF_DOSE.find(x=>w<=x[0]);
+ const z2=(min,t)=>({id:"zone2",t:t+(late?"; last 5 min: walking lifts, pelvic floor lifted halfway for 10 steps, relaxed for 10":""),b:min,i:"",s:1});
+ const lift=(id,n,reps,pair,short)=>{const k=de&&n>2?2:n;
+  return {id,t:(de?"Deload: ":"")+k+" × "+reps+(de?" at your usual weight":"")+(pair?" · "+pair:""),i:k+" × "+(short||reps),s:k}};
+ const dose=[{id:"pushups",t:"15–20 reps, daily dose",i:"15–20 reps",s:1},
+             {id:"hindu",t:"15–20 reps, daily dose; breathe out and lift the pelvic floor on the way up",i:"15–20 reps",s:1}];
+ const pull=partner=>({id:"pullups",t:"3 × 5–8 · pair A with "+partner,i:"3 × 5–8",s:3});
+ const stretch=(t,i,f)=>Object.assign({id:"stretch",t,i,s:1},f?{f}:{});
+ const S6="6 min: hips, hamstrings, chest and lats; finish with 5 release breaths";
+ const d={pf:PF_SETS.map(([id],k)=>({id,t:dz[1]+" + "+dz[2]+" · "+pfPos(k,w),s:1})),z2:[],vo2:[],me:[],st:[]};
+ const gym="60 min: warm-up 0–7 · strength 7–37 · Zone 2 37–52 · cool-down 52–60";
+ if(dk==="mon")return Object.assign(d,{tb:gym,
+  me:[...dose,pull("leg press"),stretch(S6,"6 min")],
+  st:[lift("leg-press",3,"8–10","pair A with pull-ups"),lift("chest-machine",3,"8–10","pair B with seated row"),
+      lift("row",3,"10–12","pair B with chest press"),lift("pf-bridge",2,"10, 5-s hold","pair C with leg curl","10"),
+      lift("ham-curl",2,"10–15","pair C with the bridge")],
+  z2:[z2("15","15 min after lifting")]});
+ if(dk==="tue")return Object.assign(d,{tb:"60 min: daily dose 0–4 · Zone 2 4–49 · core 49–60",
+  me:[...dose,{id:"plank",t:"2 × 30 s per side",i:"2 × 30 s",s:2},{id:"hang",t:"2 × 20–40 s",s:2},
+      {id:"rocker",t:"10 reps, 2 rounds, slow",i:"2 × 10",s:2},stretch("3 min, then 5 release breaths","3 min")],
+  z2:[z2("45","45 min")]});
+ if(dk==="wed")return Object.assign(d,{tb:gym,
+  me:[...dose,{id:"rocker",t:"10 reps, slow; primes the hip hinge",i:"10 reps",s:1},pull("Smith RDL"),stretch(S6,"6 min")],
+  st:[lift("smith-rdl",3,"8","pair A with pull-ups"),lift("shoulder-machine",3,"8–10","pair B with supported row"),
+      lift("cs-row",3,"10–12","pair B with shoulder press"),lift("lat-lunge",2,"8 per side","pair C with decline press","8/side"),
+      lift("decline-machine",2,"8–10","pair C with lateral lunge")],
+  z2:[z2("15","15 min after lifting")]});
+ if(dk==="thu")return Object.assign(d,{
+  tb:de?"60 min: daily dose 0–3 · Zone 2 3–48 · stretch 48–55":"60 min: daily dose 0–3 · build-up 3–11 · intervals 11–36 · Zone 2 36–51 · stretch 51–60",
+  me:[...dose,stretch("7 min: calves, quads and hip flexors; finish with 5 release breaths","7 min")],
+  vo2:de?[]:[{id:"sled",t:"8 min easy build-up, then 4 × 4 min hard with 3 min easy walking between",b:"Sled",i:"4 × 4",s:4}],
+  z2:[de?z2("45","Deload: 45 min easy, in place of the intervals"):z2("15","15 min cool-down after the intervals")]});
+ if(dk==="fri")return Object.assign(d,{tb:"60 min: warm-up 0–5 · strength 5–37 · Zone 2 37–52 · cool-down 52–60",
+  me:[...dose,pull("goblet squat"),{id:"carry",t:"3 × 30–40 m · trio C with curl and pushdown",i:"3 × 30–40 m",s:3},stretch(S6,"6 min")],
+  st:[lift("squat-db",3,"12–15","pair A with pull-ups"),lift("db-rdl",3,"10–12","pair B with incline press"),
+      lift("press-incline",3,"10–15","pair B with DB RDL"),lift("barbell-curl",2,"10–15","trio C"),lift("pushdown",2,"10–15","trio C")],
+  z2:[z2("15","15 min after lifting")]});
+ if(dk==="sat"){const m=w<=2?"60":"75";return Object.assign(d,{
+  tb:w<=2?"About 95 min, fed or fasted: daily dose 0–5 · Zone 2 5–65 · circuit 65–85 · stretch 85–95"
+         :"About 110 min, fed or fasted: daily dose 0–5 · Zone 2 5–80 · circuit 80–100 · stretch 100–110",
+  me:[...dose,{id:"circuit",i:"20 min",s:1,t:"20 min: pelvic rocker 2 × 10 · "+(late?"single-leg bridge 2 × 8 per side":"bridge 3 × 10")
+      +", 5-s hold · lateral lunge 2 × 10 per side · side plank 2 × 30 s per side · single-leg balance 2 × 30 s per leg"},
+      stretch("10 min, full body; finish with 5 release breaths","10 min")],
+  z2:[z2(m,m+" min, incline treadmill or a hilly outdoor route")]})}
+ return Object.assign(d,{tb:"Optional, up to 75 min, fed or fasted. Or rest completely.",rest:true,
+  restText:"Recovery: an easy walk and 10–15 min of mobility, or rest completely.",
+  me:[stretch("10–15 min: hips, hamstrings and chest; finish with 5 release breaths","10–15 min","Mobility")],
+  z2:[{id:"walk",t:"45–60 min outdoors, easier than Zone 2 (optional)",b:"Walk",i:"optional",s:1}]});
+}
+const planCache={};
+function dayPlan(date){
+ const dk=dkOf(date);if(!inBlock(date))return PLAN[dk];
+ const w=blockWeek(date),key=dk+w;
+ return planCache[key]||(planCache[key]=blockDay(dk,w));
+}
+/* weekly targets for the week starting on this Monday */
+function weekGoals(mon){
+ if(!inBlock(mon))return {z2:120,vo2:1};
+ const w=blockWeek(mon);
+ return {w,z2:w<=2?165:180,vo2:w===8?0:1,pf:21};
+}
+function phaseLine(w){
+ if(w>16)return "16-week block done. Keep the daily pelvic floor sets going; full strength can take 5–6 months.";
+ const h="Week "+w+" of 16 · ";
+ if(w===1)return h+"Baseline & learn. This week: book a semen analysis and a body scan. Keep the pelvic floor sets gentle while you learn the squeeze.";
+ if(w<=4)return h+"Baseline & learn. Learn the squeeze lying or sitting, and build the Thursday intervals toward 4 × 4.";
+ if(w<=7)return h+"Build. Stronger pelvic floor holds, sitting or standing. Thursday intervals reach 4 × 4.";
+ if(w===8)return h+"Deload. 2 sets per lift at your usual weight, easy Zone 2 instead of Thursday intervals, and a body scan.";
+ if(w<=12)return h+"Strengthen. Standing holds, a single-leg bridge on Saturday, and walking lifts at the end of each Zone 2 walk.";
+ if(w===13)return h+"Consolidate. Hold everything steady.";
+ return h+"Re-test. Repeat the semen analysis and body scan in Weeks 14–16, with the same abstinence days as the first test.";
+}
+
+/* =================== DIET PLAN =================== */
+/* meal:true steps are food (or tied to a meal), so they're skipped on a fast day unless you tick them. */
+/* The plan before the blood-work update; kept so earlier days still show what you ticked */
+const DIET_OLD=[
+  {id:"step1",time:"06:00 AM",meal:true,name:"Pure Fasted Gut Repair",
+   stack:"500 mL warm water + 5g L-Glutamine + 1 tbsp overnight-soaked Chia Seeds + pinch of sea salt",
+   science:"Absorption: L-Glutamine has zero competition from food amino acids. Enterocytes lining intestinal villi consume it immediately to repair tight junctions. Satiety/Transit: Soaked chia releases soluble mucilage that coats the gut and lubricates 7:30 AM bowel transit without harsh laxatives."},
+  {id:"step2",time:"08:00 AM",name:"Caffeine Separation",
+   stack:"1 cup plain Black Coffee (no dairy / sugar)",
+   science:"Iron Protection: Coffee polyphenols and chlorogenic acid inhibit non-heme iron absorption by 60–90%. Clearing coffee 4 hours before lunch protects Ferritin (35 µg/L) and MCV (78 fL) absorption."},
+  {id:"step3",time:"11:40 AM",meal:true,name:"Appetite & Blood Sugar Brake (20m Pre-Lunch)",
+   stack:"1/2 tbsp Psyllium Husk (4–5g) stirred in 350 mL water, drink immediately",
+   science:"Fullness: Expands 10× in stomach within 15 mins to activate gastric stretch receptors and peptide YY (PYY), preventing lunch overeating. A1c Control: Forms a viscous duodenal gel matrix that slows carb digestion, blunting postprandial glucose spikes."},
+  {id:"step4",time:"12:00 PM",meal:true,name:"Break-Fast Lunch (Plate Sequencing)",
+   stack:"1. Proteins/Greens first (3–4 Eggs OR Chicken/Salmon + Steamed Broccoli/Cucumbers in EVOO). 2. Carbs second (1–2 slices Sourdough). Side: 2 tbsp Curd/Dahi.",
+   science:"Sequencing proteins/fats before carbohydrates slows gastric emptying and flattens glucose. Live probiotic curd cultures survive best when buffered by a whole meal."},
+  {id:"step5",time:"03:00 PM",meal:true,name:"Sperm & Testosterone Pre-Gym Snack",
+   stack:"Handful of raw Walnuts (~30g) + 1/2 cup Blueberries or 1 Kiwi",
+   science:"Sperm Quality: Walnuts provide alpha-linolenic acid (ALA) and polyphenols clinically proven to reduce lipid peroxidation in sperm membranes, boosting motility and morphology. Vitamin C protects testicular cells from exercise ROS."},
+  {id:"step6",time:"05:40 PM",meal:true,name:"Post-Workout Anabolic Bridge",
+   stack:"1 scoop Whey Isolate (25g) + 5g Creatine Monohydrate + 1/2 Banana",
+   science:"Creatine loading is sodium- and insulin-dependent; post-workout contraction enhances uptake into muscle cells. Whey isolate provides a rapid leucine trigger for muscle protein synthesis (MPS)."},
+  {id:"step7",time:"06:40 PM",meal:true,name:"Gut Lining Preload (20m Pre-Dinner)",
+   stack:"1 cup warm Bone Broth (with pinch of black pepper and ginger)",
+   science:"Fullness: Warm collagenous fluid stimulates cholecystokinin (CCK) release, shutting down evening binge cravings. Gelatin and glycine seal the mucosa right before solid food."},
+  {id:"step8",time:"07:00 PM",meal:true,name:"Dinner + Fat-Soluble Micronutrients",
+   stack:"Wild Salmon / Chicken + Dal + Veggies + 1 cup Rice/Roti + Kefir. Supplements: Omega-3 (2000mg) + Vitamin D3 (2000–3000 IU).",
+   science:"Absorption: Lipophilic Omega-3 and D3 require dietary fats from salmon/olive oil for micellar absorption. Taking them at dinner separates them by >7 hours from midday psyllium, avoiding fiber-binding."},
+  {id:"step9",time:"09:00 PM",name:"Nightly Hormonal & Deep Sleep Cocktail",
+   stack:"Magnesium Glycinate (300–400mg) + Zinc Picolinate (25mg) + L-Glutamine (opt 2nd dose 5g in water)",
+   science:"Magnesium calms NMDA receptors for deep slow-wave sleep. Zinc drives nocturnal Leydig cell steroidogenesis and spermatogenesis (taken 2h away from dairy). Fasted glutamine supports overnight mucosal turnover."}
+];
+
+/* Blood-work plan from 14 Oct 2026: ferritin 35, MCV 78, A1c 5.7, HDL 0.97, LDL 3.41 */
+const DIET_FROM="2026-10-14";
+const IRON="n_iron";
+const DIET_NEW=[
+  {id:"n_water",time:"06:00 AM",name:"Wake-up water",
+   stack:"500 mL warm water + pinch of sea salt",
+   science:"Rehydrates after the overnight fast. On iron days, plain water is the only thing that goes in with the iron."},
+  {id:IRON,time:"06:00 AM",name:"Iron + vitamin C",
+   stack:"2 capsules Thorne Iron Bisglycinate (50 mg iron) + vitamin C 250–500 mg, with water only",
+   science:"Iron alone on an empty stomach absorbs best, so nothing else goes in for 1 hour. Vitamin C keeps the iron in its absorbable form. Every other day, because each dose raises hepcidin (the iron-blocking hormone) for about a day. Targets ferritin 35 µg/L and MCV 78 fL. Dark green or black stool is expected; tarry, sticky black stool or visible red blood is not, so call your doctor. Keep the bottle away from children."},
+  {id:"n_chia",time:"07:00 AM",meal:true,name:"Gut repair",
+   stack:"5 g L-glutamine + 1 tbsp overnight-soaked chia seeds in water",
+   science:"Same time every day, iron day or not. Chia's calcium, fiber and phytates would blunt the iron, so it waits 1 hour."},
+  {id:"n_bfast",time:"08:00 AM",meal:true,name:"Breakfast + coffee",
+   stack:"1 cup black coffee + 2 organic eggs + handful of walnuts (~30 g) + 2 figs",
+   science:"2 hours after the iron: the usual gap for coffee, eggs and calcium, which all block iron. Walnuts add omega-3 (ALA) and polyphenols linked to better sperm motility. Eggs and walnuts blunt the glucose rise from the figs."},
+  {id:"n_psy",time:"11:40 AM",meal:true,name:"Psyllium, 20 min before lunch",
+   stack:"1/2 tbsp (4–5 g) psyllium husk in 350 mL water, drink right away",
+   science:"A1c 5.7%: slows carb digestion at lunch. LDL 3.41 (limit 3.50): psyllium modestly lowers LDL. Kept 7+ hours from the dinner supplements so the fiber doesn't bind them."},
+  {id:"n_lunch",time:"12:00 PM",meal:true,name:"Lunch",
+   stack:"Chicken or salmon + 2 eggs + cooked veggies, protein first",
+   science:"Protein first keeps blood sugar steady. Cooked veggies (broccoli, peppers, greens) add vitamin C, which helps absorb the iron in the meal. 4 hours after coffee, so its polyphenols are cleared."},
+  {id:"n_pre",time:"03:00 PM",meal:true,name:"Pre-gym fuel",
+   stack:"1/2 cup blueberries + 1 small banana + 1 pear + 3–4 prunes",
+   science:"Carbs before training get used by working muscle, which makes it the best time of day for fruit with an A1c of 5.7. Prunes and pear add fiber that offsets iron constipation."},
+  {id:"n_post",time:"05:40 PM",meal:true,name:"Post-workout",
+   stack:"1 scoop whey isolate (25 g) + 5 g creatine monohydrate",
+   science:"Whey is fast protein for muscle repair and counts toward about 110–130 g of protein a day. 5 g of creatine is right at 92 kg."},
+  {id:"n_broth",time:"06:40 PM",meal:true,name:"Bone broth, 20 min before dinner",
+   stack:"1 cup warm bone broth + pinch of black pepper and ginger",
+   science:"Warm broth before dinner curbs evening cravings."},
+  {id:"n_dinner",time:"07:00 PM",meal:true,name:"Dinner",
+   stack:"Salmon or chicken + dal + veggies + 1 cup rice or roti + kefir",
+   science:"The fattiest meal of the day, so the fat-soluble supplements go with it. Last food of the day: about a 12-hour overnight fast until the 7:00 chia."},
+  {id:"n_supps",time:"07:00 PM",meal:true,name:"Dinner supplements",
+   stack:"Thorne Super EPA × 2 gelcaps · CoQ10 300 mg · vitamin D3 2,000 IU · Centrum × 1",
+   science:"CoQ10, omega-3 and vitamin D need dietary fat to absorb. CoQ10 is 200 mg if your label says ubiquinol. The Centrum's calcium and zinc sit 11 hours from the next iron dose. On 48-hour fast days, take these with the meal that breaks the fast."}
+];
+
+const BRISTOL={
+  1:{n:"Type 1",l:"Hard lumps",c:"constip",d:"Separate hard lumps (constipation)"},
+  2:{n:"Type 2",l:"Lumpy sausage",c:"constip",d:"Sausage-shaped but lumpy"},
+  3:{n:"Type 3",l:"Cracked sausage",c:"opt",d:"Like a sausage with surface cracks (normal)"},
+  4:{n:"Type 4",l:"Smooth snake",c:"opt",d:"Smooth and soft snake (optimal)"},
+  5:{n:"Type 5",l:"Soft blobs",c:"loose",d:"Soft blobs with clear edges"},
+  6:{n:"Type 6",l:"Mushy stool",c:"loose",d:"Mushy consistency, ragged edges"},
+  7:{n:"Type 7",l:"Liquid / watery",c:"alert",d:"Entirely liquid, watery diarrhea"}
+};
+
+/* =================== STORE & DATES =================== */
+/* Same keys and formats as before (bt26:*), so existing logs and backups load unchanged. */
+const K="bt26:";
+const S={
+ get(k,d){try{const v=localStorage.getItem(K+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+ set(k,v){try{localStorage.setItem(K+k,JSON.stringify(v));return true}catch(e){return false}},
+ del(k){try{localStorage.removeItem(K+k);return true}catch(e){return false}},
+ keys(){const out=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf(K)===0)out.push(k.slice(K.length))}}catch(e){}return out}
+};
+const $=s=>document.querySelector(s);
+const esc=v=>String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+const pad=n=>String(n).padStart(2,"0");
+const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parseD=s=>new Date(s+"T00:00:00");
+const todayKey=()=>ymd(new Date());
+const addDays=(s,n)=>{const d=parseD(s);d.setDate(d.getDate()+n);return ymd(d)};
+const dayDiff=(a,b)=>Math.round((parseD(b)-parseD(a))/864e5);
+const dkOf=s=>DAYS[(parseD(s).getDay()+6)%7];
+const dnum=s=>parseD(s).getDate();
+const isDate=s=>typeof s==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(s);
+const longDate=s=>parseD(s).toLocaleDateString(undefined,{day:"numeric",month:"long"});
+const shortDate=s=>parseD(s).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
+const nowHM=()=>{const d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes())};
+function fmtClock(t){
+  const m=/^(\d{1,2}):(\d{2})/.exec(t||"");
+  if(!m)return t||"";
+  return new Date(2000,0,1,+m[1],+m[2]).toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+}
+function monday(off){const d=parseD(todayKey());d.setDate(d.getDate()-((d.getDay()+6)%7)+7*off);return d}
+function dateOf(dk){const d=monday(weekOff);d.setDate(d.getDate()+DAYS.indexOf(dk));return ymd(d)}
+function monthStart(off){const d=parseD(todayKey());d.setDate(1);d.setMonth(d.getMonth()+off);return d}
+
+/* =================== STATE =================== */
+const TABNAME={sleep:"Sleep",gut:"Gut",workout:"Workout",fert:"Fertility"};
+let tab="gut";                 /* always open on the diet checklist, the tab used most through the day */
+let sel=null,weekOff=0,monthOff=0,refocus=null,lastTk=todayKey();
+let fertView=S.get("fview","week")==="month"?"month":"week";
+let workView=S.get("wview","day")==="week"?"week":"day";
+const openWhy=new Set();
+
+/* =================== WORKOUT LOGS =================== */
+function logs(id){const v=S.get("lift:"+id,[]);return Array.isArray(v)?v:[]}
+function entryOn(id,date){return logs(id).find(x=>x.d===date)||null}
+function logsBefore(id,date){return logs(id).filter(x=>x.d<date).sort((a,b)=>a.d.localeCompare(b.d))}
+function lb(v,unit){const n=Number(v);if(!isFinite(n))return null;return unit&&unit!=="lb"?Math.round(n*2.2046226218*100)/100:n}
+function norm(e){
+ if(!e)return null;
+ if(!Array.isArray(e.sets))return {legacy:true,mode:"reps",sets:[{reps:null,t:null,w:lb(e.w,e.unit)}]};
+ return {mode:e.mode==="time"?"time":"reps",sets:e.sets.map(s=>({
+  reps:s.reps==null?null:Number(s.reps),t:s.t==null?null:Number(s.t),
+  w:s.w==null||s.w===""?null:lb(s.w,e.unit)}))};
+}
+const unitOf=id=>EX[id].u||"sec";
+function modeOf(id){const m=S.get("mode:"+id,null);return m==="time"||m==="reps"?m:EX[id].m}
+const nf=n=>String(Math.round(n*100)/100);
+const hasW=w=>w!=null&&w!==0;
+function wtxt(w,id){const ex=EX[id];return ex.wf?ex.wf(nf(w)):nf(w)+" lb"}
+function fmtT(t){t=Math.round(t);if(t<60)return t+" s";if(t%60===0)return t/60+" min";return Math.floor(t/60)+":"+pad(t%60)+" min"}
+function summary(e,id){
+ const n=norm(e);if(!n)return "";
+ if(n.legacy)return (hasW(n.sets[0].w)?wtxt(n.sets[0].w,id)+", ":"")+"reps not recorded";
+ const main=s=>n.mode==="time"?fmtT(s.t||0):String(s.reps);
+ const ws=n.sets.map(s=>hasW(s.w)?s.w:null),same=ws.every(w=>w===ws[0]);
+ if(same){const base=n.sets.map(main).join(", ")+(n.mode==="reps"?" reps":"");return ws[0]!=null?base+" @ "+wtxt(ws[0],id):base}
+ return n.sets.map(s=>main(s)+(n.mode==="reps"?" reps":"")+(hasW(s.w)?" @ "+wtxt(s.w,id):"")).join(", ");
+}
+function shortSum(e){
+ const n=norm(e);if(!n)return "";if(n.legacy)return "logged";
+ const k=n.sets.length;
+ if(n.mode==="time")return k===1?fmtT(n.sets[0].t||0):k+" sets";
+ if(n.sets.every(s=>!hasW(s.w)))return n.sets.reduce((a,s)=>a+(s.reps||0),0)+" reps";
+ return k===1?n.sets[0].reps+" reps":k+" sets";
+}
+function topped(id,date){
+ const top=EX[id].top;if(!top)return false;
+ const l=logsBefore(id,date).map(norm).filter(n=>n&&!n.legacy&&n.mode==="reps"&&n.sets.length);
+ return l.length>=2&&l.slice(-2).every(n=>n.sets.every(s=>s.reps>=top));
+}
+function writeLog(id,date,entry){
+ const list=logs(id).filter(x=>x.d!==date);
+ list.push(entry);list.sort((a,b)=>a.d.localeCompare(b.d));
+ return S.set("lift:"+id,list);
+}
+function clearLog(id,date){
+ delete drafts[draftKey(id,date)];
+ const list=logs(id).filter(x=>x.d!==date);
+ return list.length?S.set("lift:"+id,list):S.del("lift:"+id);
+}
+function targetLog(inst,id){
+ const t=inst.t||"",mode=modeOf(id);
+ if(mode==="time"){
+  let m=t.match(/(\d+(?:[.,]\d+)?)\s*min/i);
+  if(m)return {mode:"time",sets:[{t:Math.round(parseFloat(m[1].replace(",","."))*60),w:null}]};
+  m=t.match(/(\d+)\s*s\b/i);
+  if(m)return {mode:"time",sets:[{t:+m[1],w:null}]};
+  return {mode:"time",sets:[{t:300,w:null}]};
+ }
+ const m=t.match(/(\d+)/);
+ return {mode:"reps",sets:[{reps:m?+m[1]:1,w:null}]};
+}
+function daySeq(date){
+ const dk=dkOf(date),p=dayPlan(date),seq=[];
+ (inBlock(date)?NEW_ORDER:ORDER).forEach(([c,name])=>{(p[c]||[]).forEach((inst,i)=>seq.push({dk,col:c,i,inst,group:name}))});
+ return seq;
+}
+const pfDone=date=>PF_SETS.filter(([id])=>entryOn(id,date)).length;
+function weekNumbers(){
+ const ds=DAYS.map(dateOf),inWk=e=>ds.includes(e.d);
+ const reps=n=>n&&!n.legacy&&n.mode==="reps"?n.sets.reduce((a,s)=>a+(s.reps||0),0):0;
+ let z2=0,pu=0,hs=0,pl=0,st=0;
+ logs("zone2").filter(inWk).forEach(e=>{const n=norm(e);if(n&&n.mode==="time")n.sets.forEach(s=>z2+=s.t||0)});
+ const vo2=logs("sled").filter(inWk).length;
+ logs("pushups").filter(inWk).forEach(e=>pu+=reps(norm(e)));
+ logs("hindu").filter(inWk).forEach(e=>hs+=reps(norm(e)));
+ logs("pullups").filter(inWk).forEach(e=>pl+=reps(norm(e)));
+ DAYS.forEach((dk,i)=>{const list=dayPlan(ds[i]).st||[];if(list.length&&list.every(x=>entryOn(x.id,ds[i])))st++});
+ const pf=ds.reduce((a,d)=>a+pfDone(d),0);
+ return {z2:Math.round(z2/60),vo2,pu,hs,pl,st,pf};
+}
+
+/* drafts keep half-typed sets while the log sheet is open */
+const drafts={};
+const draftKey=(id,date)=>date+"|"+id;
+function tIn(t,unit){t=Math.round(t);return unit==="min"?String(Math.round(t/60*100)/100):String(t)}
+function parseT(v,unit){
+ v=String(v).trim().toLowerCase();if(!v)return null;
+ let m=v.match(/^(\d+):([0-5]?\d)$/);if(m)return (+m[1])*60+(+m[2]);
+ m=v.match(/^(\d+(?:[.,]\d+)?)\s*(s|sec|m|min)?$/);if(!m)return NaN;
+ const x=parseFloat(m[1].replace(",",".")),u=m[2]?(m[2][0]==="s"?"sec":"min"):unit;
+ return Math.round(u==="min"?x*60:x);
+}
+function toDraft(n,id){
+ if(n.legacy)return {mode:"reps",sets:[{a:"",w:hasW(n.sets[0].w)?nf(n.sets[0].w):""}]};
+ return {mode:n.mode,sets:n.sets.map(s=>({a:n.mode==="time"?tIn(s.t||0,unitOf(id)):String(s.reps==null?"":s.reps),w:s.w==null?"":nf(s.w)}))};
+}
+function draft(){
+ const {id,date,inst}=cur,k=draftKey(id,date);
+ if(!drafts[k]){const n=norm(entryOn(id,date));
+  drafts[k]=n?toDraft(n,id):{mode:modeOf(id),sets:Array.from({length:Math.max(1,inst.s||1)},()=>({a:"",w:""}))}}
+ return drafts[k];
+}
+function ph(i,f){
+ const {id,date}=cur,dr=draft(),l=logsBefore(id,date),n=norm(l[l.length-1]),unit=unitOf(id);
+ if(n&&!n.legacy&&n.mode===dr.mode&&n.sets.length){
+  const s=n.sets[Math.min(i,n.sets.length-1)];
+  if(f==="a")return dr.mode==="time"?tIn(s.t||0,unit):String(s.reps);
+  if(hasW(s.w))return nf(s.w);
+ }
+ return f==="a"?(dr.mode==="time"?unit:"reps"):"–";
+}
+function lastNorm(){
+ const l=logsBefore(cur.id,cur.date),n=norm(l[l.length-1]);
+ if(!n||n.legacy||!n.sets.length)return null;
+ if(n.mode==="time"&&n.sets.every(s=>!s.t))return null;
+ if(n.mode==="reps"&&n.sets.every(s=>!s.reps))return null;
+ return n;
+}
+function showLoad(id,dr){return !NO_LOAD.has(id)||dr.sets.some(s=>String(s.w).trim()!=="")}
+function blankDraft(dr){return dr.sets.every(s=>!String(s.a).trim()&&!String(s.w).trim())}
+
+/* =================== SHARED UI =================== */
+const stat=(label,n,g,of,cls)=>`<div class="stat${cls?" "+cls:""}"><b class="num${g>0&&n>=g?" met":""}">${n}${g==null?(of?`<small> ${of}</small>`:""):`<small> ${of||"/"} ${g}</small>`}</b><span>${label}</span></div>`;
+const badStat=(label,n)=>`<div class="stat"><b class="num ${n>0?"bad":"met"}">${n}</b><span>${label}</span></div>`;
+const blankStat=label=>`<div class="stat"><b class="num">–</b><span>${label}</span></div>`;
+
+function ensureSel(){
+ const tk=todayKey(),ds=DAYS.map(dateOf);
+ if(tab==="fert"&&fertView==="month"){const mr=fertRange();if(!sel||!mr.includes(sel))sel=mr.includes(tk)?tk:mr[0];return ds}
+ if(!sel||!ds.includes(sel))sel=ds.includes(tk)?tk:ds[0];
+ return ds;
+}
+function dayProg(t,d){
+ if(t==="workout"){const seq=daySeq(d);return seq.length?seq.filter(x=>entryOn(x.inst.id,d)).length/seq.length:0}
+ if(t==="sleep"){const s=sleepData(d);return calcSleepDur(s.sleep,s.wake)?1:0}
+ if(t==="gut"){const c=gutCount(d);return c.due?c.done/c.due:0}
+ return 0;
+}
+function dayStrip(t){
+ const tk=todayKey(),ds=ensureSel(),cx=t==="fert"?fertCtx():null;
+ return `<div class="wk" id="strip" role="group" aria-label="Pick a day">${ds.map((d,i)=>{
+  const p=t==="fert"?fertProg(d,cx):dayProg(t,d);
+  let mk="",mt="";
+  if(t==="fert"){const f=fertMark(d,cx);mk=f[0];mt=f[1]}
+  else if(t==="gut"){const n=stoolLogs(d).length;if(n){mk="done";mt=n+(n===1?" bowel movement":" bowel movements")}}
+  return `<button type="button" class="wd${d===tk?" td":""}${d>tk?" fu":""}" data-d="${d}" aria-pressed="${d===sel}"
+   aria-label="${esc(shortDate(d))}, ${mt?mt+", ":""}${Math.round(p*100)}% done" onclick="pick('${d}')">
+   <span>${DSHORT[DAYS[i]]}</span><b class="num">${dnum(d)}</b><i class="bar"><i style="width:${Math.round(p*100)}%"></i></i><i class="mk ${mk}"></i></button>`;
+ }).join("")}</div>`;
+}
+function renderTop(){
+ const month=tab==="fert"&&fertView==="month",off=month?monthOff:weekOff,unit=month?"month":"week",go=month?"goMonth":"goWeek";
+ let sub;
+ if(month)sub=monthStart(off).toLocaleDateString(undefined,{month:"long",year:"numeric"});
+ else{const a=monday(weekOff),b=new Date(a);b.setDate(b.getDate()+6);const f=d=>d.toLocaleDateString(undefined,{day:"numeric",month:"short"});sub=f(a)+" – "+f(b)}
+ $("#top").innerHTML=`<div><h1>${TABNAME[tab]}</h1><p class="num">${off===0?(month?"This month · ":"This week · "):""}${sub}</p></div>
+  <div class="nav">${off<0?`<button type="button" class="nb txt" onclick="${go}(0)">Today</button>`:""}
+   <button type="button" class="nb" aria-label="Previous ${unit}" onclick="${go}(-1)">‹</button>
+   <button type="button" class="nb" aria-label="Next ${unit}"${off<0?"":" disabled"} onclick="${go}(1)">›</button></div>`;
+}
+function renderAll(){
+ lastTk=todayKey();
+ renderTop();
+ document.querySelectorAll(".tabs button").forEach(b=>{if(b.dataset.t===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+ $("#main").innerHTML=(tab==="workout"?renderWorkout():tab==="gut"?renderGut():tab==="fert"?renderFert():renderSleep())+backupFoot();
+ if(sheet)renderSheet();
+ if(refocus){const el=document.querySelector(refocus);refocus=null;if(el)el.focus({preventScroll:true})}
+}
+function setTab(t){if(!TABNAME[t])return;tab=t;renderAll();window.scrollTo(0,0)}
+function pick(d){sel=d;refocus=`[data-d="${d}"]`;renderAll()}
+function goWeek(d){weekOff=d===0?0:Math.min(0,weekOff+d);sel=null;renderAll();window.scrollTo(0,0)}
+function goMonth(d){monthOff=d===0?0:Math.min(0,monthOff+d);sel=null;renderAll();window.scrollTo(0,0)}
+
+/* =================== TOAST & UNDO =================== */
+let toastT=null,toastUndo=null;
+function toast(text,undo){
+ const t=$("#toast");if(!t)return;
+ toastUndo=undo||null;
+ t.innerHTML=`<span>${esc(text)}</span>${undo?`<button type="button" onclick="undoToast()">Undo</button>`:""}`;
+ t.classList.add("show");
+ clearTimeout(toastT);toastT=setTimeout(hideToast,undo?6000:2600);
+}
+function hideToast(){const t=$("#toast");if(t)t.classList.remove("show");toastUndo=null}
+function undoToast(){const u=toastUndo;hideToast();if(u){u();toast("Undone")}}
+/* remembers the stored value of a few keys, and returns a function that puts them back */
+function keep(...keys){
+ const prev=keys.map(k=>{let v=null;try{v=localStorage.getItem(K+k)}catch(e){}return [k,v]});
+ return ()=>{prev.forEach(([k,v])=>{try{v===null?localStorage.removeItem(K+k):localStorage.setItem(K+k,v)}catch(e){}});renderAll()};
+}
+
+/* =================== BOTTOM SHEET =================== */
+let sheet=null,sheetReturn=null,focusAfter=null;
+function openSheet(kind){
+ sheet=kind;
+ const app=$("#app");if(app)app.inert=true;
+ document.documentElement.classList.add("lock");
+ renderSheet();
+}
+function renderSheet(){
+ const root=$("#sheetRoot");
+ if(!sheet){root.innerHTML="";return}
+ let el=$("#sheet");
+ if(!el){
+  root.innerHTML=`<div class="shade" onclick="closeSheet()"></div><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" tabindex="-1"></div>`;
+  el=$("#sheet");
+ }
+ el.innerHTML=sheet==="lift"?liftSheet():sheet==="stool"?stoolSheet():askSheet();
+ const f=focusAfter;focusAfter=null;
+ if(f){const t=document.getElementById(f)||el;try{t.focus({preventScroll:t===el})}catch(e){t.focus()}}
+ fitSheet();
+}
+function closeSheetNow(){
+ const back=sheetReturn;
+ sheet=null;sheetReturn=null;cur=null;stool=null;ask=null;msg=null;flash=null;discardArmed=false;
+ $("#sheetRoot").innerHTML="";
+ const app=$("#app");if(app)app.inert=false;
+ document.documentElement.classList.remove("lock");
+ if(back)refocus=back;
+ renderAll();
+}
+function closeSheet(){
+ if(sheet==="lift"){
+  const r=liftCloseCheck();
+  if(r===false)return;
+  if(r==="saved"){const n=EX[cur.id].n;closeSheetNow();toast(n+" saved");return}
+ }
+ closeSheetNow();
+}
+/* keep the sheet above the iPhone keyboard */
+function fitSheet(){
+ const el=$("#sheet"),vv=window.visualViewport;if(!el||!vv)return;
+ const kb=Math.max(0,Math.round(window.innerHeight-vv.height-vv.offsetTop));
+ if(kb>80){el.style.bottom=kb+"px";el.style.maxHeight=Math.round(vv.height-8)+"px";el.style.paddingBottom="14px"}
+ else{el.style.bottom="";el.style.maxHeight="";el.style.paddingBottom=""}
+}
+
+/* confirm dialog (used before restoring a backup) */
+let ask=null;
+function confirmAsk(o){ask=o;sheetReturn=null;focusAfter="sheet";openSheet("ask")}
+function askSheet(){
+ return `<div class="grab" aria-hidden="true"></div>
+  <div class="sh"><div><h2 id="shT">${esc(ask.title)}</h2></div><button type="button" class="x" aria-label="Close" onclick="closeSheet()">×</button></div>
+  <p class="asktx">${esc(ask.text)}</p>
+  <div class="acts"><button type="button" class="btn" onclick="closeSheet()">Cancel</button>
+   <button type="button" class="btn pri${ask.danger?" danger":""}" onclick="askOk()">${esc(ask.ok)}</button></div>`;
+}
+function askOk(){const run=ask&&ask.run;closeSheetNow();if(run)run()}
+
+/* =================== WORKOUT TAB =================== */
+function renderWorkout(){return workView==="week"?renderMatrix():renderWorkDay()}
+/* the toggle remembers your choice; jumping from a matrix day into Day view doesn't change it */
+function setWorkView(v){workView=v==="week"?"week":"day";S.set("wview",workView);refocus='.seg button[aria-pressed="true"]';renderAll()}
+function openDay(date){sel=date;workView="day";renderAll();window.scrollTo(0,0)}
+function workToggle(){
+ return `<div class="seg" role="group" aria-label="Workout view">
+  <button type="button" aria-pressed="${workView==="day"}" onclick="setWorkView('day')">Day</button>
+  <button type="button" aria-pressed="${workView==="week"}" onclick="setWorkView('week')">Week</button></div>`;
+}
+function weekStats(){
+ const s=weekNumbers(),g=weekGoals(dateOf("mon"));
+ return `<div class="dh"><h3>${weekOff===0?"This week":"That week"}</h3>${g.w?`<span>Week ${g.w}${g.w<=16?" of 16":""}</span>`:""}</div>
+  <div class="stats">${g.pf?stat("Pelvic floor sets",s.pf,g.pf,null,"wide"):""}${stat("Zone 2 min",s.z2,g.z2)
+   +(g.vo2?stat("VO2 sessions",s.vo2,g.vo2):blankStat("VO2 · deload week"))+stat("Push-ups",s.pu,100)
+   +stat("Squats",s.hs,100)+stat("Pull-ups",s.pl,50)+stat("Strength days",s.st,3)}</div>`;
+}
+/* the block's phase for the week on screen; the week before it starts gets a heads-up */
+function blockGoal(){
+ const mon=dateOf("mon");
+ if(inBlock(mon))return `<p class="goal">${esc(phaseLine(blockWeek(mon)))}</p>`;
+ const n=dayDiff(mon,WORK_FROM);
+ return n>0&&n<=7?`<p class="goal">Your 16-week fertility block starts Monday, ${esc(longDate(WORK_FROM))}: pelvic floor sets every day and a reworked gym week. This week stays on the current plan.</p>`:"";
+}
+const MX_COLS=[["z2","Zone 2","min"],["vo2","VO2 max"],["me","Mobility & endurance"],["st","Strength"]];
+/* the cardio columns are narrow, so their done boxes say "✓ 43" (minutes) or "✓ 4 × 3" (intervals × minutes) */
+function mxDone(e,col){
+ const n=norm(e);
+ if(n&&!n.legacy&&n.mode==="time"&&n.sets.length){
+  if(col==="z2")return String(Math.round(n.sets.reduce((a,s)=>a+(s.t||0),0)/60));
+  const t=n.sets[0].t||0;
+  if(col==="vo2"&&t%60===0&&n.sets.every(s=>s.t===t))return n.sets.length+" × "+t/60;
+ }
+ return shortSum(e);
+}
+function mxCell(dk,col,date){
+ const list=dayPlan(date)[col]||[];
+ if(!list.length)return `<div class="em" role="cell"><span aria-hidden="true">–</span><span class="vh">Nothing planned</span></div>`;
+ return `<div class="cell" role="cell">${list.map((x,i)=>{
+  const ex=EX[x.id],e=entryOn(x.id,date);
+  /* keep units with their numbers and ranges whole, so a narrow box never splits "30–40 m" */
+  const tight=s=>s.replace(/(\d)–(\d)/g,"$1–⁠$2").replace(/ (s|m|min|reps|sets)\b/g," $1");
+  const main=tight(x.b||ex.n),sub=tight(e?"✓ "+mxDone(e,col):(x.i!==undefined?x.i:x.t));
+  const label=(x.f||ex.f)+", "+(e?"logged "+shortSum(e):"target "+x.t);
+  return `<button type="button" class="ch${e?" done":""}" data-k="${dk}|${col}|${i}" aria-label="${esc(label)}" onclick="openEx('${date}','${col}',${i})">`
+   +`<span class="n">${esc(main)}</span>${sub?`<span class="s num">${esc(sub)}</span>`:""}</button>`;
+ }).join("")}</div>`;
+}
+function renderMatrix(){
+ const tk=todayKey();
+ const head=`<div class="r hd" role="row"><div role="columnheader"><span class="vh">Day</span></div>${MX_COLS.map(c=>`<div role="columnheader"><span>${c[1]}</span>${c[2]?`<small>${c[2]}</small>`:""}</div>`).join("")}</div>`;
+ const rows=DAYS.map(dk=>{
+  const date=dateOf(dk),fu=date>tk,p=dayPlan(date),tag=tagOf(date);
+  /* block days show how many of the 3 pelvic floor sets are ticked; those are logged in Day view */
+  const pn=inBlock(date)&&!fu?pfDone(date):null;
+  const pf=pn===null?"":`<small class="pfx${pn===3?" ok":""}">PF ${pn}/3</small>`;
+  const day=`<div class="rh" role="rowheader"><button type="button" class="dcb" data-day="${date}" aria-label="${esc(DNAME[dk]+", "+longDate(date)+", "+tag+(pn===null?"":", pelvic floor "+pn+" of 3 sets")+". Open in Day view")}"
+   onclick="openDay('${date}')"><b>${DSHORT[dk]}</b><span class="num">${dnum(date)}</span><small>${esc(tag)}</small>${pf}</button></div>`;
+  const cells=p.rest
+   ?mxCell(dk,"z2",date)+`<div class="rest" role="cell" aria-colspan="3">${esc(p.restText||"Rest, or an easy walk if you feel like moving.")}</div>`
+   :MX_COLS.map(c=>mxCell(dk,c[0],date)).join("");
+  return `<div class="r${date===tk?" today":""}${fu?" fu":""}" role="row"${date===tk?' aria-current="date"':""}>${day}${cells}</div>`;
+ }).join("");
+ const blk=inBlock(dateOf("mon"));
+ return `<section class="pg">
+  ${workToggle()}
+  ${blockGoal()}
+  <div class="mx" role="table" aria-label="Workout week">${head}${rows}</div>
+  <p class="note">${blk?"Tap an exercise to log it, or tap a day to open it in Day view, where the pelvic floor sets are. PF shows the sets ticked that day; dashed boxes are days still ahead."
+   :"Tap an exercise to log it, or tap a day to open it in Day view. Dashed boxes are days still ahead."}</p>
+  ${weekStats()}
+  ${blk?chkCard()+rulesCard():""}
+ </section>`;
+}
+function renderWorkDay(){
+ const tk=todayKey();ensureSel();
+ const dk=dkOf(sel),fu=sel>tk,seq=daySeq(sel),p=dayPlan(sel),blk=inBlock(sel);
+ let g="",rows="";
+ seq.forEach(x=>{
+  const id=x.inst.id,ex=EX[id],e=entryOn(id,sel),key=x.dk+"|"+x.col+"|"+x.i,name=x.inst.f||ex.n;
+  if(x.group!==g){g=x.group;rows+=`<div class="gh">${esc(g)}</div>`}
+  const sub=e?(summary(e,id)||shortSum(e)):x.inst.t;
+  if(QUICK.has(id)){
+   rows+=`<div class="qrow"><button type="button" class="row${e?" on":""}" data-k="${key}" aria-pressed="${!!e}"${fu?" disabled":""} onclick="quickToggle('${sel}','${x.col}',${x.i})">
+     <span class="bx" aria-hidden="true">✓</span><span class="rt"><span class="nm">${esc(name)}</span><span class="sb num">${esc(sub)}</span></span></button>
+     <button type="button" class="ed"${fu?" disabled":""} aria-label="Log ${esc(name)} numbers" onclick="openEx('${sel}','${x.col}',${x.i})">Log</button></div>`;
+  }else{
+   rows+=`<button type="button" class="row${e?" on":""}" data-k="${key}"${fu?" disabled":""} onclick="openEx('${sel}','${x.col}',${x.i})">
+     <span class="bx" aria-hidden="true">✓</span><span class="rt"><span class="nm">${esc(name)}</span><span class="sb num">${esc(sub)}</span></span><span class="chev" aria-hidden="true">›</span></button>`;
+  }
+ });
+ return `<section class="pg">
+  ${workToggle()}
+  ${blockGoal()}
+  ${dayStrip("workout")}
+  <div class="dh"><h2>${sel===tk?"Today":DNAME[dk]}</h2><span>${esc(tagOf(sel))} · ${longDate(sel)}</span></div>
+  ${p.tb?`<p class="note num">${esc(p.tb)}</p>`:""}
+  <div class="list">${rows}${fu?`<p class="note">Logging opens on the day.</p>`:p.rest?`<p class="note">${esc(p.restText||"Rest, or an easy walk if you feel like moving.")}</p>`:""}</div>
+  <p class="note">${blk?"One tap ticks off a pelvic floor set, push-ups, squats, the rocker, the circuit or a stretch; Log takes real numbers."
+   :"One tap on push-ups, squats or stretch marks the target done; Log takes real numbers."} Other rows open the set log. A strength day counts once every lift is logged.</p>
+  ${weekStats()}
+ </section>`;
+}
+function quickToggle(date,col,i){
+ const dk=dkOf(date),inst=(dayPlan(date)[col]||[])[i];if(!inst)return;
+ const id=inst.id;
+ if(date>todayKey())return;
+ const e=entryOn(id,date);
+ if(e){
+  const undo=e.quick?null:keep("lift:"+id);   /* real numbers get an undo */
+  clearLog(id,date);
+  if(undo)toast(EX[id].n+" log removed",undo);
+ }else{
+  const q=targetLog(inst,id);
+  if(!writeLog(id,date,{d:date,unit:"lb",mode:q.mode,sets:q.sets,quick:true})){toast("Couldn't save in this browser.");return}
+  S.set("mode:"+id,q.mode);
+ }
+ refocus=`[data-k="${dk}|${col}|${i}"]`;renderAll();
+}
+
+/* ---- Sunday check-in: one per block week, saved under that week's Monday (wchk:YYYY-MM-DD) ---- */
+function chk(mon){const v=S.get("wchk:"+mon,null);return v&&typeof v==="object"&&!Array.isArray(v)?v:{}}
+function putChk(mon,patch){
+ if(mon>todayKey())return false;
+ const d=Object.assign({},chk(mon),patch);
+ Object.keys(d).forEach(k=>{if(d[k]==null||d[k]==="")delete d[k]});
+ return Object.keys(d).length?S.set("wchk:"+mon,d):S.del("wchk:"+mon);
+}
+const CK_OPT={drib:[["y","Yes"],["n","No"]],hand:[["y","Yes"],["p","Partly"],["n","No"]],force:[["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]]};
+const CK_WORD={y:"Yes",n:"No",p:"Partly"};
+const CK_LIM={kg:[30,300,"Weight: enter kilograms, like 88.4."],hold:[1,120,"Best hold: whole seconds, 1 to 120."],reps:[1,60,"Reps: a whole number, 1 to 60."]};
+function ckGroup(mon,f,label,sub,off){
+ const v=chk(mon)[f];
+ return `<p class="lbl" id="ck_${f}">${esc(label)}${sub?`<small>${esc(sub)}</small>`:""}</p>
+  <div class="ck" role="radiogroup" aria-labelledby="ck_${f}">${CK_OPT[f].map(([val,t])=>
+   `<button type="button" role="radio" id="ck_${f}_${val}" aria-checked="${v!=null&&String(v)===val}"${off?" disabled":""} onclick="pickChk('${mon}','${f}','${val}')">${t}</button>`).join("")}</div>`;
+}
+/* tapping the chosen answer again clears it */
+function pickChk(mon,f,val){
+ const was=chk(mon)[f];
+ putChk(mon,{[f]:was!=null&&String(was)===val?null:f==="force"?Number(val):val});
+ refocus="#ck_"+f+"_"+val;renderAll();
+}
+/* saves as you type, without rebuilding the field you're in */
+function ckIn(el){
+ const mon=el.dataset.mon,f=el.dataset.f,raw=el.value.trim(),lim=CK_LIM[f],m=$("#ckMsg");
+ const say=(t,err)=>{if(m){m.className="st"+(err?" err":"");m.textContent=t}};
+ if(!raw){putChk(mon,{[f]:null});say("");refreshChk();return}
+ const n=f==="kg"?parseFloat(raw.replace(",",".")):Number(raw);
+ if(!/^\d+([.,]\d*)?$/.test(raw)||!isFinite(n)||n<lim[0]||n>lim[1]||(f!=="kg"&&!Number.isInteger(n))){say(lim[2],true);return}
+ putChk(mon,{[f]:f==="kg"?Math.round(n*10)/10:n});say("");refreshChk();
+}
+function ckOut(el){const v=chk(el.dataset.mon)[el.dataset.f];el.value=v==null?"":String(v);const m=$("#ckMsg");if(m)m.textContent=""}
+function chkTrend(){
+ const tk=todayKey(),rows=[];
+ for(let w=1;w<=60;w++){const mon=addDays(WORK_FROM,(w-1)*7);if(mon>tk)break;const c=chk(mon);if(Object.keys(c).length)rows.push([w,c])}
+ if(!rows.length)return `<p class="note">Each Sunday's answers line up here, week by week, so you can see the trend across the block.</p>`;
+ const head=`<div class="r hd" role="row"><div role="columnheader">Week</div><div role="columnheader">kg</div><div role="columnheader">Hold s×reps</div><div role="columnheader">Dribble</div><div role="columnheader">By hand</div><div role="columnheader">Force</div></div>`;
+ return `<div class="sltab cktab" role="table" aria-label="Sunday check-ins by week">${head}${rows.map(([w,c])=>`<div class="r${w===blockWeek(dateOf("mon"))?" sel":""}" role="row">
+   <div role="rowheader"><b class="num">${w}</b></div>
+   <div class="num" role="cell">${c.kg!=null?esc(c.kg):"–"}</div>
+   <div class="num" role="cell">${c.hold!=null?esc(c.hold)+(c.reps!=null?"×"+esc(c.reps):" s"):"–"}</div>
+   <div role="cell">${CK_WORD[c.drib]||"–"}</div><div role="cell">${CK_WORD[c.hand]||"–"}</div>
+   <div class="num" role="cell">${c.force!=null?esc(c.force)+"/5":"–"}</div></div>`).join("")}</div>`;
+}
+function refreshChk(){const el=$("#ckTrend");if(el)el.innerHTML=chkTrend()}
+function chkCard(){
+ const mon=dateOf("mon"),off=mon>todayKey(),c=chk(mon),v=k=>c[k]==null?"":String(c[k]);
+ const box=(f,ph,mode,lab)=>`<input id="ck_${f}_in" class="inp num" type="text" inputmode="${mode}" autocomplete="off" placeholder="${ph}" aria-label="${esc(lab)}"
+   data-mon="${mon}" data-f="${f}" value="${esc(v(f))}"${off?" disabled":""} oninput="ckIn(this)" onblur="ckOut(this)">`;
+ return `<div class="dh"><h3>Sunday check-in</h3><span>Week ${blockWeek(mon)}</span></div>
+  <div class="card">
+   <div class="fld"><label for="ck_kg_in">Weight<small>kg, first thing in the morning</small></label>${box("kg","kg","decimal","Weight in kilograms")}</div>
+   <div class="fld"><label for="ck_hold_in">Best pelvic floor hold<small>Seconds, and good reps at that length</small></label>
+    <span class="ckh">${box("hold","s","numeric","Best hold in seconds")}<span aria-hidden="true">×</span>${box("reps","reps","numeric","Good reps at that hold")}</span></div>
+   ${ckGroup(mon,"drib","Dribble after peeing this week?","",off)}
+   ${ckGroup(mon,"hand","Still squeezed by hand after ejaculation?","",off)}
+   ${ckGroup(mon,"force","Ejaculation force","1 is a weak dribble, 5 is strong",off)}
+   <p class="st" id="ckMsg" role="status"></p>
+   ${off?`<p class="hint">Opens when this week starts.</p>`:""}
+  </div>
+  <div id="ckTrend">${chkTrend()}</div>`;
+}
+/* the block's working rules, folded away until needed */
+function rulesCard(){
+ const sec=(t,items)=>`<details class="more"><summary>${esc(t)}</summary><ul class="rl">${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`;
+ return `<div class="dh"><h3>How this block works</h3></div>
+  <div class="card rules">
+  ${sec("Every session",[
+   "Pairs: one set of each exercise in the pair back to back, then rest 60–90 s (60 s on Friday). That's what fits each session into an hour.",
+   "Top the rep range on every working set two sessions running, then add the smallest weight step and start again at the bottom of the range.",
+   "Exhale and lift: on every lower-body rep, breathe out and lift the pelvic floor as you push; breathe in and let it relax on the way down. Never hold your breath to push.",
+   "One hard-cardio day: intervals on Thursday only, capped at 4 × 4.",
+   "Weekends work fed or fasted. If fasted, keep the walk conversational and stop if you feel light-headed."])}
+  ${sec("Pelvic floor",[
+   "The squeeze: draw the penis in and lift the scrotum, as if stopping urine and holding in gas at the same time. Buttocks, thighs and belly stay relaxed.",
+   "Squeeze-out: 2–3 strong squeezes right after you finish peeing. Use the same squeeze after ejaculation instead of squeezing by hand.",
+   "Quality over count: end a set when the squeeze weakens or your buttocks, belly or breath take over.",
+   "Check you're using the right muscle by stopping your urine stream once a week only, never as the exercise.",
+   "Pain with ejaculation, pelvic pain, or needing to pee more often: drop to the release breaths only and see a pelvic health physiotherapist."])}
+  ${sec("Protect the gains",[
+   "No sauna, steam room, hot tub or very hot baths for the 16 weeks.",
+   "No cycling for cardio; use the treadmill, sled or outdoor walks.",
+   "Loose, breathable shorts and underwear. Change out of sweaty gear soon after training.",
+   "Break up sitting: stand or walk for 2–3 minutes every 45 minutes at work.",
+   "No testosterone or anabolic steroids: testosterone from outside the body stops sperm production."])}
+  ${sec("Tests and targets",[
+   "Week 1: semen analysis and body scan. Week 8: body scan. Weeks 14–16: repeat both, with the same abstinence days as the first semen test.",
+   "Week 16 targets: visceral fat under 10, weight down about 0.5–1% a week, 12 × 10-s standing holds, and little or no squeezing by hand after ejaculation.",
+   "See a doctor if volume keeps dropping, urine looks cloudy after orgasm, ejaculation hurts, or erections, libido or urine flow change."])}
+  </div>`;
+}
+
+/* ---- set log sheet ---- */
+let cur=null,msg=null,flash=null,discardArmed=false;
+function openEx(date,col,i){
+ const dk=dkOf(date),inst=(dayPlan(date)[col]||[])[i];if(!inst)return;
+ cur={dk,col,i,inst,id:inst.id,date};msg=null;discardArmed=false;
+ sheetReturn=`[data-k="${dk}|${col}|${i}"]`;
+ const future=date>todayKey(),has=!future&&!!entryOn(cur.id,date),last=!future&&lastNorm();
+ focusAfter=future||has?"sheet":last||QUICK.has(cur.id)?"pri":"a0";
+ openSheet("lift");
+}
+function liftSheet(){
+ const {dk,col,inst,id,date}=cur,ex=EX[id],future=date>todayKey();
+ const e=entryOn(id,date),prev=logsBefore(id,date),last=prev[prev.length-1];
+ const blk=inBlock(date),cue=[col==="st"&&!ex.bw?(dk==="fri"?LIGHT+(blk?PAIRS_L:""):HEAVY+(blk?PAIRS_H:"")):"",ex.c||""].filter(Boolean).join(" ");
+ let body;
+ if(future){
+  body=`<p class="wait">This opens for logging on ${DNAME[dk]}, ${longDate(date)}.</p>`;
+ }else{
+  const dr=draft(),unit=unitOf(id),time=dr.mode==="time",load=showLoad(id,dr),wl=ex.wl||"lb";
+  const has=!!e,dirty=!!dr.dirty,ln=lastNorm();
+  const label=dirty?"Save":!has&&ln?"Same as last time":!has&&QUICK.has(id)?"Mark done":"Save";
+  const priOn=!has||dirty;
+  const hint=(time?(unit==="min"?"In minutes; 2.5 means 2 min 30 s. ":"In seconds. "):"")+(load?"Leave "+wl+" blank if it doesn't apply.":"");
+  body=`<div class="sets${load?"":" noload"}">
+    <div class="sr h" aria-hidden="true"><span>Set</span><span>${time?"Time ("+unit+")":"Reps"}</span>${load?`<span>${esc(wl)}</span>`:""}<span></span></div>
+    ${dr.sets.map((s,i)=>`<div class="sr"><span class="sn num">${i+1}</span>
+     <input id="a${i}" class="num" type="text" inputmode="${time?"decimal":"numeric"}" autocomplete="off" enterkeyhint="go"
+      aria-label="Set ${i+1} ${time?"time in "+(unit==="min"?"minutes":"seconds"):"reps"}" placeholder="${esc(ph(i,"a"))}"
+      value="${esc(s.a)}" oninput="edit(${i},'a',this.value)" onkeydown="fieldKey(event)">
+     ${load?`<input id="w${i}" class="num" type="text" inputmode="decimal" autocomplete="off" enterkeyhint="go"
+      aria-label="Set ${i+1} ${esc(wl)}" placeholder="${esc(ph(i,"w"))}" value="${esc(s.w)}" oninput="edit(${i},'w',this.value)" onkeydown="fieldKey(event)">`:""}
+     <button type="button" class="rm" aria-label="Remove set ${i+1}" onclick="rmSet(${i})">×</button></div>`).join("")}
+    ${hint?`<p class="hint">${esc(hint)}</p>`:""}
+    <button type="button" class="quiet" onclick="setMode('${time?"reps":"time"}')">Log ${time?"reps":"time"} instead</button>
+   </div>
+   <div class="acts">
+    <button type="button" class="btn" onclick="addSet()">Add set</button>
+    ${!dirty&&!has&&ln&&QUICK.has(id)?`<button type="button" class="btn" id="md" onclick="markDone()">Mark done</button>`:""}
+    <button type="button" class="btn${priOn?" pri":""}" id="pri"${priOn?"":" disabled"} onclick="primaryAction()">${esc(label)}</button>
+   </div>
+   <p class="st${msg&&msg.err?" err":""}" id="st" role="status">${msg?esc(msg.text):""}</p>
+   ${e?`<button type="button" class="quiet" onclick="del()">Delete this log</button>`:""}`;
+ }
+ const fl=flash;flash=null;
+ return `<div class="grab" aria-hidden="true"></div>
+  <div class="sh"><div><h2 id="shT">${esc(inst.f||ex.f)}</h2><p>${DNAME[dk]}, ${longDate(date)}</p></div>
+   <button type="button" class="x" aria-label="Close" onclick="closeSheet()">×</button></div>
+  ${fl?`<p class="flash">${esc(fl)}</p>`:""}
+  <p class="tgt num">${esc(inst.t)}</p>
+  <p class="last">${last?`Last time, ${shortDate(last.d)}: <b class="num">${esc(summary(last,id))}</b>`:"No earlier log yet."}</p>
+  ${!future&&topped(id,date)?`<p class="up">You topped the rep range on your last two sessions. Add the smallest weight step and start again at the bottom of the range.</p>`:""}
+  ${cue?`<details class="more"><summary>How to do it</summary><p>${esc(cue)}</p></details>`:""}
+  ${body}`;
+}
+/* returns true to close, "saved" if it saved on the way out, false to stay open */
+function liftCloseCheck(){
+ if(!cur||cur.date>todayKey())return true;
+ const k=draftKey(cur.id,cur.date),dr=drafts[k];
+ if(!dr||!dr.dirty)return true;
+ if(blankDraft(dr)){delete drafts[k];return true}
+ if(discardArmed){delete drafts[k];return true}
+ if(save({closing:true}))return "saved";
+ discardArmed=true;
+ msg={err:true,text:(msg?msg.text+" ":"")+"Close again to discard it."};focusAfter="sheet";renderSheet();
+ return false;
+}
+function edit(i,f,v){
+ const dr=draft();if(!dr.sets[i])return;dr.sets[i][f]=v;dr.dirty=true;msg=null;discardArmed=false;
+ const st=$("#st");if(st){st.className="st";st.textContent="Unsaved changes"}
+ const b=$("#pri");if(b){b.disabled=false;b.textContent="Save";b.className="btn pri"}
+ const md=$("#md");if(md)md.remove();      /* "Mark done" would ignore what you just typed */
+}
+function fieldKey(e){if(e.key==="Enter"){e.preventDefault();primaryAction()}}
+function addSet(){const dr=draft(),p=dr.sets[dr.sets.length-1];dr.sets.push({a:"",w:p?p.w:""});dr.dirty=true;msg=null;discardArmed=false;focusAfter="a"+(dr.sets.length-1);renderSheet()}
+function rmSet(i){const dr=draft();dr.sets.splice(i,1);if(!dr.sets.length)dr.sets.push({a:"",w:""});dr.dirty=true;msg=null;discardArmed=false;focusAfter="sheet";renderSheet()}
+function setMode(m){const dr=draft();if(dr.mode===m)return;dr.mode=m;dr.sets.forEach(s=>s.a="");dr.dirty=true;msg=null;discardArmed=false;focusAfter="a0";renderSheet()}
+function fail(text){msg={err:true,text};focusAfter="pri";renderSheet();return false}
+function nextOpen(){
+ const {col,i,date}=cur,seq=daySeq(date);
+ const at=seq.findIndex(x=>x.col===col&&x.i===i);
+ const undone=k=>!entryOn(seq[k].inst.id,date);
+ for(let k=at+1;k<seq.length;k++)if(undone(k))return seq[k];
+ for(let k=0;k<at;k++)if(undone(k))return seq[k];
+ return null;
+}
+function afterSave(){
+ const name=EX[cur.id].n,n=nextOpen();
+ if(n){flash="✓ "+name+" saved. Next up:";openEx(cur.date,n.col,n.i);return}
+ closeSheetNow();toast(name+" saved. Everything on the list is logged.");
+}
+function save(opt){
+ opt=opt||{};
+ const {id,date}=cur;if(date>todayKey())return false;
+ const dr=draft(),unit=unitOf(id),out=[];
+ for(const [i,s] of dr.sets.entries()){
+  const a=String(s.a).trim(),w=String(s.w).trim();
+  if(!a&&!w)continue;
+  let wv=null;
+  if(w){wv=parseFloat(w.replace(",","."));if(!isFinite(wv)||wv<0||!/^\d*[.,]?\d*$/.test(w))return fail(`Set ${i+1}: enter a number of 0 or more in ${EX[id].wl||"lb"}, or leave it blank.`)}
+  if(dr.mode==="time"){
+   const t=parseT(a,unit);
+   if(!t||!isFinite(t)||t<=0)return fail(`Set ${i+1}: enter the time in ${unit==="min"?"minutes":"seconds"}.`);
+   out.push({t,w:wv});
+  }else{
+   const r=Number(a);
+   if(!a||!Number.isSafeInteger(r)||r<1)return fail(`Set ${i+1}: enter whole reps above 0.`);
+   out.push({reps:r,w:wv});
+  }
+ }
+ if(!out.length)return fail(dr.mode==="time"?"Enter a time for at least one set.":"Enter reps for at least one set.");
+ if(!writeLog(id,date,{d:date,unit:"lb",mode:dr.mode,sets:out}))return fail("Couldn't save in this browser. Your entries are still here, so try again.");
+ S.set("mode:"+id,dr.mode);
+ delete drafts[draftKey(id,date)];
+ if(opt.closing)return true;
+ afterSave();
+ return true;
+}
+function primaryAction(){
+ if(!cur||cur.date>todayKey())return;
+ const dr=draft(),has=!!entryOn(cur.id,cur.date);
+ if(dr.dirty)return save();
+ if(!has&&lastNorm())return sameAsLast();
+ if(!has&&QUICK.has(cur.id))return markDone();
+ if(!has)return save();
+}
+function sameAsLast(){
+ const n=lastNorm();if(!n)return;
+ const d=toDraft(n,cur.id);d.dirty=true;
+ drafts[draftKey(cur.id,cur.date)]=d;
+ save();
+}
+function markDone(){
+ const {id,date,inst}=cur;if(date>todayKey())return;
+ const q=targetLog(inst,id);
+ if(!writeLog(id,date,{d:date,unit:"lb",mode:q.mode,sets:q.sets,quick:true}))return fail("Couldn't save in this browser. Try again.");
+ S.set("mode:"+id,q.mode);
+ delete drafts[draftKey(id,date)];
+ afterSave();
+}
+function del(){
+ const {id,date}=cur,undo=keep("lift:"+id),name=EX[id].n;
+ clearLog(id,date);closeSheetNow();toast(name+" log deleted",undo);
+}
+
+/* =================== SLEEP TAB =================== */
+/* One entry per night, saved under the morning you wake up (the day your Charge 6 gives the score):
+   bedtime is the evening before (PM, or just after midnight); wake-up is that morning (AM). */
+function sleepData(date){
+ const v=S.get("sleep:"+date,null);
+ if(!v||typeof v!=="object")return {sleep:"",wake:"",score:"",note:""};
+ return {sleep:typeof v.sleep==="string"?v.sleep:"",wake:typeof v.wake==="string"?v.wake:"",
+         score:v.score!=null?String(v.score):"",note:typeof v.note==="string"?v.note:""};
+}
+function toMin(t){
+ const m=/^(\d{1,2}):(\d{2})/.exec(t||"");
+ if(!m)return null;
+ const h=+m[1],mi=+m[2];
+ return h<24&&mi<60?h*60+mi:null;
+}
+const hhmm=m=>pad(Math.floor(m/60))+":"+pad(m%60);
+/* bedtime from noon on is the evening before; earlier bedtimes are just after midnight */
+function calcSleepDur(bed,wake){
+ const b=toMin(bed),w=toMin(wake);
+ if(b==null||w==null)return null;
+ const diff=w-(b>=720?b-1440:b);
+ if(diff<=0||diff>16*60)return null;
+ return {diff,hours:Math.floor(diff/60),mins:diff%60,dec:Math.round(diff/6)/10};
+}
+function sleepProblem(s){
+ if(!s.sleep||!s.wake||calcSleepDur(s.sleep,s.wake))return "";
+ return "These times don't add up to a night. Bedtime is the evening before (PM, or just after midnight) and wake-up is the morning (AM).";
+}
+/* the time picker can't tell a PM bedtime from an AM one, so fix the usual slip */
+function fixSleepTime(field,v){
+ const m=toMin(v);if(m==null)return v;
+ const h=Math.floor(m/60);let n=m;
+ if(field==="sleep"){if(h>=4&&h<12)n=m+720;else if(h>=12&&h<16)n=m-720}
+ else if(field==="wake"&&h>=13)n=m-720;
+ return hhmm(n);
+}
+function putSleep(date,field,val){
+ const tk=todayKey(),tonight=field==="sleep"&&date===addDays(tk,1);
+ if(date>tk&&!tonight)return false;
+ const d=sleepData(date);d[field]=val;
+ if(!d.sleep&&!d.wake&&!d.score&&!d.note)S.del("sleep:"+date);else S.set("sleep:"+date,d);
+ return true;
+}
+function scoreBadge(v){
+ if(v===""||v==null||isNaN(Number(v)))return "";
+ const n=Number(v);
+ return n>=80?`<span class="bdg high">On target</span>`:n>=70?`<span class="bdg mid">Close</span>`:`<span class="bdg low">Low</span>`;
+}
+function sleepSum(date){
+ if(date>todayKey())return `<p class="hint">Opens the morning you wake up.</p>`;
+ const s=sleepData(date),dur=calcSleepDur(s.sleep,s.wake),bad=sleepProblem(s);
+ if(dur)return `<div class="dur${dur.dec>=7.5?"":" short"}"><span><small>Slept</small><b class="num">${dur.hours}h ${dur.mins}m</b></span><span>${dur.dec>=7.5?"✓ Goal met":"Goal is 7.5 h+"}</span></div>`;
+ if(bad)return `<p class="up">${esc(bad)}</p>`;
+ return `<p class="hint">Add bedtime and wake-up to see hours slept.</p>`;
+}
+function sleepWeek(){
+ const tk=todayKey(),ds=DAYS.map(dateOf);
+ let tot=0,n=0,sc=0,ns=0;
+ ds.forEach(d=>{const s=sleepData(d),dr=calcSleepDur(s.sleep,s.wake);if(dr){tot+=dr.diff;n++}if(s.score!==""&&!isNaN(Number(s.score))){sc+=Number(s.score);ns++}});
+ const avgH=n?Math.round(tot/n/6)/10:"–",avgS=ns?Math.round(sc/ns):"–";
+ const head=`<div class="r hd" role="row"><div role="columnheader">Night</div><div role="columnheader">Bed</div><div role="columnheader">Wake</div><div role="columnheader">Hours</div><div role="columnheader">Score</div></div>`;
+ const rows=ds.map(d=>{
+  const p=addDays(d,-1),s=sleepData(d),dr=calcSleepDur(s.sleep,s.wake),off=!dr&&s.sleep&&s.wake;
+  return `<div class="r${d===tk?" today":""}${d===sel?" sel":""}" role="row"${d===tk?' aria-current="date"':""}>
+   <div class="dc" role="rowheader"><b>${DSHORT[dkOf(p)]}→${DSHORT[dkOf(d)]}</b><span class="num">${dnum(p)}–${dnum(d)}</span></div>
+   <div class="num" role="cell">${s.sleep?esc(fmtClock(s.sleep)):"–"}</div>
+   <div class="num" role="cell">${s.wake?esc(fmtClock(s.wake)):"–"}</div>
+   <div class="num" role="cell"><b class="${dr&&dr.dec>=7.5?"met":""}">${dr?dr.hours+"h "+dr.mins+"m":off?"Check":"–"}</b></div>
+   <div class="num" role="cell"><b class="${s.score!==""&&Number(s.score)>=80?"met":""}">${s.score!==""?esc(s.score):"–"}</b></div></div>`;
+ }).join("");
+ return `<div class="dh"><h3>${weekOff===0?"This week":"That week"}</h3><span>Nights ending Mon–Sun</span></div>
+  <div class="stats">${stat("Avg hours",avgH,7.5)}${stat("Avg score",avgS,80)}${stat("Nights logged",n,7)}</div>
+  <div class="sltab" role="table" aria-label="Sleep by night">${head}${rows}</div>`;
+}
+const timeIn=(id,date,f,v,off)=>`<span class="tbox"${v?"":" data-empty"}><input id="${id}" class="inp num" type="time" step="60" data-date="${date}" data-f="${f}" value="${esc(v)}"${off?" disabled":""} oninput="sleepIn(this)" onchange="sleepIn(this)" onblur="sleepOut(this)"></span>`;
+const markEmpty=el=>{const b=el.parentElement;if(b&&b.classList.contains("tbox"))b.toggleAttribute("data-empty",!el.value)};
+function renderSleep(){
+ const tk=todayKey();ensureSel();
+ const fu=sel>tk,isT=sel===tk,prev=addDays(sel,-1),sl=sleepData(sel);
+ const eve=DSHORT[dkOf(prev)],morn=DSHORT[dkOf(sel)];
+ const tmr=addDays(tk,1),tn=sleepData(tmr);
+ const tonight=isT&&new Date().getHours()>=16?`
+  <div class="dh"><h3>Tonight</h3><span>${morn} ${dnum(tk)} → ${DSHORT[dkOf(tmr)]} ${dnum(tmr)}</span></div>
+  <div class="card"><div class="fld"><label for="sl_tn">Bedtime<small>Optional; finish it in the morning</small></label>
+   <div class="tin">${timeIn("sl_tn",tmr,"sleep",tn.sleep,false)}<button type="button" class="nowb" onclick="bedNow()">Now</button></div></div></div>`:"";
+ return `<section class="pg">
+  <p class="goal">Goal: in bed by 10 PM, up at 6 AM, 7.5 hours or more and a sleep score of 80+.</p>
+  ${dayStrip("sleep")}
+  <div class="dh"><h2>${isT?"Last night":DNAME[dkOf(prev)]+" night"}</h2><span>${eve} ${dnum(prev)} → ${morn} ${dnum(sel)}</span></div>
+  <div class="card">
+   <div id="slSum">${sleepSum(sel)}</div>
+   <p class="st" id="slMsg" role="status"></p>
+   <div class="fld"><label for="sl_bed">Bedtime<small>${eve} evening</small></label>${timeIn("sl_bed",sel,"sleep",sl.sleep,fu)}</div>
+   <div class="fld"><label for="sl_wake">Wake-up<small>${morn} morning</small></label>${timeIn("sl_wake",sel,"wake",sl.wake,fu)}</div>
+   <div class="fld"><label for="sl_score">Sleep score<span id="slBadge">${scoreBadge(sl.score)}</span><small>From your Charge 6</small></label>
+    <input id="sl_score" class="inp num" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" placeholder="0–100"
+     data-date="${sel}" data-f="score" value="${esc(sl.score)}"${fu?" disabled":""} oninput="sleepIn(this)" onblur="sleepOut(this)"></div>
+   <div class="field"><label for="sl_note">Notes</label>
+    <textarea id="sl_note" class="ta" data-date="${sel}" data-f="note" placeholder="Restfulness, wake-ups, room temperature…"${fu?" disabled":""} oninput="sleepIn(this)">${esc(sl.note)}</textarea></div>
+  </div>
+  ${tonight}
+  <div id="slWeek" class="pg">${sleepWeek()}</div>
+ </section>`;
+}
+function sleepMsg(text,err){const el=$("#slMsg");if(el){el.className="st"+(err?" err":"");el.textContent=text||""}}
+/* saves as you pick or type, but never rebuilds the field you're in, so the time picker stays open */
+function sleepIn(el){
+ const date=el.dataset.date,field=el.dataset.f;
+ let v=el.value;
+ if(field==="score"){
+  const c=v.replace(/\D/g,"").slice(0,3);if(c!==v)el.value=c;
+  if(c!==""&&Number(c)>100){sleepMsg("Sleep score is 0 to 100.",true);return}
+  v=c===""?"":String(Number(c));
+ }else if(field==="sleep"||field==="wake"){v=fixSleepTime(field,v);markEmpty(el)}
+ if(!putSleep(date,field,v))return;
+ if(field!=="note"){sleepMsg("");refreshSleep()}
+}
+function sleepOut(el){
+ const date=el.dataset.date,field=el.dataset.f,d=sleepData(date);
+ if(field==="sleep"||field==="wake"){
+  if(el.value&&d[field]&&el.value!==d[field]){
+   el.value=d[field];markEmpty(el);
+   sleepMsg(`Saved as ${fmtClock(d[field])}: ${field==="sleep"?"bedtime is an evening time":"wake-up is a morning time"}.`);
+  }
+ }else if(field==="score"&&el.value!==d.score)el.value=d.score;
+}
+function refreshSleep(){
+ if(tab!=="sleep")return;
+ const set=(id,h)=>{const el=document.getElementById(id);if(el)el.innerHTML=h};
+ set("slSum",sleepSum(sel));set("slBadge",scoreBadge(sleepData(sel).score));set("slWeek",sleepWeek());
+ const s=$("#strip");if(s)s.outerHTML=dayStrip("sleep");
+}
+function bedNow(){
+ const tmr=addDays(todayKey(),1),v=fixSleepTime("sleep",nowHM());
+ if(!putSleep(tmr,"sleep",v))return;
+ const el=$("#sl_tn");if(el){el.value=v;markEmpty(el)}
+ refreshSleep();toast("Bedtime saved: "+fmtClock(v));
+}
+
+/* =================== GUT TAB =================== */
+const dietPlan=date=>date>=DIET_FROM?DIET_NEW:DIET_OLD;
+function dietDone(date){const o=S.get("gut:diet:"+date,{});return o&&typeof o==="object"&&!Array.isArray(o)?o:{}}
+const isDietDone=(date,id)=>!!dietDone(date)[id];
+const isFast=date=>!!S.get("gut:fast:"+date,false);
+/* iron every other day: "done" | "due" | "off". Future days assume each iron day gets taken. */
+function ironDay(date){
+ if(date<DIET_FROM)return null;
+ if(isDietDone(date,IRON))return "done";
+ const tk=todayKey();
+ if(date<=tk)return isDietDone(addDays(date,-1),IRON)?"off":"due";
+ let d=tk<DIET_FROM?DIET_FROM:tk,s=tk<DIET_FROM?"due":ironDay(tk);   /* the first day of the plan is an iron day */
+ while(d<date){d=addDays(d,1);s=s==="off"?"due":"off"}
+ return s;
+}
+function stepState(date,st){
+ if(st.id===IRON&&ironDay(date)==="off")return "off";
+ if(isDietDone(date,st.id))return "done";
+ if(st.meal&&isFast(date))return "skip";
+ return "todo";
+}
+function gutCount(date){
+ let done=0,due=0,skip=0;
+ dietPlan(date).forEach(st=>{const s=stepState(date,st);if(s==="done"){done++;due++}else if(s==="todo")due++;else if(s==="skip")skip++});
+ return {done,due,skip};
+}
+function toggleDietStep(date,id){
+ if(date>todayKey())return;
+ if(id===IRON&&ironDay(date)==="off")return;   /* no doubling up on an off day */
+ const o=Object.assign({},dietDone(date));
+ if(o[id])delete o[id];else o[id]=1;
+ if(Object.keys(o).length)S.set("gut:diet:"+date,o);else S.del("gut:diet:"+date);
+ refocus=`[data-s="${id}"]`;renderAll();
+}
+function toggleFast(date){
+ if(date>todayKey())return;
+ if(isFast(date))S.del("gut:fast:"+date);else S.set("gut:fast:"+date,1);
+ refocus=".swrow";renderAll();
+}
+function toggleWhy(id){if(openWhy.has(id))openWhy.delete(id);else openWhy.add(id);refocus=`[data-w="${id}"]`;renderAll()}
+const dietNote=date=>{const v=S.get("gut:dietnote:"+date,"");return typeof v==="string"?v:""};
+function saveDietNote(date,val){if(date>todayKey())return;if(!val.trim())S.del("gut:dietnote:"+date);else S.set("gut:dietnote:"+date,val)}
+
+function stepRow(st,date,fu,isNext){
+ const s=stepState(date,st),t=st.time.replace(/^0/,"");
+ if(s==="off"){
+  const why=fu?"Iron is every other day.":date===todayKey()?"Taken yesterday. Next dose tomorrow morning.":"Taken the day before.";
+  return `<div class="step off"><div class="row"><span class="bx" aria-hidden="true"></span><span class="rt">
+   <span class="tm">${esc(t)} <span class="pill mute">Off day</span></span><span class="nm">No iron today</span><span class="sb">${why}</span></span></div></div>`;
+ }
+ const on=s==="done",skip=s==="skip",iron=st.id===IRON,open=openWhy.has(st.id);
+ return `<div class="step${isNext?" next":""}${skip?" skip":""}">
+  <div class="stepr">
+   <button type="button" class="row${on?" on":""}" data-s="${st.id}" aria-pressed="${on}"${fu?" disabled":""} onclick="toggleDietStep('${date}','${st.id}')">
+    <span class="bx" aria-hidden="true">✓</span>
+    <span class="rt"><span class="tm">${esc(t)}${iron?' <span class="pill">Iron day</span>':""}${isNext?' <span class="pill">Next</span>':""}${skip?' <span class="pill mute">Fasting</span>':""}</span>
+     <span class="nm">${esc(st.name)}</span><span class="sb">${esc(st.stack)}</span></span>
+   </button>
+   <button type="button" class="why" data-w="${st.id}" aria-expanded="${open}" aria-label="Why this step: ${esc(st.name)}" onclick="toggleWhy('${st.id}')"><span aria-hidden="true">i</span></button>
+  </div>
+  ${open?`<p class="whyp">${esc(st.science)}</p>`:""}
+ </div>`;
+}
+function fastRow(date,fu){
+ const on=isFast(date);
+ return `<button type="button" class="swrow" role="switch" aria-checked="${on}"${fu?" disabled":""} onclick="toggleFast('${date}')">
+  <span class="rt"><span class="nm">Fast day</span><span class="sb">${on?"Meals and food steps are skipped; water and iron still count.":"Turn on when fasting, so skipped meals don't count against the day."}</span></span>
+  <span class="tgl" aria-hidden="true"><i></i></span></button>`;
+}
+function renderGut(){
+ const tk=todayKey();ensureSel();
+ const fu=sel>tk,isT=sel===tk,plan=dietPlan(sel),c=gutCount(sel);
+ const next=isT?plan.find(st=>stepState(sel,st)==="todo"):null;
+ const rows=plan.map(st=>stepRow(st,sel,fu,!!next&&next.id===st.id)).join("");
+ return `<section class="pg">
+  ${dayStrip("gut")}
+  <div class="dh"><h2>${isT?"Today":DNAME[dkOf(sel)]}</h2><span>${longDate(sel)}</span></div>
+  ${bmCard(sel)}
+  <div class="dh"><h3>Daily steps</h3><span class="num">${c.done} of ${c.due} done${c.skip?` · ${c.skip} skipped`:""}</span></div>
+  ${fastRow(sel,fu)}
+  <div class="list">${rows}</div>
+  ${plan===DIET_NEW?`<p class="note">Blood-work recheck in mid-January 2027: ferritin, iron panel, CBC, A1c and lipids, plus a repeat semen analysis.</p>`:""}
+  <div class="field"><label for="diet_note">Notes</label>
+   <textarea id="diet_note" class="ta" placeholder="Appetite, fullness, anything you skipped or changed…"${fu?" disabled":""} oninput="saveDietNote('${sel}',this.value)">${esc(dietNote(sel))}</textarea></div>
+ </section>`;
+}
+
+/* ---- bowel movements: as many per day as you need ---- */
+function stoolLogs(date){const v=S.get("gut:stools:"+date,[]);return Array.isArray(v)?v.filter(x=>x&&typeof x==="object"):[]}
+function bmCard(date){
+ const tk=todayKey(),list=stoolLogs(date),fu=date>tk,isT=date===tk,n=list.length;
+ const chips=list.map(s=>{
+  const b=BRISTOL[s.type]||BRISTOL[4],flag=s.blood||s.mucus,id=esc(String(s.id));
+  const lab=`${fmtClock(s.time)}, ${b.n}, ${b.l}${s.blood?", blood":""}${s.mucus?", mucus":""}. Tap to edit.`;
+  return `<button type="button" class="bmc ${b.c}" data-bm="${id}" aria-label="${esc(lab)}" onclick="openStool('${date}','${id}')"><span class="num">${esc(fmtClock(s.time))}</span><b>${esc(b.n)}</b>${flag?'<span class="fl" aria-hidden="true">!</span>':""}</button>`;
+ }).join("");
+ const count=n?`${n} ${isT?"today":"logged"}`:fu?"":isT?"None yet today":"None logged";
+ return `<div class="card">
+  <div class="bmh"><h3>Bowel movements</h3><span class="num">${count}</span></div>
+  <div class="bmrow">${chips}${fu?`<span class="hint">Opens on the day.</span>`:`<button type="button" class="bmc add" onclick="openStool('${date}')">${n?"+ Add another":"+ Log one"}</button>`}</div>
+ </div>`;
+}
+let stool=null;
+function openStool(date,id){
+ if(date>todayKey())return;
+ const e=id!=null?stoolLogs(date).find(x=>String(x.id)===String(id)):null;
+ stool=e?{date,id:e.id,time:typeof e.time==="string"?e.time:"",type:String(BRISTOL[e.type]?e.type:4),blood:!!e.blood,mucus:!!e.mucus,note:typeof e.note==="string"?e.note:""}
+        :{date,id:null,time:nowHM(),type:"4",blood:false,mucus:false,note:""};
+ sheetReturn=e?`[data-bm="${String(e.id)}"]`:".bmc.add";
+ focusAfter="sheet";
+ openSheet("stool");
+}
+function setBm(f,v){
+ if(!stool)return;
+ if(f==="type")stool.type=String(v);else stool[f]=!stool[f];
+ focusAfter=f==="type"?"bt"+v:"bm_"+f;
+ renderSheet();
+}
+function stoolSheet(){
+ const s=stool,b=BRISTOL[s.type]||BRISTOL[4],edit=s.id!=null;
+ return `<div class="grab" aria-hidden="true"></div>
+  <div class="sh"><div><h2 id="shT">${edit?"Edit bowel movement":"Log bowel movement"}</h2><p>${esc(shortDate(s.date))}</p></div>
+   <button type="button" class="x" aria-label="Close" onclick="closeSheet()">×</button></div>
+  <div class="fld"><label for="bm_time">Time</label><input id="bm_time" class="inp num" type="time" step="60" value="${esc(s.time)}" oninput="stool.time=this.value" onchange="stool.time=this.value"></div>
+  <p class="lbl" id="bm_tl">Type (Bristol scale)</p>
+  <div class="bris" role="radiogroup" aria-labelledby="bm_tl">${[1,2,3,4,5,6,7].map(n=>{const o=BRISTOL[n];
+   return `<button type="button" id="bt${n}" role="radio" class="${o.c}" aria-checked="${String(n)===s.type}" aria-label="${esc(o.n+": "+o.d)}" onclick="setBm('type',${n})">${n}</button>`}).join("")}</div>
+  <p class="bdesc ${b.c}">${esc(b.n)} · ${esc(b.d)}</p>
+  <p class="lbl">Anything unusual?</p>
+  <div class="chips"><button type="button" id="bm_blood" class="chip" aria-pressed="${s.blood}" onclick="setBm('blood')">Blood</button>
+   <button type="button" id="bm_mucus" class="chip" aria-pressed="${s.mucus}" onclick="setBm('mucus')">Mucus</button></div>
+  ${s.blood?`<p class="up">Visible red blood, or black, tarry, sticky stool, is worth a call to your doctor.</p>`:""}
+  <div class="field"><label for="bm_note">Note (optional)</label>
+   <input id="bm_note" class="inp" type="text" maxlength="100" autocomplete="off" placeholder="e.g. effortless, urgent, after chia water…" value="${esc(s.note)}" oninput="stool.note=this.value"></div>
+  <p class="st err" id="bm_st" role="status"></p>
+  <div class="acts">${edit?`<button type="button" class="btn del" onclick="delStool()">Delete</button>`:""}
+   <button type="button" class="btn pri" onclick="saveStool()">${edit?"Save changes":"Log it"}</button></div>`;
+}
+function saveStool(){
+ const s=stool;if(!s||s.date>todayKey())return;
+ const list=stoolLogs(s.date);
+ let id=s.id;
+ if(id==null){id=Date.now();while(list.some(x=>String(x.id)===String(id)))id++}
+ const entry={id,time:s.time||nowHM(),type:Number(s.type)||4,blood:!!s.blood,mucus:!!s.mucus,note:String(s.note||"").trim().slice(0,100)};
+ const i=list.findIndex(x=>String(x.id)===String(id));
+ if(i>=0)list[i]=entry;else list.push(entry);
+ list.sort((a,b)=>String(a.time||"").localeCompare(String(b.time||"")));
+ if(!S.set("gut:stools:"+s.date,list)){const st=$("#bm_st");if(st)st.textContent="Couldn't save in this browser. Try again.";return}
+ const isT=s.date===todayKey();
+ sheetReturn=".bmc.add";closeSheetNow();
+ toast(i>=0?"Entry updated":`Logged: ${list.length} ${isT?"today":"that day"}`);
+}
+function delStool(){
+ const s=stool;if(!s||s.id==null)return;
+ const undo=keep("gut:stools:"+s.date),list=stoolLogs(s.date).filter(x=>String(x.id)!==String(s.id));
+ if(list.length)S.set("gut:stools:"+s.date,list);else S.del("gut:stools:"+s.date);
+ sheetReturn=".bmc.add";closeSheetNow();toast("Entry deleted",undo);
+}
+
+/* =================== FERTILITY TAB =================== */
+/* Goal: intercourse with deep deposit after 2 full days of abstinence (every 3rd day).
+   Any release, intercourse or masturbation, restarts the 2-day clock; masturbation counts as a miss.
+   Cold therapy and romance with your wife are daily goals. */
+function fertData(date){
+ const raw=S.get("fert:"+date,{}),v=raw&&typeof raw==="object"?raw:{};
+ return {sex:!!v.sex,ddp:!!v.sex&&!!v.ddp,
+         mb:v.nm===false,            /* saved as nm:false, so entries from the old "No masturbation" box carry over */
+         cold:!!v.cold,rom:!!v.rom,note:typeof v.note==="string"?v.note:""};
+}
+function saveFert(date,patch){
+ if(date>todayKey())return;
+ const d=Object.assign(fertData(date),patch);
+ if(!d.sex)d.ddp=false;
+ if(!d.sex&&!d.mb&&!d.cold&&!d.rom&&!d.note)S.del("fert:"+date);
+ else S.set("fert:"+date,{sex:d.sex,ddp:d.ddp,nm:!d.mb,cold:d.cold,rom:d.rom,note:d.note});
+ if(!("note" in patch))renderAll();
+}
+function flipFert(date,field){
+ if(date>todayKey())return;
+ const fd=fertData(date);
+ if(field==="ddp"&&!fd.sex)return;
+ refocus=`[data-f="${field}"]`;
+ saveFert(date,{[field]:!fd[field]});
+}
+/* every day with a release (intercourse or masturbation), oldest first */
+function fertReleases(){
+ const out=[];
+ S.keys().forEach(k=>{if(k.indexOf("fert:")===0){const d=k.slice(5);if(isDate(d)){const fd=fertData(d);if(fd.sex||fd.mb)out.push(d)}}});
+ return out.sort();
+}
+const lastBefore=(rel,date)=>{let p=null;for(const d of rel){if(d<date)p=d;else break}return p};
+/* the releases plus the next planned intercourse day (3 days after the last release, never before today) */
+function fertCtx(){
+ const tk=todayKey(),rel=fertReleases(),last=lastBefore(rel,addDays(tk,1));
+ let next=last?addDays(last,3):tk;
+ if(next<tk)next=tk;
+ return {tk,rel,next};
+}
+/* days since the last release before this day (null if none); 3 or more means 2 full days of abstinence */
+function fertGap(date,cx){const p=lastBefore(cx.rel,date);return p?dayDiff(p,date):null}
+const fertReady=g=>g===null||g>=3;
+const plannedDay=(date,cx)=>date>=cx.next&&dayDiff(cx.next,date)%3===0;
+function nextPlanned(date,cx){
+ if(date<=cx.next)return cx.next;
+ const r=dayDiff(cx.next,date)%3;
+ return r?addDays(date,3-r):date;
+}
+function fertIsDay(date,cx){
+ if(fertData(date).sex)return true;
+ return date>cx.tk?plannedDay(date,cx):fertReady(fertGap(date,cx));
+}
+function fertMark(d,cx){
+ const fd=fertData(d);
+ if(fd.mb)return ["bl",fd.sex?"intercourse and masturbation logged":"masturbation logged"];
+ if(fd.sex)return ["done","intercourse logged"];
+ if(d>=cx.tk&&plannedDay(d,cx))return ["due","intercourse day"];
+ return ["",""];
+}
+/* daily goals: cold therapy, romance, no masturbation; plus intercourse and deep deposit on an intercourse day */
+function fertProg(d,cx){
+ cx=cx||fertCtx();
+ if(d>cx.tk)return 0;
+ const fd=fertData(d);
+ const goals=[fd.cold,fd.rom,!fd.mb].concat(fertIsDay(d,cx)?[fd.sex,fd.ddp]:[]);
+ return goals.filter(Boolean).length/goals.length;
+}
+function fertStatus(date,cx){
+ const fd=fertData(date),g=fertGap(date,cx),ready=fertReady(g),tk=cx.tk;
+ const days=n=>n+(n===1?" day":" days");
+ const nextFrom=d=>"Next intercourse day: "+shortDate(addDays(d,3))+".";
+ if(date>tk){
+  return plannedDay(date,cx)
+   ?{cls:"",title:"Planned intercourse day",sub:"After 2 full days of abstinence. Practise deep deposit."}
+   :{cls:"",title:"Abstinence day",sub:"Next intercourse day: "+shortDate(nextPlanned(date,cx))+"."};
+ }
+ if(fd.mb){
+  return {cls:"bad",title:fd.sex?"Intercourse logged, and masturbation":"Abstinence broken",
+          sub:"Masturbation restarts the 2-day clock. "+nextFrom(date)};
+ }
+ if(fd.sex){
+  const before=g===null?"":ready?`After ${days(g-1)} of abstinence. `:`Only ${days(g-1)} of abstinence before it; the goal is 2. `;
+  return {cls:"ok",title:"Intercourse logged"+(fd.ddp?" · deep deposit":""),sub:before+nextFrom(date)};
+ }
+ if(ready){
+  const done=g===null?"No release logged yet. ":`${days(g-1)} of abstinence done. `;
+  return date===tk
+   ?{cls:"due",title:"Intercourse day: due today",sub:done+"Practise deep deposit."}
+   :{cls:"",title:"Intercourse day, nothing logged",sub:done.trim()};
+ }
+ return {cls:"",title:`Abstinence day ${g} of 2`,
+         sub:g===1?"Next intercourse day: "+shortDate(addDays(date,2))+".":"Intercourse day is tomorrow."};
+}
+function setFertView(v){fertView=v==="month"?"month":"week";S.set("fview",fertView);refocus='.seg button[aria-pressed="true"]';renderAll()}
+function fertRange(){
+ if(fertView==="week")return DAYS.map(dateOf);
+ const m=monthStart(monthOff),n=new Date(m.getFullYear(),m.getMonth()+1,0).getDate(),s0=ymd(m);
+ return Array.from({length:n},(_,i)=>addDays(s0,i));
+}
+function fertCal(cx){
+ const tk=todayKey(),ds=fertRange(),lead=(parseD(ds[0]).getDay()+6)%7;
+ const cells=Array.from({length:lead},()=>`<span></span>`).join("")+ds.map(d=>{
+  const [mk,mt]=fertMark(d,cx);
+  return `<button type="button" class="cd${d===tk?" td":""}${d>tk?" fu":""}" data-d="${d}" aria-pressed="${d===sel}"
+   aria-label="${esc(shortDate(d))}${mt?", "+mt:""}" onclick="pick('${d}')"><span class="num">${dnum(d)}</span><i class="mk ${mk}"></i></button>`;
+ }).join("");
+ return `<div class="cal" role="group" aria-label="Pick a day">${DAYS.map(k=>`<span class="dow">${DSHORT[k]}</span>`).join("")}${cells}</div>`;
+}
+function fertRow(f,label,sub,fd,o){
+ const on=!!fd[f];
+ return `<button type="button" class="row${on?" on":""}${o.neg?" neg":""}" data-f="${f}" aria-pressed="${on}"${o.off?" disabled":""} onclick="flipFert('${sel}','${f}')">
+  <span class="bx" aria-hidden="true">${o.neg?"!":"✓"}</span><span class="rt"><span class="nm">${esc(label)}</span><span class="sb">${esc(sub)}</span></span></button>`;
+}
+function renderFert(){
+ const tk=todayKey();ensureSel();
+ const cx=fertCtx(),fu=sel>tk,fd=fertData(sel),st=fertStatus(sel,cx),isDay=fertIsDay(sel,cx);
+ const past=fertRange().filter(d=>d<=tk),all=past.map(d=>[d,fertData(d)]);
+ const sexDays=all.filter(([,x])=>x.sex);
+ const onCadence=sexDays.filter(([d])=>fertReady(fertGap(d,cx))).length;
+ const ddpCount=sexDays.filter(([,x])=>x.ddp).length;
+ const count=k=>all.filter(([,x])=>x[k]).length;
+ const period=fertView==="month"?(monthOff===0?"This month":"That month"):(weekOff===0?"This week":"That week");
+ const ofSex=(label,n)=>sexDays.length?stat(label,n,sexDays.length,"of"):blankStat(label);
+ const sexSub=fd.sex?"Logged":isDay?(fu?"Planned: 2 days of abstinence by then":"Due: 2 days of abstinence done"):"Not due today; log it if it happens";
+ const ddpSub=fd.ddp?"Practised":fd.sex?"Tick if practised":"Log intercourse first";
+ return `<section class="pg">
+  <p class="goal">Intercourse every 3rd day, after 2 full days of abstinence. Cold therapy and romance every day.</p>
+  ${fertToggle()}
+  <div class="fst ${st.cls}"><h3>${esc(st.title)}</h3><p>${esc(st.sub)}</p></div>
+  ${fertView==="month"?fertCal(cx):dayStrip("fert")}
+  <p class="lg"><span><i class="mk done"></i>Intercourse</span><span><i class="mk due"></i>Intercourse day</span><span><i class="mk bl"></i>Masturbation</span></p>
+  <div class="dh"><h2>${sel===tk?"Today":DNAME[dkOf(sel)]}</h2><span>${longDate(sel)}</span></div>
+  <div class="list">
+   <div class="gh">Every day</div>
+   ${fertRow("cold","Cold therapy","Cool water or a cool pack, never ice on bare skin",fd,{off:fu})}
+   ${fertRow("rom","Romance with your wife","Love, affection and time together",fd,{off:fu})}
+   <div class="gh">Intercourse</div>
+   ${fertRow("sex","Intercourse",sexSub,fd,{off:fu})}
+   ${fertRow("ddp","Deep deposit",ddpSub,fd,{off:fu||!fd.sex})}
+   <div class="gh">Abstinence</div>
+   ${fertRow("mb","Masturbation",fd.mb?"Logged as a miss; the clock restarted":"Counts as a miss and restarts the 2-day clock",fd,{off:fu,neg:true})}
+  </div>
+  <div class="field"><label for="fert_notes">Notes</label>
+   <textarea id="fert_notes" class="ta" placeholder="Time together, energy, how you both felt…"${fu?" disabled":""} oninput="saveFert('${sel}',{note:this.value})">${esc(fd.note)}</textarea></div>
+  <div class="dh"><h3>${period}</h3><span>Days so far: ${past.length}</span></div>
+  <div class="stats">
+   ${stat("Intercourse",sexDays.length,null)}
+   ${ofSex("After 2-day abstinence",onCadence)}
+   ${ofSex("Deep deposit",ddpCount)}
+   ${stat("Cold therapy days",count("cold"),past.length)}
+   ${stat("Romance days",count("rom"),past.length)}
+   ${badStat("Masturbation",count("mb"))}
+  </div>
+ </section>`;
+}
+function fertToggle(){
+ return `<div class="seg" role="group" aria-label="Fertility view">
+  <button type="button" aria-pressed="${fertView==="week"}" onclick="setFertView('week')">Week</button>
+  <button type="button" aria-pressed="${fertView==="month"}" onclick="setFertView('month')">Month</button></div>`;
+}
+
+/* =================== BACKUP =================== */
+function backupFoot(){
+ const d=S.get("lastexport",null);
+ let text,stale;
+ if(!isDate(d)){text="No backup yet. Your log is stored only in this browser.";stale=true}
+ else{const n=dayDiff(d,todayKey());text="Last backup: "+shortDate(d)+(n>=7?` (${n} days ago)`:"");stale=n>=7}
+ return `<div class="foot${stale?" stale":""}"><span>${esc(text)}</span>
+  <button type="button" onclick="exportData()">Back up</button>
+  <button type="button" onclick="document.getElementById('imp').click()">Restore</button></div>`;
+}
+function allData(){const d={};S.keys().forEach(k=>{try{d[k]=JSON.parse(localStorage.getItem(K+k))}catch(e){}});return d}
+function markBackup(tk){S.set("lastexport",tk);if(!sheet)renderAll()}
+function downloadFile(text,name){
+ const b=new Blob([text],{type:"application/json"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+/* on iPhone this opens the share sheet, so "Save to Files", AirDrop or Messages all work */
+async function exportData(){
+ const tk=todayKey(),d=allData();d.lastexport=tk;
+ const name="health-log-"+tk+".json",json=JSON.stringify(d,null,1);
+ let file=null;try{file=new File([json],name,{type:"application/json"})}catch(e){}
+ let canFile=false;try{canFile=!!(file&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]}))}catch(e){}
+ if(canFile){
+  try{await navigator.share({files:[file],title:"Four Pillars backup"});markBackup(tk);toast("Backup saved")}
+  catch(e){if(!e||e.name!=="AbortError"){downloadFile(json,name);markBackup(tk)}}
+  return;
+ }
+ downloadFile(json,name);markBackup(tk);
+}
+const KNOWN=/^(lift:|mode:|sleep:|gut:|fert:|wchk:|fview$|wview$|lastexport$)/;
+function importData(inp){
+ const f=inp.files&&inp.files[0];inp.value="";if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{
+  let d;try{d=JSON.parse(r.result)}catch(e){toast("That file isn't a backup from this app.");return}
+  if(!d||typeof d!=="object"||Array.isArray(d)){toast("That file isn't a backup from this app.");return}
+  const keys=Object.keys(d).filter(k=>k&&k.length<80);
+  if(!keys.some(k=>KNOWN.test(k))){toast("That file has no log entries.");return}
+  const when=isDate(d.lastexport)?" from "+shortDate(d.lastexport):"";
+  confirmAsk({title:"Restore this backup?",ok:"Replace",danger:true,run:()=>doImport(d,keys),
+   text:`This replaces everything in the app with the backup${when} (${keys.length} entries). You can undo right after.`});
+ };
+ r.onerror=()=>toast("Couldn't read that file.");
+ r.readAsText(f);
+}
+function snapshotAll(){
+ const snap={};S.keys().forEach(k=>{try{snap[k]=localStorage.getItem(K+k)}catch(e){}});
+ return ()=>{S.keys().forEach(k=>{if(!(k in snap))S.del(k)});
+  Object.keys(snap).forEach(k=>{try{localStorage.setItem(K+k,snap[k])}catch(e){}});
+  resetView();renderAll()};
+}
+function resetView(){
+ Object.keys(drafts).forEach(k=>delete drafts[k]);openWhy.clear();
+ tab="gut";sel=null;weekOff=0;monthOff=0;fertView=S.get("fview","week")==="month"?"month":"week";
+ workView=S.get("wview","day")==="week"?"week":"day";
+}
+function doImport(d,keys){
+ const undo=snapshotAll();
+ S.keys().forEach(k=>S.del(k));
+ for(const k of keys){if(!S.set(k,d[k])){undo();toast("Couldn't restore: this browser is out of space. Nothing changed.");return}}
+ resetView();renderAll();toast("Backup restored",undo);
+}
+
+/* =================== START =================== */
+/* home-screen apps stay suspended overnight; jump to the new day instead of leaving yesterday open */
+function checkDay(){
+ const tk=todayKey();
+ if(tk===lastTk)return;
+ if(!sel||sel===lastTk){sel=null;weekOff=0;monthOff=0}
+ lastTk=tk;
+ if(!sheet)renderAll();
+}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkDay()});
+window.addEventListener("pageshow",checkDay);
+window.addEventListener("focus",checkDay);
+setInterval(()=>{if(!document.hidden)checkDay()},60000);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&sheet)closeSheet()});
+if(window.visualViewport){visualViewport.addEventListener("resize",fitSheet);visualViewport.addEventListener("scroll",fitSheet)}
+/* ask Safari to keep this app's storage (iPhone and iPad only; elsewhere it can trigger a prompt) */
+try{if(navigator.standalone!==undefined&&navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}
+renderAll();
+</script>
+</body>
+</html>
