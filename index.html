@@ -333,7 +333,9 @@ button.row:active{background:var(--bg)}
 /* 16-week block: pelvic floor count in the week matrix, Sunday check-in, block rules */
 .stat.wide{grid-column:1/-1}
 .stat.w2{grid-column:span 2}
-.wd .wt{display:block;max-width:100%;padding:0 2px;margin-top:1px;font-size:10.5px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wd .wt{display:block;max-width:100%;padding:0 2px;margin-top:1px;font-size:10.5px;font-weight:600;line-height:1.15;text-align:center;overflow-wrap:break-word}
+.fst.big h3{font-size:20px;letter-spacing:-.015em}
+.fst .btn{margin-top:10px;min-height:44px}
 .wd.td .wt{color:var(--acc)}
 .dcb .pfx{margin-top:2px;color:var(--t3)}
 .dcb .pfx.ok{color:var(--acc);font-weight:600}
@@ -392,7 +394,7 @@ const PAIRS_H=" Pairs: one set of each exercise in the pair back to back, then r
 const PAIRS_L=" Pairs: one set of each exercise back to back, then rest 60 s.";
 /* from Week 2 the gym days split into lower body, push and pull, all at the same effort */
 const WORK="Warm up with 1–2 lighter sets, then stop each working set with 2–3 good reps left. Breathe out on the effort instead of holding your breath.";
-const STRAIGHT=" Straight sets: finish every set of one exercise before the next, resting as the target says.";
+const STRAIGHT=" Straight sets: finish every set of this exercise before moving on, resting as the target says.";
 const QUICK=new Set(["pushups","hindu","hang","stretch","pf-am","pf-work","pf-pm","rocker","circuit"]);
 const NO_LOAD=new Set(["pushups","hindu","stretch","plank","hang","balance","pf-am","pf-work","pf-pm","rocker","circuit","pf-bridge","walk"]);
 const PF_CUE="The squeeze: draw the penis in and lift the scrotum, as if stopping urine and holding in gas at the same time. Buttocks, thighs and belly stay relaxed; keep breathing. Slow holds: squeeze, hold, then let go fully for as long as you held. Quick flicks: hard 1-second squeezes with a full let-go between each. Finish with 5 slow belly breaths, letting the pelvic floor drop. End the set when the squeeze weakens or your buttocks, belly or breath take over. Log the number of good holds.";
@@ -427,8 +429,8 @@ const EX={
  "cs-row":{n:"Supported row",f:"Chest-supported row (machine)",m:"reps",top:12,c:"Chest stays on the pad, so your low back rests after the RDLs."},
  "decline-machine":{n:"Decline press",f:"Decline press (machine)",m:"reps",top:10,c:"On the machine, or a Smith machine with the safety stops set."},
  "abductor":{n:"Abductor",f:"Abductor machine",m:"reps",top:15},
- "squat-db":{n:"Goblet squat",f:"Goblet squat (light dumbbell)",m:"reps",top:15,c:"Breathe out and lift the pelvic floor as you stand. Keep it light; Friday follows Thursday's intervals."},
- "press-incline":{n:"Incline DB press",f:"Incline dumbbell press (light)",m:"reps",top:15},
+ "squat-db":{n:"Goblet squat",f:"Goblet squat (dumbbell)",m:"reps",top:15,c:"Hold one dumbbell at your chest and sit down between your heels, chest tall. Breathe out and lift the pelvic floor as you stand."},
+ "press-incline":{n:"Incline DB press",f:"Incline dumbbell press",m:"reps",top:15},
  "db-rdl":{n:"DB RDL",f:"Dumbbell Romanian deadlift (light)",m:"reps",top:12,c:"Same flat-back hinge as Wednesday, with light dumbbells. Breathe out and lift the pelvic floor as you stand."},
  "barbell-curl":{n:"Barbell curl",f:"Barbell curl",m:"reps",top:15,c:"An EZ bar is easier on the wrists."},
  "pushdown":{n:"Pushdown",f:"Cable triceps pushdown",m:"reps",top:15},
@@ -439,7 +441,7 @@ const EX={
  "pf-bridge":{n:"PF bridge",f:"Pelvic floor bridge with ball squeeze",m:"reps",bw:true,
    c:"On your back, knees bent, a soft ball or rolled towel between the knees. Squeeze the pelvic floor, press through your heels to lift the hips, squeeze the ball and hold 5 s, then lower slowly. Replaces the adductor machine."},
  "lat-lunge":{n:"Lateral lunge",f:"Lateral (side-step) lunge",m:"reps",top:8,bw:true,
-   c:"Step wide to one side, bend that knee and sit back while the other leg stays straight, then push back to start. Log reps per side. Bodyweight first; once 2 × 8 is easy, hold a light dumbbell at your chest. Replaces the abductor machine."},
+   c:"Step wide to one side, bend that knee and sit back while the other leg stays straight, then push back to start. Log reps per side. Bodyweight first; once 3 × 8 is easy, hold a light dumbbell at your chest. Replaces the abductor machine."},
  "rocker":{n:"Pelvic rocker",f:"Pelvic rocker",m:"reps",
    c:"On your back, knees bent: roll the tailbone up toward your stomach so the low back flattens, then roll it back down into the floor. Slow."},
  "circuit":{n:"Hip & PF circuit",f:"Hip & pelvic floor circuit",m:"time",u:"min",
@@ -484,8 +486,8 @@ const NEW_TAG={mon:"Heavy",tue:"Zone 2",wed:"Heavy",thu:"VO2",fri:"Light",sat:"L
 const NEW_ORDER=[["pf","Pelvic floor · 3 sets through the day"],...ORDER,["cd","Cool-down"]];
 /* From Week 2 (Mon 26 Oct 2026) every day has one job; Week 1 keeps the layout it was logged against */
 const SPLIT_FROM="2026-10-26",SPLIT_WEEK=2;
-const SPLIT_TAG={mon:"Lower",tue:"Zone 2",wed:"Push",thu:"VO2",fri:"Pull",sat:"Long Z2",sun:"Rest"};
-const SPLIT_MAP="Mon lower body · Tue Zone 2 · Wed push · Thu VO2 max · Fri pull · Sat long Zone 2 · Sun rest";
+const SPLIT_TAG={mon:"Lower push",tue:"Upper push",wed:"Lower pull",thu:"VO2 max",fri:"Upper pull",sat:"Zone 2",sun:"Rest"};
+const SPLIT_MAP="Mon Lower Body Push · Tue Upper Body Push · Wed Lower Body Pull · Thu VO2 Max · Fri Upper Body Pull · Sat Zone 2 · Sun Rest";
 const inSplit=date=>date>=SPLIT_FROM;
 const PF_SETS=[["pf-am"],["pf-work"],["pf-pm"]];
 /* [last week, slow holds, quick flicks] — one dose per phase, the same for all three sets */
@@ -514,46 +516,42 @@ function blockDay(dk,w){
  const d={pf:PF_SETS.map(([id],k)=>({id,t:dz[1]+" + "+dz[2]+" · "+pfPos(k,w),s:1})),z2:[],vo2:[],me:[],st:[]};
  const gym="60 min: warm-up 0–7 · strength 7–37 · Zone 2 37–52 · cool-down 52–60";
  const hang={id:"hang",t:"2 × 20–40 s, daily dose; stop before your grip gives out",i:"2 × 20–40 s",s:2};
- /* the split: one job per day, in the order you do it (warm-up, main work, Zone 2, cool-down) */
+ /* the split: one routine per day, listed in the order you do it (warm-up, routine, Zone 2, cool-down) */
  if(w>=SPLIT_WEEK&&dk!=="sun"){
-  const dd=[...dose,hang],WU="Warm-up & daily dose";
-  const r90="rest 90 s",z15=z2("15","15 min after lifting");
-  if(dk==="mon")return Object.assign(d,{focus:["Lower body day","Legs and hips, then 15 min of Zone 2"],
-   gn:{me:WU,st:"Lower body · in pairs"},tb:"60 min: warm-up 0–6 · lower body 6–37 · Zone 2 37–52 · stretch 52–60",
-   me:[...dd,{id:"rocker",t:"10 reps, slow; primes the hip hinge",i:"10 reps",s:1}],
-   st:[lift("leg-press",3,"8–10","pair A with leg curl"),lift("ham-curl",3,"10–15","pair A with leg press"),
-       lift("smith-rdl",3,"8","pair B with the bridge"),lift("pf-bridge",2,"10, 5-s hold","pair B with Smith RDL","10"),
-       lift("lat-lunge",2,"8 per side","on its own, rest 60 s","8/side")],
-   z2:[z15],cd:[stretch("6 min: hips, hamstrings and glutes; finish with 5 release breaths","6 min")]});
-  if(dk==="tue")return Object.assign(d,{focus:["Zone 2 day","45 min easy incline walk, then core"],
-   gn:{me:WU,cd:"Core & cool-down"},tb:"60 min: daily dose 0–5 · Zone 2 5–50 · core 50–60",
-   me:dd,z2:[z2("45","45 min")],
-   cd:[{id:"plank",t:"2 × 30 s per side",i:"2 × 30 s",s:2},{id:"rocker",t:"10 reps, 2 rounds, slow",i:"2 × 10",s:2},
-       stretch("3 min, then 5 release breaths","3 min")]});
-  if(dk==="wed")return Object.assign(d,{focus:["Push day","Chest, shoulders and triceps, then 15 min of Zone 2"],
-   gn:{me:WU,st:"Push · straight sets"},tb:"60 min: warm-up 0–5 · push 5–36 · Zone 2 36–51 · stretch 51–60",
-   me:dd,
-   st:[lift("chest-machine",3,"8–10",r90),lift("shoulder-machine",3,"8–10",r90),
-       Object.assign(lift("press-incline",3,"10–15",r90),{f:"Incline dumbbell press"}),
-       lift("decline-machine",2,"8–10",r90),lift("pushdown",2,"10–15","rest 60 s")],
-   z2:[z15],cd:[stretch("6 min: chest, shoulders and lats; finish with 5 release breaths","6 min")]});
-  if(dk==="thu")return Object.assign(d,{focus:de?["Zone 2 day (deload week)","45 min easy, in place of the intervals"]:["VO2 max day","Sled intervals, then 15 min of easy Zone 2"],
-   gn:{me:WU},tb:de?"60 min: daily dose 0–4 · Zone 2 4–49 · stretch 49–56":"60 min: daily dose 0–4 · build-up 4–12 · intervals 12–37 · Zone 2 37–52 · stretch 52–60",
+  const dd=[...dose,hang],WU="Warm-up · daily dose";
+  const r90="rest 90 s",r60="rest 60 s",fin=z2("20","20 min after lifting");
+  const gym=name=>"60 min: warm-up 0–5 · "+name+" 5–33 · Zone 2 33–53 · stretch 53–60";
+  const liftDay=(title,sub,st,warm,cool)=>Object.assign(d,{focus:[title,sub+", then 20 min of Zone 2"],
+   gn:{me:WU,st:title,z2:"Zone 2 finisher"},tb:gym(title.toLowerCase()),
+   me:warm?[...dd,warm]:dd,st,z2:[fin],cd:[stretch(cool+"; finish with 5 release breaths","6 min")]});
+  if(dk==="mon")return liftDay("Lower Body Push","Quads and glutes",
+   [lift("leg-press",3,"8–10",r90),lift("squat-db",3,"10–15",r90),lift("lat-lunge",3,"8 per side",r60,"8/side")],
+   null,"6 min: quads, hip flexors and glutes");
+  if(dk==="tue")return liftDay("Upper Body Push","Chest, shoulders and triceps",
+   [lift("chest-machine",3,"8–10",r90),lift("shoulder-machine",3,"8–10",r90),
+    lift("press-incline",3,"10–15",r90),lift("pushdown",2,"10–15",r60)],
+   null,"6 min: chest, shoulders and triceps");
+  if(dk==="wed")return liftDay("Lower Body Pull","Hamstrings, glutes and hips",
+   [lift("smith-rdl",3,"8",r90),lift("ham-curl",3,"10–15",r90),lift("pf-bridge",3,"10, 5-s hold",r60,"10")],
+   {id:"rocker",t:"10 reps, slow; primes the hip hinge",i:"10 reps",s:1},"6 min: hamstrings, hips and low back");
+  if(dk==="fri")return liftDay("Upper Body Pull","Back, biceps and grip",
+   [lift("pullups",4,"5–8",r90),lift("row",3,"10–12",r90),lift("barbell-curl",2,"10–15",r60),
+    lift("carry",3,"30–40 m",r60,"30–40 m")],
+   null,"6 min: lats, chest and forearms");
+  if(dk==="thu")return Object.assign(d,{
+   focus:de?["Zone 2","Deload week: 45 min easy, in place of the intervals"]:["VO2 Max","Sled intervals, then 15 min of easy Zone 2"],
+   gn:{me:WU,z2:de?"Zone 2":"Zone 2 cool-down"},
+   tb:de?"60 min: daily dose 0–4 · Zone 2 4–49 · stretch 49–56":"60 min: daily dose 0–4 · build-up 4–12 · intervals 12–37 · Zone 2 37–52 · stretch 52–60",
    me:dd,
    vo2:de?[]:[{id:"sled",t:"8 min easy build-up, then 4 × 4 min hard with 3 min easy walking between",b:"Sled",i:"4 × 4",s:4}],
    z2:[de?z2("45","Deload: 45 min easy, in place of the intervals"):z2("15","15 min cool-down after the intervals")],
    cd:[stretch("7 min: calves, quads and hip flexors; finish with 5 release breaths","7 min")]});
-  if(dk==="fri")return Object.assign(d,{focus:["Pull day","Back, biceps and grip, then 15 min of Zone 2"],
-   gn:{me:WU,st:"Pull · straight sets"},tb:"60 min: warm-up 0–5 · pull 5–37 · Zone 2 37–52 · stretch 52–60",
-   me:dd,
-   st:[lift("pullups",4,"5–8",r90),lift("row",3,"10–12",r90),lift("cs-row",2,"10–12",r90),
-       lift("barbell-curl",2,"10–15","finisher pair with the carry"),lift("carry",3,"30–40 m","finisher pair with the curl")],
-   z2:[z15],cd:[stretch("6 min: lats, chest and hips; finish with 5 release breaths","6 min")]});
-  const m=w<=2?"60":"75";
-  return Object.assign(d,{focus:["Long Zone 2 day",m+" min walk, then the hip & pelvic floor circuit"],
-   gn:{me:WU,cd:"Circuit & cool-down"},
-   tb:w<=2?"About 95 min, fed or fasted: daily dose 0–5 · Zone 2 5–65 · circuit 65–85 · stretch 85–95"
-          :"About 110 min, fed or fasted: daily dose 0–5 · Zone 2 5–80 · circuit 80–100 · stretch 100–110",
+  /* Saturday carries the rest of the week's Zone 2: 4 × 20 + 15 + this = 165 min (Weeks 1–2), then 180 */
+  const m=w<=2?"70":"85";
+  return Object.assign(d,{focus:["Zone 2",m+" min easy incline walk, then the hip & pelvic floor circuit"],
+   gn:{me:WU,z2:"Zone 2",cd:"Circuit & cool-down"},
+   tb:w<=2?"About 105 min, fed or fasted: daily dose 0–5 · Zone 2 5–75 · circuit 75–95 · stretch 95–105"
+          :"About 120 min, fed or fasted: daily dose 0–5 · Zone 2 5–90 · circuit 90–110 · stretch 110–120",
    me:dd,z2:[z2(m,m+" min, incline treadmill or a hilly outdoor route")],
    cd:[{id:"circuit",i:"20 min",s:1,t:"20 min: pelvic rocker 2 × 10 · "+(late?"single-leg bridge 2 × 8 per side":"bridge 3 × 10")
        +", 5-s hold · lateral lunge 2 × 10 per side · side plank 2 × 30 s per side · single-leg balance 2 × 30 s per leg"},
@@ -593,7 +591,7 @@ function blockDay(dk,w){
       stretch("10 min, full body; finish with 5 release breaths","10 min")],
   z2:[z2(m,m+" min, incline treadmill or a hilly outdoor route")]})}
  return Object.assign(d,{tb:"Optional, up to 75 min, fed or fasted. Or rest completely.",rest:true,
-  focus:["Rest day","Dead hang and mobility; an easy walk if you feel like it"],gn:{me:"Daily dose",cd:"Mobility"},
+  focus:["Rest","Dead hang and mobility; an easy walk if you feel like it"],gn:{me:"Daily dose",z2:"Optional walk",cd:"Mobility"},
   restText:"Recovery: the dead hang, an easy walk and 10–15 min of mobility, or rest completely.",restShort:"Rest day",
   me:[hang],cd:[stretch("10–15 min: hips, hamstrings and chest; finish with 5 release breaths","10–15 min","Mobility")],
   z2:[{id:"walk",t:"45–60 min outdoors, easier than Zone 2 (optional)",b:"Walk",i:"optional",s:1}]});
@@ -606,10 +604,10 @@ function dayPlan(date){
 }
 /* weekly targets for the week starting on this Monday */
 function weekGoals(mon){
- if(!inBlock(mon))return {z2:120,vo2:1,pl:50};
+ if(!inBlock(mon))return {z2:120,vo2:1,pl:50,st:3};
  const w=blockWeek(mon),split=inSplit(mon);
  /* pull-ups move to Friday only in the split: 4 × 5–8 a week */
- return {w,split,z2:w<=2?165:180,vo2:w===8?0:1,pf:21,pl:split?25:50};
+ return {w,split,z2:w<=2?165:180,vo2:w===8?0:1,pf:21,pl:split?25:50,st:split?4:3};
 }
 function phaseLine(w){
  if(w>16)return "16-week block done. Keep the daily pelvic floor sets going; full strength can take 5–6 months.";
@@ -895,15 +893,18 @@ function dayStrip(t){
    <span>${DSHORT[DAYS[i]]}</span><b class="num">${dnum(d)}</b>${t==="workout"?`<small class="wt" aria-hidden="true">${esc(tagOf(d))}</small>`:""}<i class="bar"><i style="width:${Math.round(p*100)}%"></i></i><i class="mk ${mk}"></i></button>`;
  }).join("")}</div>`;
 }
+/* the Workout tab can look one week ahead, so a new plan can be seen before it starts */
+const maxAhead=()=>tab==="workout"?1:0;
 function renderTop(){
  const month=tab==="fert"&&fertView==="month",off=month?monthOff:weekOff,unit=month?"month":"week",go=month?"goMonth":"goWeek";
+ const ahead=month?0:maxAhead();
  let sub;
  if(month)sub=monthStart(off).toLocaleDateString(undefined,{month:"long",year:"numeric"});
  else{const a=monday(weekOff),b=new Date(a);b.setDate(b.getDate()+6);const f=d=>d.toLocaleDateString(undefined,{day:"numeric",month:"short"});sub=f(a)+" – "+f(b)}
- $("#top").innerHTML=`<div><h1>${TABNAME[tab]}</h1><p class="num">${off===0?(month?"This month · ":"This week · "):""}${sub}</p></div>
-  <div class="nav">${off<0?`<button type="button" class="nb txt" onclick="${go}(0)">Today</button>`:""}
+ $("#top").innerHTML=`<div><h1>${TABNAME[tab]}</h1><p class="num">${off===0?(month?"This month · ":"This week · "):off>0?"Next week · ":""}${sub}</p></div>
+  <div class="nav">${off!==0?`<button type="button" class="nb txt" onclick="${go}(0)">Today</button>`:""}
    <button type="button" class="nb" aria-label="Previous ${unit}" onclick="${go}(-1)">‹</button>
-   <button type="button" class="nb" aria-label="Next ${unit}"${off<0?"":" disabled"} onclick="${go}(1)">›</button></div>`;
+   <button type="button" class="nb" aria-label="Next ${unit}"${off<ahead?"":" disabled"} onclick="${go}(1)">›</button></div>`;
 }
 function renderAll(){
  lastTk=todayKey();
@@ -913,9 +914,9 @@ function renderAll(){
  if(sheet)renderSheet();
  if(refocus){const el=document.querySelector(refocus);refocus=null;if(el)el.focus({preventScroll:true})}
 }
-function setTab(t){if(!TABNAME[t])return;tab=t;renderAll();window.scrollTo(0,0)}
+function setTab(t){if(!TABNAME[t])return;tab=t;if(weekOff>maxAhead()){weekOff=0;sel=null}renderAll();window.scrollTo(0,0)}
 function pick(d){sel=d;refocus=`[data-d="${d}"]`;renderAll()}
-function goWeek(d){weekOff=d===0?0:Math.min(0,weekOff+d);sel=null;renderAll();window.scrollTo(0,0)}
+function goWeek(d){weekOff=d===0?0:Math.min(maxAhead(),weekOff+d);sel=null;renderAll();window.scrollTo(0,0)}
 function goMonth(d){monthOff=d===0?0:Math.min(0,monthOff+d);sel=null;renderAll();window.scrollTo(0,0)}
 
 /* =================== TOAST & UNDO =================== */
@@ -1005,11 +1006,11 @@ function workToggle(){
 }
 function weekStats(){
  const s=weekNumbers(),g=weekGoals(dateOf("mon"));
- return `<div class="dh"><h3>${weekOff===0?"This week":"That week"}</h3>${g.w?`<span>Week ${g.w}${g.w<=16?" of 16":""}</span>`:""}</div>
+ return `<div class="dh"><h3>${weekOff===0?"This week":weekOff>0?"Next week":"That week"}</h3>${g.w?`<span>Week ${g.w}${g.w<=16?" of 16":""}</span>`:""}</div>
   <div class="stats">${g.split?stat("Pelvic floor sets",s.pf,g.pf,null,"w2")+stat("Dead hang days",s.hang,7)
    :g.pf?stat("Pelvic floor sets",s.pf,g.pf,null,"wide"):""}${stat("Zone 2 min",s.z2,g.z2)
    +(g.vo2?stat("VO2 sessions",s.vo2,g.vo2):blankStat("VO2 · deload week"))+stat("Push-ups",s.pu,100)
-   +stat("Squats",s.hs,100)+stat("Pull-ups",s.pl,g.pl)+stat("Strength days",s.st,3)}</div>`;
+   +stat("Squats",s.hs,100)+stat("Pull-ups",s.pl,g.pl)+stat("Strength days",s.st,g.st)}</div>`;
 }
 /* the block's phase for the week on screen; the week before it starts gets a heads-up */
 function blockGoal(){
@@ -1017,7 +1018,9 @@ function blockGoal(){
  if(inBlock(mon)){
   const nxt=!inSplit(mon)&&dayDiff(mon,SPLIT_FROM)===7;
   return `<p class="goal">${esc(phaseLine(blockWeek(mon)))}</p>`
-   +(nxt?`<p class="goal">From Monday, ${esc(longDate(SPLIT_FROM))}, each day has one job: ${esc(SPLIT_MAP)}. The dead hang joins the daily dose, Sundays included.</p>`:"");
+   +(nxt?`<div class="fst due"><h3>New routine from Monday, ${esc(longDate(SPLIT_FROM))}</h3>
+     <p>This week still shows the old mixed layout you logged. From Monday, each day is one routine: ${esc(SPLIT_MAP)}. The dead hang is in the daily dose, Sundays included.</p>
+     <button type="button" class="btn pri" onclick="goWeek(1)">Show next week</button></div>`:"");
  }
  const n=dayDiff(mon,WORK_FROM);
  return n>0&&n<=7?`<p class="goal">Your 16-week fertility block starts Monday, ${esc(longDate(WORK_FROM))}: pelvic floor sets every day and a reworked gym week. This week stays on the current plan.</p>`:"";
@@ -1100,7 +1103,7 @@ function renderWorkDay(){
   ${blockGoal()}
   ${dayStrip("workout")}
   <div class="dh"><h2>${sel===tk?"Today":DNAME[dk]}</h2><span>${esc(tagOf(sel))} · ${longDate(sel)}</span></div>
-  ${p.focus?`<div class="fst${sel===tk?" due":""}"><h3>${esc(p.focus[0])}</h3><p>${esc(p.focus[1])}</p></div>`:""}
+  ${p.focus?`<div class="fst big${sel===tk?" due":""}"><h3>${esc(p.focus[0])}</h3><p>${esc(p.focus[1])}</p></div>`:""}
   ${p.tb?`<p class="note num">${esc(p.tb)}</p>`:""}
   <div class="list">${rows}${fu?`<p class="note">Logging opens on the day.</p>`:p.rest?`<p class="note">${esc(p.restText||"Rest, or an easy walk if you feel like moving.")}</p>`:""}</div>
   <p class="note">${blk?"One tap ticks off a pelvic floor set, push-ups, squats, the dead hang, the rocker, the circuit or a stretch; Log takes real numbers."
@@ -1194,9 +1197,10 @@ function rulesCard(split){
  return `<div class="dh"><h3>How this block works</h3></div>
   <div class="card rules">
   ${sec("Every session",[
-   ...(split?["One job per day: "+SPLIT_MAP+". Monday, Wednesday and Friday also end with 15 min of Zone 2.",
-    "Daily dose, every day in the warm-up: 15–20 push-ups, 15–20 Hindu squats and 2 dead hangs of 20–40 s (on Sunday, just the dead hang).",
-    "Lower body is done in pairs: one set of each exercise in the pair back to back, then rest 60–90 s. Push and pull are straight sets: every set of one exercise, then the next, resting 90 s (60 s for the small arm moves)."]
+   ...(split?["One routine per day: "+SPLIT_MAP+".",
+    "The four lifting days end with 20 min of Zone 2; Thursday ends with 15. Saturday's long walk makes up the rest of the week's Zone 2.",
+    "Straight sets: finish every set of one exercise, then move to the next. Rest 90 s between sets, or 60 s where the target says.",
+    "Daily dose, every day in the warm-up: 15–20 push-ups, 15–20 Hindu squats and 2 dead hangs of 20–40 s (on Sunday, just the dead hang)."]
    :["Pairs: one set of each exercise in the pair back to back, then rest 60–90 s (60 s on Friday). That's what fits each session into an hour."]),
    "Top the rep range on every working set two sessions running, then add the smallest weight step and start again at the bottom of the range.",
    "Exhale and lift: on every lower-body rep, breathe out and lift the pelvic floor as you push; breathe in and let it relax on the way down. Never hold your breath to push.",
@@ -1234,7 +1238,7 @@ function openEx(date,col,i){
 function liftSheet(){
  const {dk,col,inst,id,date}=cur,ex=EX[id],future=date>todayKey();
  const e=entryOn(id,date),prev=logsBefore(id,date),last=prev[prev.length-1];
- const blk=inBlock(date),lc=col!=="st"||ex.bw?"":inSplit(date)?WORK+(/pair/.test(inst.t)?PAIRS_H:STRAIGHT)
+ const blk=inBlock(date),lc=col!=="st"||ex.bw?"":inSplit(date)?WORK+STRAIGHT
   :dk==="fri"?LIGHT+(blk?PAIRS_L:""):HEAVY+(blk?PAIRS_H:"");
  const cue=[lc,ex.c||""].filter(Boolean).join(" ");
  let body;
