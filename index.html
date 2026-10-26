@@ -231,7 +231,8 @@ button.row:active{background:var(--bg)}
 .ch.done .s{color:var(--acc)}
 .mx .r.fu .ch{background:transparent;border-style:dashed}
 .mx .em{padding:8px 6px;font-size:12px;color:var(--t3)}
-.mx .rest{grid-column:span 3;display:flex;align-items:center;padding:6px 10px;font-size:12.5px;line-height:1.35;color:var(--t2)}
+.mx .rest.span3{grid-column:span 3}
+.mx .rest{display:flex;align-items:center;padding:6px 10px;font-size:12.5px;line-height:1.35;color:var(--t2)}
 /* very narrow screens: scroll sideways instead of squeezing (a sticky header can't work inside a scroller) */
 @media (max-width:359px){.mx{overflow-x:auto}.mx .r{min-width:340px}.mx .hd{position:static}}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
@@ -331,6 +332,9 @@ button.row:active{background:var(--bg)}
 
 /* 16-week block: pelvic floor count in the week matrix, Sunday check-in, block rules */
 .stat.wide{grid-column:1/-1}
+.stat.w2{grid-column:span 2}
+.wd .wt{display:block;max-width:100%;padding:0 2px;margin-top:1px;font-size:10.5px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wd.td .wt{color:var(--acc)}
 .dcb .pfx{margin-top:2px;color:var(--t3)}
 .dcb .pfx.ok{color:var(--acc);font-weight:600}
 .card .lbl{margin:12px 0 8px}
@@ -386,7 +390,10 @@ const LIGHT="Light free weights: stop each set with 3–4 good reps left, loweri
 /* the 16-week block pairs its lifts to fit each session into an hour */
 const PAIRS_H=" Pairs: one set of each exercise in the pair back to back, then rest 60–90 s.";
 const PAIRS_L=" Pairs: one set of each exercise back to back, then rest 60 s.";
-const QUICK=new Set(["pushups","hindu","stretch","pf-am","pf-work","pf-pm","rocker","circuit"]);
+/* from Week 2 the gym days split into lower body, push and pull, all at the same effort */
+const WORK="Warm up with 1–2 lighter sets, then stop each working set with 2–3 good reps left. Breathe out on the effort instead of holding your breath.";
+const STRAIGHT=" Straight sets: finish every set of one exercise before the next, resting as the target says.";
+const QUICK=new Set(["pushups","hindu","hang","stretch","pf-am","pf-work","pf-pm","rocker","circuit"]);
 const NO_LOAD=new Set(["pushups","hindu","stretch","plank","hang","balance","pf-am","pf-work","pf-pm","rocker","circuit","pf-bridge","walk"]);
 const PF_CUE="The squeeze: draw the penis in and lift the scrotum, as if stopping urine and holding in gas at the same time. Buttocks, thighs and belly stay relaxed; keep breathing. Slow holds: squeeze, hold, then let go fully for as long as you held. Quick flicks: hard 1-second squeezes with a full let-go between each. Finish with 5 slow belly breaths, letting the pelvic floor drop. End the set when the squeeze weakens or your buttocks, belly or breath take over. Log the number of good holds.";
 
@@ -474,14 +481,19 @@ const PLAN={
 const WORK_FROM="2026-10-19";
 /* same day labels as before, so the week matrix's day column looks the same */
 const NEW_TAG={mon:"Heavy",tue:"Zone 2",wed:"Heavy",thu:"VO2",fri:"Light",sat:"Long",sun:"Rest"};
-const NEW_ORDER=[["pf","Pelvic floor · 3 sets through the day"],...ORDER];
+const NEW_ORDER=[["pf","Pelvic floor · 3 sets through the day"],...ORDER,["cd","Cool-down"]];
+/* From Week 2 (Mon 26 Oct 2026) every day has one job; Week 1 keeps the layout it was logged against */
+const SPLIT_FROM="2026-10-26",SPLIT_WEEK=2;
+const SPLIT_TAG={mon:"Lower",tue:"Zone 2",wed:"Push",thu:"VO2",fri:"Pull",sat:"Long Z2",sun:"Rest"};
+const SPLIT_MAP="Mon lower body · Tue Zone 2 · Wed push · Thu VO2 max · Fri pull · Sat long Zone 2 · Sun rest";
+const inSplit=date=>date>=SPLIT_FROM;
 const PF_SETS=[["pf-am"],["pf-work"],["pf-pm"]];
 /* [last week, slow holds, quick flicks] — one dose per phase, the same for all three sets */
 const PF_DOSE=[[2,"Up to 5 × 3–5 s holds","5 quick flicks, gentle"],[4,"8 × 5–6 s holds","10 quick flicks"],
  [8,"10 × 8–10 s holds","2 × 10 quick flicks"],[12,"10–12 × 10 s holds","2 × 10 quick flicks"],[Infinity,"12 × 10 s holds","3 × 10 quick flicks"]];
 const inBlock=date=>date>=WORK_FROM;
 const blockWeek=date=>Math.floor(dayDiff(WORK_FROM,date)/7)+1;
-const tagOf=date=>(inBlock(date)?NEW_TAG:TAG)[dkOf(date)];
+const tagOf=date=>(inSplit(date)?SPLIT_TAG:inBlock(date)?NEW_TAG:TAG)[dkOf(date)];
 /* where and when each of the three daily sets happens; positions get more upright as the block goes on */
 function pfPos(k,w){
  if(k===0)return w<=4?"lying in bed, before getting up":w<=8?"sitting on the edge of the bed, first thing":"standing, first thing in the morning";
@@ -501,6 +513,52 @@ function blockDay(dk,w){
  const S6="6 min: hips, hamstrings, chest and lats; finish with 5 release breaths";
  const d={pf:PF_SETS.map(([id],k)=>({id,t:dz[1]+" + "+dz[2]+" · "+pfPos(k,w),s:1})),z2:[],vo2:[],me:[],st:[]};
  const gym="60 min: warm-up 0–7 · strength 7–37 · Zone 2 37–52 · cool-down 52–60";
+ const hang={id:"hang",t:"2 × 20–40 s, daily dose; stop before your grip gives out",i:"2 × 20–40 s",s:2};
+ /* the split: one job per day, in the order you do it (warm-up, main work, Zone 2, cool-down) */
+ if(w>=SPLIT_WEEK&&dk!=="sun"){
+  const dd=[...dose,hang],WU="Warm-up & daily dose";
+  const r90="rest 90 s",z15=z2("15","15 min after lifting");
+  if(dk==="mon")return Object.assign(d,{focus:["Lower body day","Legs and hips, then 15 min of Zone 2"],
+   gn:{me:WU,st:"Lower body · in pairs"},tb:"60 min: warm-up 0–6 · lower body 6–37 · Zone 2 37–52 · stretch 52–60",
+   me:[...dd,{id:"rocker",t:"10 reps, slow; primes the hip hinge",i:"10 reps",s:1}],
+   st:[lift("leg-press",3,"8–10","pair A with leg curl"),lift("ham-curl",3,"10–15","pair A with leg press"),
+       lift("smith-rdl",3,"8","pair B with the bridge"),lift("pf-bridge",2,"10, 5-s hold","pair B with Smith RDL","10"),
+       lift("lat-lunge",2,"8 per side","on its own, rest 60 s","8/side")],
+   z2:[z15],cd:[stretch("6 min: hips, hamstrings and glutes; finish with 5 release breaths","6 min")]});
+  if(dk==="tue")return Object.assign(d,{focus:["Zone 2 day","45 min easy incline walk, then core"],
+   gn:{me:WU,cd:"Core & cool-down"},tb:"60 min: daily dose 0–5 · Zone 2 5–50 · core 50–60",
+   me:dd,z2:[z2("45","45 min")],
+   cd:[{id:"plank",t:"2 × 30 s per side",i:"2 × 30 s",s:2},{id:"rocker",t:"10 reps, 2 rounds, slow",i:"2 × 10",s:2},
+       stretch("3 min, then 5 release breaths","3 min")]});
+  if(dk==="wed")return Object.assign(d,{focus:["Push day","Chest, shoulders and triceps, then 15 min of Zone 2"],
+   gn:{me:WU,st:"Push · straight sets"},tb:"60 min: warm-up 0–5 · push 5–36 · Zone 2 36–51 · stretch 51–60",
+   me:dd,
+   st:[lift("chest-machine",3,"8–10",r90),lift("shoulder-machine",3,"8–10",r90),
+       Object.assign(lift("press-incline",3,"10–15",r90),{f:"Incline dumbbell press"}),
+       lift("decline-machine",2,"8–10",r90),lift("pushdown",2,"10–15","rest 60 s")],
+   z2:[z15],cd:[stretch("6 min: chest, shoulders and lats; finish with 5 release breaths","6 min")]});
+  if(dk==="thu")return Object.assign(d,{focus:de?["Zone 2 day (deload week)","45 min easy, in place of the intervals"]:["VO2 max day","Sled intervals, then 15 min of easy Zone 2"],
+   gn:{me:WU},tb:de?"60 min: daily dose 0–4 · Zone 2 4–49 · stretch 49–56":"60 min: daily dose 0–4 · build-up 4–12 · intervals 12–37 · Zone 2 37–52 · stretch 52–60",
+   me:dd,
+   vo2:de?[]:[{id:"sled",t:"8 min easy build-up, then 4 × 4 min hard with 3 min easy walking between",b:"Sled",i:"4 × 4",s:4}],
+   z2:[de?z2("45","Deload: 45 min easy, in place of the intervals"):z2("15","15 min cool-down after the intervals")],
+   cd:[stretch("7 min: calves, quads and hip flexors; finish with 5 release breaths","7 min")]});
+  if(dk==="fri")return Object.assign(d,{focus:["Pull day","Back, biceps and grip, then 15 min of Zone 2"],
+   gn:{me:WU,st:"Pull · straight sets"},tb:"60 min: warm-up 0–5 · pull 5–37 · Zone 2 37–52 · stretch 52–60",
+   me:dd,
+   st:[lift("pullups",4,"5–8",r90),lift("row",3,"10–12",r90),lift("cs-row",2,"10–12",r90),
+       lift("barbell-curl",2,"10–15","finisher pair with the carry"),lift("carry",3,"30–40 m","finisher pair with the curl")],
+   z2:[z15],cd:[stretch("6 min: lats, chest and hips; finish with 5 release breaths","6 min")]});
+  const m=w<=2?"60":"75";
+  return Object.assign(d,{focus:["Long Zone 2 day",m+" min walk, then the hip & pelvic floor circuit"],
+   gn:{me:WU,cd:"Circuit & cool-down"},
+   tb:w<=2?"About 95 min, fed or fasted: daily dose 0–5 · Zone 2 5–65 · circuit 65–85 · stretch 85–95"
+          :"About 110 min, fed or fasted: daily dose 0–5 · Zone 2 5–80 · circuit 80–100 · stretch 100–110",
+   me:dd,z2:[z2(m,m+" min, incline treadmill or a hilly outdoor route")],
+   cd:[{id:"circuit",i:"20 min",s:1,t:"20 min: pelvic rocker 2 × 10 · "+(late?"single-leg bridge 2 × 8 per side":"bridge 3 × 10")
+       +", 5-s hold · lateral lunge 2 × 10 per side · side plank 2 × 30 s per side · single-leg balance 2 × 30 s per leg"},
+       stretch("10 min, full body; finish with 5 release breaths","10 min")]});
+ }
  if(dk==="mon")return Object.assign(d,{tb:gym,
   me:[...dose,pull("leg press"),stretch(S6,"6 min")],
   st:[lift("leg-press",3,"8–10","pair A with pull-ups"),lift("chest-machine",3,"8–10","pair B with seated row"),
@@ -535,8 +593,9 @@ function blockDay(dk,w){
       stretch("10 min, full body; finish with 5 release breaths","10 min")],
   z2:[z2(m,m+" min, incline treadmill or a hilly outdoor route")]})}
  return Object.assign(d,{tb:"Optional, up to 75 min, fed or fasted. Or rest completely.",rest:true,
-  restText:"Recovery: an easy walk and 10–15 min of mobility, or rest completely.",
-  me:[stretch("10–15 min: hips, hamstrings and chest; finish with 5 release breaths","10–15 min","Mobility")],
+  focus:["Rest day","Dead hang and mobility; an easy walk if you feel like it"],gn:{me:"Daily dose",cd:"Mobility"},
+  restText:"Recovery: the dead hang, an easy walk and 10–15 min of mobility, or rest completely.",restShort:"Rest day",
+  me:[hang],cd:[stretch("10–15 min: hips, hamstrings and chest; finish with 5 release breaths","10–15 min","Mobility")],
   z2:[{id:"walk",t:"45–60 min outdoors, easier than Zone 2 (optional)",b:"Walk",i:"optional",s:1}]});
 }
 const planCache={};
@@ -547,9 +606,10 @@ function dayPlan(date){
 }
 /* weekly targets for the week starting on this Monday */
 function weekGoals(mon){
- if(!inBlock(mon))return {z2:120,vo2:1};
- const w=blockWeek(mon);
- return {w,z2:w<=2?165:180,vo2:w===8?0:1,pf:21};
+ if(!inBlock(mon))return {z2:120,vo2:1,pl:50};
+ const w=blockWeek(mon),split=inSplit(mon);
+ /* pull-ups move to Friday only in the split: 4 × 5–8 a week */
+ return {w,split,z2:w<=2?165:180,vo2:w===8?0:1,pf:21,pl:split?25:50};
 }
 function phaseLine(w){
  if(w>16)return "16-week block done. Keep the daily pelvic floor sets going; full strength can take 5–6 months.";
@@ -747,7 +807,8 @@ function targetLog(inst,id){
 }
 function daySeq(date){
  const dk=dkOf(date),p=dayPlan(date),seq=[];
- (inBlock(date)?NEW_ORDER:ORDER).forEach(([c,name])=>{(p[c]||[]).forEach((inst,i)=>seq.push({dk,col:c,i,inst,group:name}))});
+ (inBlock(date)?NEW_ORDER:ORDER).forEach(([c,name])=>{const gname=(p.gn&&p.gn[c])||name;
+  (p[c]||[]).forEach((inst,i)=>seq.push({dk,col:c,i,inst,group:gname}))});
  return seq;
 }
 const pfDone=date=>PF_SETS.filter(([id])=>entryOn(id,date)).length;
@@ -761,8 +822,8 @@ function weekNumbers(){
  logs("hindu").filter(inWk).forEach(e=>hs+=reps(norm(e)));
  logs("pullups").filter(inWk).forEach(e=>pl+=reps(norm(e)));
  DAYS.forEach((dk,i)=>{const list=dayPlan(ds[i]).st||[];if(list.length&&list.every(x=>entryOn(x.id,ds[i])))st++});
- const pf=ds.reduce((a,d)=>a+pfDone(d),0);
- return {z2:Math.round(z2/60),vo2,pu,hs,pl,st,pf};
+ const pf=ds.reduce((a,d)=>a+pfDone(d),0),hang=ds.filter(d=>entryOn("hang",d)).length;
+ return {z2:Math.round(z2/60),vo2,pu,hs,pl,st,pf,hang};
 }
 
 /* drafts keep half-typed sets while the log sheet is open */
@@ -830,8 +891,8 @@ function dayStrip(t){
   if(t==="fert"){const f=fertMark(d,cx);mk=f[0];mt=f[1]}
   else if(t==="gut"){const n=stoolLogs(d).length;if(n){mk="done";mt=n+(n===1?" bowel movement":" bowel movements")}}
   return `<button type="button" class="wd${d===tk?" td":""}${d>tk?" fu":""}" data-d="${d}" aria-pressed="${d===sel}"
-   aria-label="${esc(shortDate(d))}, ${mt?mt+", ":""}${Math.round(p*100)}% done" onclick="pick('${d}')">
-   <span>${DSHORT[DAYS[i]]}</span><b class="num">${dnum(d)}</b><i class="bar"><i style="width:${Math.round(p*100)}%"></i></i><i class="mk ${mk}"></i></button>`;
+   aria-label="${esc(shortDate(d))}, ${t==="workout"?esc(tagOf(d))+", ":""}${mt?mt+", ":""}${Math.round(p*100)}% done" onclick="pick('${d}')">
+   <span>${DSHORT[DAYS[i]]}</span><b class="num">${dnum(d)}</b>${t==="workout"?`<small class="wt" aria-hidden="true">${esc(tagOf(d))}</small>`:""}<i class="bar"><i style="width:${Math.round(p*100)}%"></i></i><i class="mk ${mk}"></i></button>`;
  }).join("")}</div>`;
 }
 function renderTop(){
@@ -945,14 +1006,19 @@ function workToggle(){
 function weekStats(){
  const s=weekNumbers(),g=weekGoals(dateOf("mon"));
  return `<div class="dh"><h3>${weekOff===0?"This week":"That week"}</h3>${g.w?`<span>Week ${g.w}${g.w<=16?" of 16":""}</span>`:""}</div>
-  <div class="stats">${g.pf?stat("Pelvic floor sets",s.pf,g.pf,null,"wide"):""}${stat("Zone 2 min",s.z2,g.z2)
+  <div class="stats">${g.split?stat("Pelvic floor sets",s.pf,g.pf,null,"w2")+stat("Dead hang days",s.hang,7)
+   :g.pf?stat("Pelvic floor sets",s.pf,g.pf,null,"wide"):""}${stat("Zone 2 min",s.z2,g.z2)
    +(g.vo2?stat("VO2 sessions",s.vo2,g.vo2):blankStat("VO2 · deload week"))+stat("Push-ups",s.pu,100)
-   +stat("Squats",s.hs,100)+stat("Pull-ups",s.pl,50)+stat("Strength days",s.st,3)}</div>`;
+   +stat("Squats",s.hs,100)+stat("Pull-ups",s.pl,g.pl)+stat("Strength days",s.st,3)}</div>`;
 }
 /* the block's phase for the week on screen; the week before it starts gets a heads-up */
 function blockGoal(){
  const mon=dateOf("mon");
- if(inBlock(mon))return `<p class="goal">${esc(phaseLine(blockWeek(mon)))}</p>`;
+ if(inBlock(mon)){
+  const nxt=!inSplit(mon)&&dayDiff(mon,SPLIT_FROM)===7;
+  return `<p class="goal">${esc(phaseLine(blockWeek(mon)))}</p>`
+   +(nxt?`<p class="goal">From Monday, ${esc(longDate(SPLIT_FROM))}, each day has one job: ${esc(SPLIT_MAP)}. The dead hang joins the daily dose, Sundays included.</p>`:"");
+ }
  const n=dayDiff(mon,WORK_FROM);
  return n>0&&n<=7?`<p class="goal">Your 16-week fertility block starts Monday, ${esc(longDate(WORK_FROM))}: pelvic floor sets every day and a reworked gym week. This week stays on the current plan.</p>`:"";
 }
@@ -967,10 +1033,12 @@ function mxDone(e,col){
  }
  return shortSum(e);
 }
+/* the mobility column also carries the cool-down (core, circuit, stretch), which the split lists after Zone 2 */
 function mxCell(dk,col,date){
- const list=dayPlan(date)[col]||[];
+ const p=dayPlan(date),cols=col==="me"?["me","cd"]:[col];
+ const list=[];cols.forEach(c=>(p[c]||[]).forEach((x,i)=>list.push([c,i,x])));
  if(!list.length)return `<div class="em" role="cell"><span aria-hidden="true">–</span><span class="vh">Nothing planned</span></div>`;
- return `<div class="cell" role="cell">${list.map((x,i)=>{
+ return `<div class="cell" role="cell">${list.map(([col,i,x])=>{
   const ex=EX[x.id],e=entryOn(x.id,date);
   /* keep units with their numbers and ranges whole, so a narrow box never splits "30–40 m" */
   const tight=s=>s.replace(/(\d)–(\d)/g,"$1–⁠$2").replace(/ (s|m|min|reps|sets)\b/g," $1");
@@ -981,8 +1049,9 @@ function mxCell(dk,col,date){
  }).join("")}</div>`;
 }
 function renderMatrix(){
- const tk=todayKey();
- const head=`<div class="r hd" role="row"><div role="columnheader"><span class="vh">Day</span></div>${MX_COLS.map(c=>`<div role="columnheader"><span>${c[1]}</span>${c[2]?`<small>${c[2]}</small>`:""}</div>`).join("")}</div>`;
+ const tk=todayKey(),sp=inSplit(dateOf("mon"));
+ const colName=c=>sp&&c[0]==="me"?"Daily dose & mobility":sp&&c[0]==="st"?"Lift":c[1];
+ const head=`<div class="r hd" role="row"><div role="columnheader"><span class="vh">Day</span></div>${MX_COLS.map(c=>`<div role="columnheader"><span>${colName(c)}</span>${c[2]?`<small>${c[2]}</small>`:""}</div>`).join("")}</div>`;
  const rows=DAYS.map(dk=>{
   const date=dateOf(dk),fu=date>tk,p=dayPlan(date),tag=tagOf(date);
   /* block days show how many of the 3 pelvic floor sets are ticked; those are logged in Day view */
@@ -990,8 +1059,11 @@ function renderMatrix(){
   const pf=pn===null?"":`<small class="pfx${pn===3?" ok":""}">PF ${pn}/3</small>`;
   const day=`<div class="rh" role="rowheader"><button type="button" class="dcb" data-day="${date}" aria-label="${esc(DNAME[dk]+", "+longDate(date)+", "+tag+(pn===null?"":", pelvic floor "+pn+" of 3 sets")+". Open in Day view")}"
    onclick="openDay('${date}')"><b>${DSHORT[dk]}</b><span class="num">${dnum(date)}</span><small>${esc(tag)}</small>${pf}</button></div>`;
-  const cells=p.rest
-   ?mxCell(dk,"z2",date)+`<div class="rest" role="cell" aria-colspan="3">${esc(p.restText||"Rest, or an easy walk if you feel like moving.")}</div>`
+  /* a rest day with a daily dose keeps its columns, so the dead hang and mobility can be logged from here */
+  const cells=p.rest&&(p.me||p.cd)
+   ?mxCell(dk,"z2",date)+mxCell(dk,"vo2",date)+mxCell(dk,"me",date)+`<div class="rest" role="cell">${esc(p.restShort||"Rest")}</div>`
+   :p.rest
+   ?mxCell(dk,"z2",date)+`<div class="rest span3" role="cell" aria-colspan="3">${esc(p.restText||"Rest, or an easy walk if you feel like moving.")}</div>`
    :MX_COLS.map(c=>mxCell(dk,c[0],date)).join("");
   return `<div class="r${date===tk?" today":""}${fu?" fu":""}" role="row"${date===tk?' aria-current="date"':""}>${day}${cells}</div>`;
  }).join("");
@@ -1003,7 +1075,7 @@ function renderMatrix(){
   <p class="note">${blk?"Tap an exercise to log it, or tap a day to open it in Day view, where the pelvic floor sets are. PF shows the sets ticked that day; dashed boxes are days still ahead."
    :"Tap an exercise to log it, or tap a day to open it in Day view. Dashed boxes are days still ahead."}</p>
   ${weekStats()}
-  ${blk?chkCard()+rulesCard():""}
+  ${blk?chkCard()+rulesCard(inSplit(dateOf("mon"))):""}
  </section>`;
 }
 function renderWorkDay(){
@@ -1028,10 +1100,11 @@ function renderWorkDay(){
   ${blockGoal()}
   ${dayStrip("workout")}
   <div class="dh"><h2>${sel===tk?"Today":DNAME[dk]}</h2><span>${esc(tagOf(sel))} · ${longDate(sel)}</span></div>
+  ${p.focus?`<div class="fst${sel===tk?" due":""}"><h3>${esc(p.focus[0])}</h3><p>${esc(p.focus[1])}</p></div>`:""}
   ${p.tb?`<p class="note num">${esc(p.tb)}</p>`:""}
   <div class="list">${rows}${fu?`<p class="note">Logging opens on the day.</p>`:p.rest?`<p class="note">${esc(p.restText||"Rest, or an easy walk if you feel like moving.")}</p>`:""}</div>
-  <p class="note">${blk?"One tap ticks off a pelvic floor set, push-ups, squats, the rocker, the circuit or a stretch; Log takes real numbers."
-   :"One tap on push-ups, squats or stretch marks the target done; Log takes real numbers."} Other rows open the set log. A strength day counts once every lift is logged.</p>
+  <p class="note">${blk?"One tap ticks off a pelvic floor set, push-ups, squats, the dead hang, the rocker, the circuit or a stretch; Log takes real numbers."
+   :"One tap on push-ups, squats, the dead hang or stretch marks the target done; Log takes real numbers."} Other rows open the set log. A strength day counts once every lift is logged.</p>
   ${weekStats()}
  </section>`;
 }
@@ -1116,12 +1189,15 @@ function chkCard(){
   <div id="ckTrend">${chkTrend()}</div>`;
 }
 /* the block's working rules, folded away until needed */
-function rulesCard(){
+function rulesCard(split){
  const sec=(t,items)=>`<details class="more"><summary>${esc(t)}</summary><ul class="rl">${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`;
  return `<div class="dh"><h3>How this block works</h3></div>
   <div class="card rules">
   ${sec("Every session",[
-   "Pairs: one set of each exercise in the pair back to back, then rest 60–90 s (60 s on Friday). That's what fits each session into an hour.",
+   ...(split?["One job per day: "+SPLIT_MAP+". Monday, Wednesday and Friday also end with 15 min of Zone 2.",
+    "Daily dose, every day in the warm-up: 15–20 push-ups, 15–20 Hindu squats and 2 dead hangs of 20–40 s (on Sunday, just the dead hang).",
+    "Lower body is done in pairs: one set of each exercise in the pair back to back, then rest 60–90 s. Push and pull are straight sets: every set of one exercise, then the next, resting 90 s (60 s for the small arm moves)."]
+   :["Pairs: one set of each exercise in the pair back to back, then rest 60–90 s (60 s on Friday). That's what fits each session into an hour."]),
    "Top the rep range on every working set two sessions running, then add the smallest weight step and start again at the bottom of the range.",
    "Exhale and lift: on every lower-body rep, breathe out and lift the pelvic floor as you push; breathe in and let it relax on the way down. Never hold your breath to push.",
    "One hard-cardio day: intervals on Thursday only, capped at 4 × 4.",
@@ -1158,7 +1234,9 @@ function openEx(date,col,i){
 function liftSheet(){
  const {dk,col,inst,id,date}=cur,ex=EX[id],future=date>todayKey();
  const e=entryOn(id,date),prev=logsBefore(id,date),last=prev[prev.length-1];
- const blk=inBlock(date),cue=[col==="st"&&!ex.bw?(dk==="fri"?LIGHT+(blk?PAIRS_L:""):HEAVY+(blk?PAIRS_H:"")):"",ex.c||""].filter(Boolean).join(" ");
+ const blk=inBlock(date),lc=col!=="st"||ex.bw?"":inSplit(date)?WORK+(/pair/.test(inst.t)?PAIRS_H:STRAIGHT)
+  :dk==="fri"?LIGHT+(blk?PAIRS_L:""):HEAVY+(blk?PAIRS_H:"");
+ const cue=[lc,ex.c||""].filter(Boolean).join(" ");
  let body;
  if(future){
   body=`<p class="wait">This opens for logging on ${DNAME[dk]}, ${longDate(date)}.</p>`;
