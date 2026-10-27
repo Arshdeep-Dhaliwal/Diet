@@ -657,6 +657,9 @@ const DIET_OLD=[
 /* Blood-work plan from 14 Oct 2026: ferritin 35, MCV 78, A1c 5.7, HDL 0.97, LDL 3.41 */
 const DIET_FROM="2026-10-14";
 const IRON="n_iron";
+/* Fertility supplements from 27 Oct 2026. Steps with a from date only appear from that day on,
+   so earlier days keep the list you ticked. */
+const SUPPS_FROM="2026-10-27";
 const DIET_NEW=[
   {id:"n_water",time:"06:00 AM",name:"Wake-up water",
    stack:"500 mL warm water + pinch of sea salt",
@@ -670,6 +673,9 @@ const DIET_NEW=[
   {id:"n_bfast",time:"08:00 AM",meal:true,name:"Breakfast + coffee",
    stack:"1 cup black coffee + 2 organic eggs + handful of walnuts (~30 g) + 2 figs",
    science:"2 hours after the iron: the usual gap for coffee, eggs and calcium, which all block iron. Walnuts add omega-3 (ALA) and polyphenols linked to better sperm motility. Eggs and walnuts blunt the glucose rise from the figs."},
+  {id:"n_carn_am",time:"08:00 AM",meal:true,from:SUPPS_FROM,name:"L-carnitine, morning",
+   stack:"1 g L-carnitine with breakfast",
+   science:"For sperm motility. 2 g a day, split into two doses, is what most motility studies used, and two smaller doses absorb better than one big one. It doesn't interfere with the iron or the coffee; food just keeps it easy on the stomach. Don't go above 2 g: from about 3 g it can cause a fishy body odor, and carnitine raises TMAO, a gut byproduct linked to heart disease, which matters with LDL at 3.41. Check with your doctor first if you take thyroid medication or a blood thinner."},
   {id:"n_psy",time:"11:40 AM",meal:true,name:"Psyllium, 20 min before lunch",
    stack:"1/2 tbsp (4–5 g) psyllium husk in 350 mL water, drink right away",
    science:"A1c 5.7%: slows carb digestion at lunch. LDL 3.41 (limit 3.50): psyllium modestly lowers LDL. Kept 7+ hours from the dinner supplements so the fiber doesn't bind them."},
@@ -690,7 +696,10 @@ const DIET_NEW=[
    science:"The fattiest meal of the day, so the fat-soluble supplements go with it. Last food of the day: about a 12-hour overnight fast until the 7:00 chia."},
   {id:"n_supps",time:"07:00 PM",meal:true,name:"Dinner supplements",
    stack:"Thorne Super EPA × 2 gelcaps · CoQ10 300 mg · vitamin D3 2,000 IU · Centrum × 1",
-   science:"CoQ10, omega-3 and vitamin D need dietary fat to absorb. CoQ10 is 200 mg if your label says ubiquinol. The Centrum's calcium and zinc sit 11 hours from the next iron dose. On 48-hour fast days, take these with the meal that breaks the fast."}
+   science:"CoQ10, omega-3 and vitamin D need dietary fat to absorb. CoQ10 is 200 mg if your label says ubiquinol. The Centrum's calcium and zinc sit 11 hours from the next iron dose. On 48-hour fast days, take these with the meal that breaks the fast."},
+  {id:"n_zinc",time:"09:00 PM",meal:true,from:SUPPS_FROM,name:"Zinc + L-carnitine, before bed",
+   stack:"Zinc 15–25 mg (picolinate or bisglycinate) + 1 g L-carnitine, about 2 hours after dinner",
+   science:"Zinc competes with iron, and the kefir's calcium and the phytates in dal and roti cut its absorption, so it waits 2 hours after dinner; the next iron dose is 9 hours away. The Centrum already has some zinc, so keep the daily total under 40 mg: months above that drain copper, which can cause an anemia that iron won't fix (MCV 78), and can lower HDL (0.97). Zinc mainly helps motility if you're short on it, so the low end of the range is fine. The second gram of carnitine goes here because it doesn't clash with zinc. If this upsets your stomach at night, take it with dinner instead. On 48-hour fast days, take it with the meal that breaks the fast."}
 ];
 
 const BRISTOL={
@@ -1511,7 +1520,7 @@ function bedNow(){
 }
 
 /* =================== GUT TAB =================== */
-const dietPlan=date=>date>=DIET_FROM?DIET_NEW:DIET_OLD;
+const dietPlan=date=>date>=DIET_FROM?DIET_NEW.filter(st=>!st.from||date>=st.from):DIET_OLD;
 function dietDone(date){const o=S.get("gut:diet:"+date,{});return o&&typeof o==="object"&&!Array.isArray(o)?o:{}}
 const isDietDone=(date,id)=>!!dietDone(date)[id];
 const isFast=date=>!!S.get("gut:fast:"+date,false);
@@ -1591,7 +1600,7 @@ function renderGut(){
   <div class="dh"><h3>Daily steps</h3><span class="num">${c.done} of ${c.due} done${c.skip?` · ${c.skip} skipped`:""}</span></div>
   ${fastRow(sel,fu)}
   <div class="list">${rows}</div>
-  ${plan===DIET_NEW?`<p class="note">Blood-work recheck in mid-January 2027: ferritin, iron panel, CBC, A1c and lipids, plus a repeat semen analysis.</p>`:""}
+  ${sel>=DIET_FROM?`<p class="note">Blood-work recheck in mid-January 2027: ferritin, iron panel, CBC, A1c and lipids, plus a repeat semen analysis.</p>`:""}
   <div class="field"><label for="diet_note">Notes</label>
    <textarea id="diet_note" class="ta" placeholder="Appetite, fullness, anything you skipped or changed…"${fu?" disabled":""} oninput="saveDietNote('${sel}',this.value)">${esc(dietNote(sel))}</textarea></div>
  </section>`;
