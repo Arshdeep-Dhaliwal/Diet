@@ -105,6 +105,8 @@ button.row:active{background:var(--bg)}
 .ed:disabled{color:var(--t3)}
 
 /* diet steps */
+.rule{margin:0 0 10px;padding:10px 14px;border-radius:14px;border:1.5px solid var(--alert);background:var(--alert-bg);
+      color:var(--alert);font-size:15px;font-weight:700;text-align:center;letter-spacing:.01em}
 .stepr{display:flex;align-items:stretch}
 .stepr .row{flex:1;padding-right:4px}
 .why{width:48px;flex-shrink:0;border:0;background:none;color:var(--t3);display:grid;place-items:center}
@@ -796,6 +798,46 @@ const DIET_NEW=[
   {id:"n_zinc",time:"09:00 PM",meal:true,from:SUPPS_FROM,name:"Zinc + L-carnitine, before bed",
    stack:"Zinc 15–25 mg (picolinate or bisglycinate) + 1 g L-carnitine, about 2 hours after dinner",
    science:"Zinc competes with iron, and the kefir's calcium and the phytates in dal and roti cut its absorption, so it waits 2 hours after dinner; the next iron dose is 9 hours away. The Centrum already has some zinc, so keep the daily total under 40 mg: months above that drain copper, which can cause an anemia that iron won't fix (MCV 78), and can lower HDL (0.97). Zinc mainly helps motility if you're short on it, so the low end of the range is fine. The second gram of carnitine goes here because it doesn't clash with zinc. If this upsets your stomach at night, take it with dinner instead. On 48-hour fast days, take it with the meal that breaks the fast."}
+];
+
+/* Routine from 31 Oct 2026: chia + glutamine with the 5:15 home workout, breakfast at 9, no lunch, oatmeal at 2.
+   Steps that carry over keep their ids, so anything already ticked on the first day still counts. */
+const DIET_V3_FROM="2026-10-31";
+const DIET_RULE="No processed food · No fast food";
+const DIET_V3=[
+  {id:"n_chia",time:"05:15 AM",meal:true,name:"Chia + glutamine · home workout",
+   stack:"5 g L-glutamine + 1 tbsp overnight-soaked chia seeds in water",
+   science:"Glutamine on an empty stomach feeds the gut lining directly. Soaked chia adds soluble fiber for morning regularity. It's 45 minutes before the iron, and chia's calcium, fiber and phytates can still blunt iron a little, so drink it early and give it the full 45 minutes."},
+  {id:IRON,time:"06:00 AM",name:"Iron + vitamin C",
+   stack:"2 capsules Thorne Iron Bisglycinate (50 mg iron) + vitamin C 250–500 mg, with water only",
+   science:"Iron absorbs best with nothing else for the next few hours, and vitamin C keeps it in its absorbable form. Every other day, because each dose raises hepcidin (the iron-blocking hormone) for about a day. Targets ferritin 35 µg/L and MCV 78 fL. Coffee and eggs wait until 9:00, 3 hours later. Dark green or black stool is expected; tarry, sticky black stool or visible red blood is not, so call your doctor. Keep the bottle away from children."},
+  {id:"n_bfast",time:"09:00 AM",meal:true,name:"Breakfast + coffee",
+   stack:"1 cup black coffee + handful of nuts + 4 eggs",
+   science:"3 hours after the iron, past the window where coffee, eggs and calcium block it. 4 eggs is about 25 g of protein toward 110–130 g a day. Walnuts are the best nut pick: omega-3 (ALA) and polyphenols linked to better sperm motility."},
+  {id:"n_carn_am",time:"09:00 AM",meal:true,name:"B12 + D3 + L-carnitine",
+   stack:"Vitamin B12 + vitamin D3 2,000 IU + 1 g L-carnitine, with breakfast",
+   science:"D3 is fat-soluble, so it goes with the eggs and nuts. B12 has no clash with anything here. Carnitine is split 1 g morning and 1 g night, the 2 g a day used in most motility studies; don't go above 2 g (fishy body odor from about 3 g, and it raises TMAO, which matters with LDL at 3.41)."},
+  {id:"n_psy",time:"12:00 PM",meal:true,name:"Psyllium husk",
+   stack:"1/2 tbsp (4–5 g) psyllium husk in 350 mL water, drink right away",
+   science:"A1c 5.7%: slows the carbs from the 2:00 oatmeal. LDL 3.41 (limit 3.50): psyllium modestly lowers LDL. 3 hours after the morning supplements and 7 before the dinner ones, so the fiber doesn't bind them."},
+  {id:"n_oats",time:"02:00 PM",meal:true,name:"Oatmeal + antioxidants",
+   stack:"Oatmeal + antioxidants",
+   science:"Oats' beta-glucan lowers LDL and slows the glucose rise, which helps with an A1c of 5.7. Plain rolled or steel-cut oats, not sweetened instant packets."},
+  {id:"n_post",time:"05:00 PM",meal:true,name:"Whey + creatine",
+   stack:"1 scoop whey isolate (25 g) + 5 g creatine monohydrate",
+   science:"Fast protein toward about 110–130 g a day. 5 g of creatine is right at 92 kg; timing matters less than taking it every day."},
+  {id:"n_broth",time:"07:00 PM",meal:true,name:"Bone broth + kefir",
+   stack:"1 cup warm bone broth + kefir",
+   science:"Warm broth curbs evening cravings. Kefir's live cultures survive best alongside a full meal. Its calcium is why the zinc waits until 9:00."},
+  {id:"n_dinner",time:"07:00 PM",meal:true,name:"Dinner",
+   stack:"Protein (salmon or chicken) + rice + veggies",
+   science:"Protein and veggies first, rice last, to keep blood sugar steady. The fattiest meal of the day, so the fat-soluble supplements go with it."},
+  {id:"n_supps",time:"07:00 PM",meal:true,name:"Dinner supplements",
+   stack:"Thorne Super EPA × 2 gelcaps · CoQ10 300 mg · Centrum × 1",
+   science:"Omega-3 and CoQ10 need dietary fat to absorb. CoQ10 is 200 mg if your label says ubiquinol. The Centrum's calcium and zinc sit 11 hours from the next iron dose. On 48-hour fast days, take these with the meal that breaks the fast."},
+  {id:"n_zinc",time:"09:00 PM",meal:true,name:"Kiwi + zinc + L-carnitine",
+   stack:"1–2 kiwi + zinc 15–25 mg (picolinate or bisglycinate) + 1 g L-carnitine",
+   science:"Kiwi before bed is linked to falling asleep faster, and its fiber helps offset iron constipation. Zinc waits 2 hours after the kefir's calcium; the next iron dose is 9 hours away. The Centrum already has some zinc, so keep the daily total under 40 mg: months above that drain copper, which can cause an anemia that iron won't fix (MCV 78), and can lower HDL (0.97). Last food of the day: about 8 hours until the 5:15 chia."}
 ];
 
 const BRISTOL={
@@ -1695,7 +1737,7 @@ function bedNow(){
 }
 
 /* =================== GUT TAB =================== */
-const dietPlan=date=>date>=DIET_FROM?DIET_NEW.filter(st=>!st.from||date>=st.from):DIET_OLD;
+const dietPlan=date=>date>=DIET_V3_FROM?DIET_V3:date>=DIET_FROM?DIET_NEW.filter(st=>!st.from||date>=st.from):DIET_OLD;
 function dietDone(date){const o=S.get("gut:diet:"+date,{});return o&&typeof o==="object"&&!Array.isArray(o)?o:{}}
 const isDietDone=(date,id)=>!!dietDone(date)[id];
 const isFast=date=>!!S.get("gut:fast:"+date,false);
@@ -1773,6 +1815,7 @@ function renderGut(){
   <div class="dh"><h2>${isT?"Today":DNAME[dkOf(sel)]}</h2><span>${longDate(sel)}</span></div>
   ${bmCard(sel)}
   <div class="dh"><h3>Daily steps</h3><span class="num">${c.done} of ${c.due} done${c.skip?` · ${c.skip} skipped`:""}</span></div>
+  ${sel>=DIET_V3_FROM?`<p class="rule" role="note"><span aria-hidden="true">⛔</span> ${esc(DIET_RULE)}</p>`:""}
   ${fastRow(sel,fu)}
   <div class="list">${rows}</div>
   ${sel>=DIET_FROM?`<p class="note">Blood-work recheck in mid-January 2027: ferritin, iron panel, CBC, A1c and lipids, plus a repeat semen analysis.</p>`:""}
