@@ -18,6 +18,7 @@
   --text:#1c1b19;--t2:#67645d;--t3:#8c897f;
   --acc:#2f6f5e;--acc-bg:#e8f2ee;--on-acc:#fff;--today:#f1f6f3;
   --warn:#7d5615;--warn-bg:#fbf2e1;--alert:#a14545;--alert-bg:#f9ecec;--loose:#6a4cb5;--loose-bg:#f1edfb;
+  --sl:#5a55c9;--dt:#2f6f5e;--wo:#b8641c;--ft:#b4487a;--jr:#4f6f8f;
   --shade:rgba(28,27,25,.42);--toast:#1c1b19;--toast-t:#f4f2ee;--toast-a:#8fd3bd;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --topH:56px;
@@ -26,6 +27,7 @@
   :root{--bg:#141413;--card:#1d1d1b;--bd:#2d2c29;--bd2:#3e3d38;--text:#f0eee9;--t2:#a6a39b;--t3:#85827a;
         --acc:#6cbfa6;--acc-bg:#1d2b26;--on-acc:#0f201b;--today:#17211d;
         --warn:#dcae62;--warn-bg:#2b2519;--alert:#e39494;--alert-bg:#301e1e;--loose:#b9a3f0;--loose-bg:#262036;
+        --sl:#a29ef2;--dt:#6cbfa6;--wo:#eda066;--ft:#ec8fb8;--jr:#93b2d0;
         --shade:rgba(0,0,0,.6);--toast:#f0eee9;--toast-t:#1c1b19;--toast-a:#2f6f5e}
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -363,6 +365,82 @@ button.row:active{background:var(--bg)}
 .rl{margin:0 0 10px 18px;line-height:1.45}
 .rl li+li{margin-top:5px}
 
+/* 90-day home */
+.hero{border:1px solid var(--bd);border-radius:16px;background:var(--card);padding:14px 16px}
+.hrow{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.hday{display:flex;align-items:baseline;gap:6px;color:var(--t2);font-size:15px;font-weight:600}
+.hday b{font-size:44px;line-height:1;font-weight:750;letter-spacing:-.03em;color:var(--acc)}
+.hleft{text-align:right;font-size:15px;font-weight:650}
+.hleft small{display:block;font-size:12.5px;font-weight:500;color:var(--t2)}
+.hbar{height:8px;border-radius:4px;background:var(--bd);margin:10px 0 10px;overflow:hidden}
+.hbar i{display:block;height:100%;border-radius:4px;background:var(--acc)}
+.hero p{font-size:13.5px;color:var(--t2);line-height:1.45}
+.hero p+p{margin-top:6px}
+.hero .hdec{color:var(--text)}
+.pcs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pc{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;padding:10px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--card);text-align:left}
+.pc .pl{font-size:12.5px;color:var(--t2);display:flex;align-items:center;gap:5px}
+.pc b{font-size:19px;font-weight:650;letter-spacing:-.01em}
+.pc .hb{width:100%;height:5px;margin-top:2px}
+.fresh{display:block;width:100%;min-height:52px;border:0;border-radius:14px;background:var(--acc);color:var(--on-acc);font-size:17px;font-weight:700}
+.fresh.sm{min-height:44px;background:transparent;border:1.5px dashed var(--acc);color:var(--acc);font-size:15px;font-weight:600}
+.mh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:6px}
+.mh h3{font-size:17px;font-weight:650;letter-spacing:-.01em}
+.hcal .hc{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;min-height:58px;padding:6px 0 7px;
+  border:1px solid var(--bd);border-radius:10px;background:var(--card)}
+.hc .hn{font-size:15px;font-weight:600;line-height:1.2}
+.hc.td .hn{color:var(--acc)}
+.hc.td{background:var(--today)}
+.hc.fu{border-style:dashed;background:transparent}
+.hc.out{opacity:.5}
+.hc[aria-pressed="true"]{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.hbs{display:flex;flex-direction:column;gap:2px;width:70%}
+.hb{display:block;width:100%;height:4px;border-radius:2px;background:var(--bd);overflow:hidden}
+.hb>i{display:block;height:100%;border-radius:2px}
+.hb.sl>i{background:var(--sl)}.hb.dt>i{background:var(--dt)}.hb.wo>i{background:var(--wo)}
+.hb.junk{background:var(--alert)}.hb.junk>i{background:var(--alert)}
+.hbl{position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--alert)}
+.lk{display:inline-block;width:12px;height:4px;border-radius:2px;margin-right:5px;vertical-align:2px;background:var(--bd2)}
+.lk.sl{background:var(--sl)}.lk.dt{background:var(--dt)}.lk.wo{background:var(--wo)}.lk.ft{background:var(--ft)}.lk.jr{background:var(--jr)}.lk.junk{background:var(--alert)}
+.lk.big{flex-shrink:0;width:6px;height:34px;border-radius:3px;margin:0}
+.pill.bad{background:var(--alert-bg);color:var(--alert)}
+.mile{font-size:14px;font-weight:650;color:var(--acc);padding:0 2px}
+.up.bad{background:var(--alert-bg);color:var(--alert)}
+
+/* journal */
+.rem{padding:12px 14px;border-radius:14px;background:var(--acc-bg);color:var(--acc);font-size:16px;font-weight:600;line-height:1.4}
+.frc{border:1px solid var(--bd);border-radius:14px;background:var(--card);padding:14px}
+.frc h3{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.frc>p{font-size:14px;color:var(--t2);margin:3px 0 12px;line-height:1.45}
+.frc .frm{margin:12px 0 0;color:var(--text)}
+.frc .frm b{color:var(--acc)}
+.frc .lbl{margin:12px 0 6px}
+.nx{list-style:none;display:flex;flex-direction:column;gap:6px}
+.nx li{padding:8px 10px;border-radius:10px;background:var(--bg);font-size:14.5px;line-height:1.35}
+.nx b{color:var(--acc);font-weight:650;margin-right:4px}
+.card>.lbl:first-child{margin-top:2px}
+.sv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.sv button{display:flex;flex-direction:column;align-items:center;min-height:56px;padding:6px 2px;border:1px solid var(--bd2);border-radius:10px;background:var(--card);line-height:1.2}
+.sv b{font-size:18px;font-weight:650}
+.sv small{font-size:11px;color:var(--t2)}
+.sv button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
+.sv button[aria-pressed="true"] small{color:var(--on-acc)}
+.sv button[data-sv="4"][aria-pressed="true"],.sv button[data-sv="5"][aria-pressed="true"]{background:var(--alert);border-color:var(--alert);color:var(--card)}
+.sv button[data-sv="4"][aria-pressed="true"] small,.sv button[data-sv="5"][aria-pressed="true"] small{color:var(--card)}
+.sv button:disabled{opacity:.55}
+.card .hint{margin-top:8px}
+.calm{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--alert-bg)}
+.calm h3{font-size:15px;font-weight:700;color:var(--alert);margin-bottom:6px}
+.calm .rl{margin-bottom:0;font-size:14px}
+.brbtn{width:100%;margin-top:12px}
+.brw{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px}
+.brc{width:150px;height:150px;border-radius:50%;margin:18px 0 14px;background:var(--acc-bg);border:2px solid var(--acc);
+     transform:scale(.6);transition-property:transform;transition-timing-function:ease-in-out}
+.brc.in{transform:scale(.88)}.brc.in2{transform:scale(1)}.brc.out{transform:scale(.6)}
+.brp{font-size:19px;font-weight:650;text-align:center;min-height:28px}
+.brl{font-size:14px;color:var(--t2);min-height:20px}
+@media (prefers-reduced-motion:reduce){.brc{transition:none!important}}
+
 /* toast */
 .toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 70px);z-index:60;display:flex;align-items:center;gap:14px;
        width:max-content;max-width:calc(100% - 24px);min-height:48px;padding:6px 8px 6px 16px;border-radius:12px;background:var(--toast);color:var(--toast-t);
@@ -377,10 +455,12 @@ button.row:active{background:var(--bg)}
   <header class="top" id="top"></header>
   <main id="main"></main>
   <nav class="tabs" aria-label="Sections">
+    <button type="button" data-t="home" onclick="setTab('home')"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg>90 Days</button>
     <button type="button" data-t="sleep" onclick="setTab('sleep')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>Sleep</button>
-    <button type="button" data-t="gut" onclick="setTab('gut')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h11.2a2.8 2.8 0 0 1 0 5.7H6.8a2.8 2.8 0 0 0 0 5.6h10.4a2.8 2.8 0 0 1 0 5.7H9"/></svg>Gut</button>
+    <button type="button" data-t="gut" onclick="setTab('gut')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h11.2a2.8 2.8 0 0 1 0 5.7H6.8a2.8 2.8 0 0 0 0 5.6h10.4a2.8 2.8 0 0 1 0 5.7H9"/></svg>Diet</button>
     <button type="button" data-t="workout" onclick="setTab('workout')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 7v10M17.5 7v10M3.5 10v4M20.5 10v4M6.5 12h11"/></svg>Workout</button>
     <button type="button" data-t="fert" onclick="setTab('fert')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></svg>Fertility</button>
+    <button type="button" data-t="jr" onclick="setTab('jr')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h10.5a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6z"/><path d="M6 3.5v17M9.5 8h5.5M9.5 11.5h5.5"/></svg>Journal</button>
   </nav>
 </div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -882,10 +962,20 @@ function monday(off){const d=parseD(todayKey());d.setDate(d.getDate()-((d.getDay
 function dateOf(dk){const d=monday(weekOff);d.setDate(d.getDate()+DAYS.indexOf(dk));return ymd(d)}
 function monthStart(off){const d=parseD(todayKey());d.setDate(1);d.setMonth(d.getMonth()+off);return d}
 
+/* =================== 90-DAY CHALLENGE =================== */
+/* Day 1 is Sat 31 Oct 2026, Day 90 is Thu 28 Jan 2027. Sperm take about 74 days to form and 2 more weeks to mature,
+   so the sample tested at the end comes from this window. The call on how to conceive is made in February 2027. */
+const CH_FROM="2026-10-31",CH_DAYS=90,CH_END=addDays(CH_FROM,CH_DAYS-1);
+const CH_DECIDE="February 2027";
+const chDay=d=>dayDiff(CH_FROM,d)+1;
+const inCh=d=>d>=CH_FROM&&d<=CH_END;
+const monIdx=s=>{const d=parseD(s);return d.getFullYear()*12+d.getMonth()};
+function mondayOf(s){const d=parseD(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return ymd(d)}
+
 /* =================== STATE =================== */
-const TABNAME={sleep:"Sleep",gut:"Gut",workout:"Workout",fert:"Fertility"};
-let tab="gut";                 /* always open on the diet checklist, the tab used most through the day */
-let sel=null,weekOff=0,monthOff=0,refocus=null,lastTk=todayKey();
+const TABNAME={home:"90 Days",sleep:"Sleep",gut:"Diet",workout:"Workout",fert:"Fertility",jr:"Journal"};
+let tab="home";                /* opens on the 90-day calendar; the diet checklist is one tap away */
+let sel=null,weekOff=0,monthOff=0,homeOff=0,refocus=null,lastTk=todayKey();
 let fertView=S.get("fview","week")==="month"?"month":"week";
 let workView=S.get("wview","day")==="week"?"week":"day";
 const openWhy=new Set();
@@ -1026,6 +1116,7 @@ const blankStat=label=>`<div class="stat"><b class="num">–</b><span>${label}</
 
 function ensureSel(){
  const tk=todayKey(),ds=DAYS.map(dateOf);
+ if(tab==="home"){const mr=homeRange();if(!sel||!mr.includes(sel))sel=mr.includes(tk)?tk:(mr.find(inCh)||mr[0]);return mr}
  if(tab==="fert"&&fertView==="month"){const mr=fertRange();if(!sel||!mr.includes(sel))sel=mr.includes(tk)?tk:mr[0];return ds}
  if(!sel||!ds.includes(sel))sel=ds.includes(tk)?tk:ds[0];
  return ds;
@@ -1034,6 +1125,7 @@ function dayProg(t,d){
  if(t==="workout"){const seq=daySeq(d);return seq.length?seq.filter(x=>entryOn(x.inst.id,d)).length/seq.length:0}
  if(t==="sleep"){const s=sleepData(d);return calcSleepDur(s.sleep,s.wake)?1:0}
  if(t==="gut"){const c=gutCount(d);return c.due?c.done/c.due:0}
+ if(t==="jr")return jrProg(d);
  return 0;
 }
 function dayStrip(t){
@@ -1043,6 +1135,7 @@ function dayStrip(t){
   let mk="",mt="";
   if(t==="fert"){const f=fertMark(d,cx);mk=f[0];mt=f[1]}
   else if(t==="gut"){const n=stoolLogs(d).length;if(n){mk="done";mt=n+(n===1?" bowel movement":" bowel movements")}}
+  else if(t==="jr"){const n=jrData(d).fresh.length;if(n){mk="done";mt=n+(n===1?" fresh start":" fresh starts")}}
   return `<button type="button" class="wd${d===tk?" td":""}${d>tk?" fu":""}" data-d="${d}" aria-pressed="${d===sel}"
    aria-label="${esc(shortDate(d))}, ${t==="workout"?esc(tagOf(d))+", ":""}${mt?mt+", ":""}${Math.round(p*100)}% done" onclick="pick('${d}')">
    <span>${DSHORT[DAYS[i]]}</span><b class="num">${dnum(d)}</b>${t==="workout"?`<small class="wt" aria-hidden="true">${esc(tagOf(d))}</small>`:""}<i class="bar"><i style="width:${Math.round(p*100)}%"></i></i><i class="mk ${mk}"></i></button>`;
@@ -1051,6 +1144,12 @@ function dayStrip(t){
 /* the Workout tab can look one week ahead, so a new plan can be seen before it starts */
 const maxAhead=()=>tab==="workout"?1:0;
 function renderTop(){
+ if(tab==="home"){
+  const tk=todayKey(),n=chDay(tk);
+  const sub=tk<CH_FROM?"Starts "+shortDate(CH_FROM):tk>CH_END?"Complete · decision in "+CH_DECIDE:"Day "+n+" of "+CH_DAYS+" · ends "+shortDate(CH_END);
+  $("#top").innerHTML=`<div><h1>90-Day Challenge</h1><p class="num">${esc(sub)}</p></div>`;
+  return;
+ }
  const month=tab==="fert"&&fertView==="month",off=month?monthOff:weekOff,unit=month?"month":"week",go=month?"goMonth":"goWeek";
  const ahead=month?0:maxAhead();
  let sub;
@@ -1065,11 +1164,20 @@ function renderAll(){
  lastTk=todayKey();
  renderTop();
  document.querySelectorAll(".tabs button").forEach(b=>{if(b.dataset.t===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
- $("#main").innerHTML=(tab==="workout"?renderWorkout():tab==="gut"?renderGut():tab==="fert"?renderFert():renderSleep())+backupFoot();
+ $("#main").innerHTML=(tab==="home"?renderHome():tab==="jr"?renderJournal():tab==="workout"?renderWorkout():tab==="gut"?renderGut():tab==="fert"?renderFert():renderSleep())+backupFoot();
  if(sheet)renderSheet();
  if(refocus){const el=document.querySelector(refocus);refocus=null;if(el)el.focus({preventScroll:true})}
 }
 function setTab(t){if(!TABNAME[t])return;tab=t;if(weekOff>maxAhead()){weekOff=0;sel=null}renderAll();window.scrollTo(0,0)}
+/* from the calendar: open a tab on that day, showing the week (or month) it's in */
+function goTo(t,date){
+ if(!TABNAME[t])return;
+ const tk=todayKey();tab=t;sel=date;
+ weekOff=Math.min(maxAhead(),Math.round(dayDiff(mondayOf(tk),mondayOf(date))/7));
+ if(t==="fert"&&fertView==="month")monthOff=Math.min(0,monIdx(date)-monIdx(tk));
+ if(t==="workout")workView="day";
+ renderAll();window.scrollTo(0,0);
+}
 function pick(d){sel=d;refocus=`[data-d="${d}"]`;renderAll()}
 function goWeek(d){weekOff=d===0?0:Math.min(maxAhead(),weekOff+d);sel=null;renderAll();window.scrollTo(0,0)}
 function goMonth(d){monthOff=d===0?0:Math.min(0,monthOff+d);sel=null;renderAll();window.scrollTo(0,0)}
@@ -1107,13 +1215,14 @@ function renderSheet(){
   root.innerHTML=`<div class="shade" onclick="closeSheet()"></div><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" tabindex="-1"></div>`;
   el=$("#sheet");
  }
- el.innerHTML=sheet==="lift"?liftSheet():sheet==="stool"?stoolSheet():askSheet();
+ el.innerHTML=sheet==="lift"?liftSheet():sheet==="stool"?stoolSheet():sheet==="breathe"?breatheSheet():askSheet();
  const f=focusAfter;focusAfter=null;
  if(f){const t=document.getElementById(f)||el;try{t.focus({preventScroll:t===el})}catch(e){t.focus()}}
  fitSheet();
 }
 function closeSheetNow(){
  const back=sheetReturn;
+ stopBreathe();
  sheet=null;sheetReturn=null;cur=null;stool=null;ask=null;msg=null;flash=null;discardArmed=false;
  $("#sheetRoot").innerHTML="";
  const app=$("#app");if(app)app.inert=false;
@@ -1770,6 +1879,21 @@ function toggleDietStep(date,id){
  if(Object.keys(o).length)S.set("gut:diet:"+date,o);else S.del("gut:diet:"+date);
  refocus=`[data-s="${id}"]`;renderAll();
 }
+/* junk: processed or fast food. Logged only when it happens; any other day counts as clean. */
+const isJunk=date=>!!S.get("gut:junk:"+date,false);
+function toggleJunk(date){
+ if(date>todayKey())return;
+ const was=isJunk(date);
+ if(was)S.del("gut:junk:"+date);else S.set("gut:junk:"+date,1);
+ refocus="[data-j]";renderAll();
+ if(!was&&date===todayKey())toast("Logged. That meal is done; the next one is clean.");
+}
+function junkRow(date,fu){
+ const on=isJunk(date);
+ return `<button type="button" class="row neg${on?" on":""}" data-j="1" aria-pressed="${on}"${fu?" disabled":""} onclick="toggleJunk('${date}')">
+  <span class="bx" aria-hidden="true">!</span><span class="rt"><span class="nm">Had processed or fast food</span>
+  <span class="sb">${on?"Logged as a miss. The next meal is a fresh start.":"Tap only if it happened. Days without it count as clean."}</span></span></button>`;
+}
 function toggleFast(date){
  if(date>todayKey())return;
  if(isFast(date))S.del("gut:fast:"+date);else S.set("gut:fast:"+date,1);
@@ -1815,7 +1939,7 @@ function renderGut(){
   <div class="dh"><h2>${isT?"Today":DNAME[dkOf(sel)]}</h2><span>${longDate(sel)}</span></div>
   ${bmCard(sel)}
   <div class="dh"><h3>Daily steps</h3><span class="num">${c.done} of ${c.due} done${c.skip?` · ${c.skip} skipped`:""}</span></div>
-  ${sel>=DIET_V3_FROM?`<p class="rule" role="note"><span aria-hidden="true">⛔</span> ${esc(DIET_RULE)}</p>`:""}
+  ${sel>=DIET_V3_FROM?`<p class="rule" role="note"><span aria-hidden="true">⛔</span> ${esc(DIET_RULE)}</p><div class="list">${junkRow(sel,fu)}</div>`:""}
   ${fastRow(sel,fu)}
   <div class="list">${rows}</div>
   ${sel>=DIET_FROM?`<p class="note">Blood-work recheck in mid-January 2027: ferritin, iron panel, CBC, A1c and lipids, plus a repeat semen analysis.</p>`:""}
@@ -2057,6 +2181,243 @@ function fertToggle(){
   <button type="button" aria-pressed="${fertView==="month"}" onclick="setFertView('month')">Month</button></div>`;
 }
 
+/* =================== HOME: 90-DAY CALENDAR =================== */
+/* how each pillar went on a day: p is 0–1 for the calendar bars, met is the daily goal */
+function sleepStat(d){
+ const s=sleepData(d),dr=calcSleepDur(s.sleep,s.wake);
+ if(!dr)return {p:0,met:false,txt:"Not logged"};
+ const sc=s.score!==""&&!isNaN(Number(s.score))?Number(s.score):null,met=dr.dec>=7.5&&(sc===null||sc>=80);
+ return {p:met?1:.5,met,txt:dr.hours+"h "+dr.mins+"m"+(sc!=null?" · score "+sc:"")+(met?" · goal met":"")};
+}
+function dietStat(d){
+ const c=gutCount(d),p=c.due?c.done/c.due:0,junk=isJunk(d);
+ return {p,junk,met:p>=.8&&!junk,txt:c.done+" of "+c.due+" steps"+(junk?" · processed or fast food":"")};
+}
+function workStat(d){
+ const seq=daySeq(d),n=seq.filter(x=>entryOn(x.inst.id,d)).length,p=seq.length?n/seq.length:0;
+ return {p,met:seq.length>0&&p>=.8,txt:tagOf(d).replace(/ /g," ")+" · "+n+" of "+seq.length+" done"};
+}
+const hadBlood=d=>stoolLogs(d).some(s=>s.blood);
+function homeRange(){
+ const m=monthStart(homeOff),n=new Date(m.getFullYear(),m.getMonth()+1,0).getDate(),s0=ymd(m);
+ return Array.from({length:n},(_,i)=>addDays(s0,i));
+}
+function homeLimits(){const t=monIdx(todayKey());return [Math.min(0,monIdx(CH_FROM)-t),Math.max(0,monIdx(CH_END)-t)]}
+function goHome(d){const [a,b]=homeLimits();homeOff=d===0?0:Math.max(a,Math.min(b,homeOff+d));sel=null;renderAll()}
+function homeCal(){
+ const tk=todayKey(),ds=homeRange(),lead=(parseD(ds[0]).getDay()+6)%7,[lo,hi]=homeLimits();
+ const bar=(cls,p,extra)=>`<i class="hb ${cls}${extra||""}"><i style="width:${Math.round(p*100)}%"></i></i>`;
+ const cells=Array.from({length:lead},()=>`<span></span>`).join("")+ds.map(d=>{
+  const fu=d>tk,ch=inCh(d);
+  const s=fu?{p:0}:sleepStat(d),dt=fu?{p:0}:dietStat(d),w=fu?{p:0}:workStat(d),bl=!fu&&hadBlood(d);
+  const lab=shortDate(d)+(ch?", day "+chDay(d):"")+(fu?"":`, sleep ${s.met?"goal met":s.p?"logged":"not logged"}, diet ${Math.round(dt.p*100)}%${dt.junk?", processed food":""}, workout ${Math.round(w.p*100)}%${bl?", blood in stool":""}`);
+  return `<button type="button" class="hc${d===tk?" td":""}${fu?" fu":""}${ch?"":" out"}" data-d="${d}" aria-pressed="${d===sel}" aria-label="${esc(lab)}" onclick="pick('${d}')">
+   <span class="hn num">${dnum(d)}</span>${bl?`<i class="hbl" aria-hidden="true"></i>`:""}
+   <span class="hbs" aria-hidden="true">${bar("sl",s.p)}${bar("dt",dt.p,dt.junk?" junk":"")}${bar("wo",w.p)}</span></button>`;
+ }).join("");
+ const title=monthStart(homeOff).toLocaleDateString(undefined,{month:"long",year:"numeric"});
+ return `<div class="mh"><button type="button" class="nb" aria-label="Previous month"${homeOff>lo?"":" disabled"} onclick="goHome(-1)">‹</button>
+   <h3>${esc(title)}</h3>
+   <button type="button" class="nb" aria-label="Next month"${homeOff<hi?"":" disabled"} onclick="goHome(1)">›</button></div>
+  <div class="cal hcal" role="group" aria-label="Pick a day">${DAYS.map(k=>`<span class="dow">${DSHORT[k]}</span>`).join("")}${cells}</div>
+  <p class="lg"><span><i class="lk sl"></i>Sleep</span><span><i class="lk dt"></i>Diet</span><span><i class="lk wo"></i>Workout</span><span><i class="lk junk"></i>Junk food</span><span><i class="mk bl"></i>Blood</span></p>`;
+}
+function homeHero(){
+ const tk=todayKey(),n=Math.max(0,Math.min(CH_DAYS,chDay(tk))),left=CH_DAYS-n;
+ const big=tk<CH_FROM?`<b class="num">0</b><span>starts ${esc(shortDate(CH_FROM))}</span>`
+  :tk>CH_END?`<b class="num">90</b><span>days done</span>`:`<span>Day</span><b class="num">${n}</b><span>of ${CH_DAYS}</span>`;
+ return `<div class="hero">
+  <div class="hrow"><div class="hday">${big}</div>
+   <div class="hleft num">${tk>CH_END?"Complete":left+(left===1?" day left":" days left")}<small>Day 90: ${esc(shortDate(CH_END))}</small></div></div>
+  <div class="hbar" role="progressbar" aria-label="Challenge progress" aria-valuemin="0" aria-valuemax="${CH_DAYS}" aria-valuenow="${n}"><i style="width:${n/CH_DAYS*100}%"></i></div>
+  <p>Goal: sperm count and quality. Sperm take about 74 days to form and 2 more weeks to mature, so the ones made from today are the ones in your next test.</p>
+  <p class="hdec">${esc(CH_DECIDE)}: decide between conceiving naturally (Shettles method) and IVF with PGT-A. Blood work and a repeat semen analysis come first, in mid-January.</p>
+ </div>`;
+}
+function homeToday(){
+ const tk=todayKey(),s=sleepStat(tk),dt=dietStat(tk),w=workStat(tk);
+ const next=dietPlan(tk).find(st=>stepState(tk,st)==="todo");
+ const chip=(cls,label,val,p,t)=>`<button type="button" class="pc" onclick="goTo('${t}','${tk}')"><span class="pl"><i class="lk ${cls}"></i>${label}</span><b class="num">${val}</b><i class="hb ${cls}"><i style="width:${Math.round(p*100)}%"></i></i></button>`;
+ const sd=sleepData(tk),dr=calcSleepDur(sd.sleep,sd.wake),c=gutCount(tk),seq=daySeq(tk),wn=seq.filter(x=>entryOn(x.inst.id,tk)).length;
+ return `<div class="dh"><h2>Today</h2><span>${esc(longDate(tk))}</span></div>
+  <div class="pcs">${chip("sl","Sleep",dr?dr.hours+"h "+dr.mins+"m":"–",s.p,"sleep")}${chip("dt","Diet",c.done+"/"+c.due,dt.p,"gut")}${chip("wo","Workout",wn+"/"+seq.length,w.p,"workout")}</div>
+  ${next?`<div class="list"><div class="stepr">
+    <button type="button" class="row" data-s="${next.id}" aria-pressed="false" onclick="toggleDietStep('${tk}','${next.id}')">
+     <span class="bx" aria-hidden="true">✓</span><span class="rt"><span class="tm">Next · ${esc(next.time.replace(/^0/,""))}</span>
+     <span class="nm">${esc(next.name)}</span><span class="sb">${esc(next.stack)}</span></span></button></div></div>`
+   :`<p class="note">Every diet step for today is done.</p>`}
+  <button type="button" class="fresh sm" onclick="goTo('jr','${tk}');setTimeout(()=>{const b=$('.fresh');if(b)b.focus()},0)">Slipped up? Start fresh now ›</button>`;
+}
+function fertLine(d){
+ const fd=fertData(d),p=[];
+ if(fd.cold)p.push("cold therapy");if(fd.rom)p.push("romance");if(fd.sex)p.push("intercourse"+(fd.ddp?" + deep deposit":""));
+ return (p.length?p.join(" · "):"Nothing logged")+(fd.mb?" · masturbation (miss)":"");
+}
+function homeDay(d){
+ const tk=todayKey(),fu=d>tk,ch=inCh(d),n=chDay(d);
+ const mile={1:"Day 1: the start",30:"Day 30: one month in",45:"Day 45: halfway",60:"Day 60: two months in",90:"Day 90: the last day"}[n];
+ const row=(t,cls,label,sub,flag)=>`<button type="button" class="row" onclick="goTo('${t}','${d}')"><i class="lk big ${cls}" aria-hidden="true"></i>
+  <span class="rt"><span class="nm">${label}${flag||""}</span><span class="sb">${esc(sub)}</span></span><span class="chev" aria-hidden="true">›</span></button>`;
+ const ok='<span class="pill">Goal met</span>';
+ const s=fu?null:sleepStat(d),dt=fu?null:dietStat(d),w=workStat(d),j=jrData(d),bl=!fu&&hadBlood(d);
+ const jt=fu?"":[j.stress.length?"stress "+j.stress[j.stress.length-1].v+"/5":"",j.fresh.length?j.fresh.length+(j.fresh.length===1?" fresh start":" fresh starts"):"",
+  calmCount(j)?calmCount(j)+" of 3 calm habits":""].filter(Boolean).join(" · ");
+ return `<div class="dh"><h2>${ch?"Day "+n:esc(DNAME[dkOf(d)])}</h2><span>${d===tk?"Today":esc(DNAME[dkOf(d)])} · ${esc(longDate(d))}</span></div>
+  ${mile&&ch?`<p class="mile">${esc(mile)}</p>`:""}
+  ${bl?`<p class="up bad">Blood logged in a bowel movement this day. If it keeps happening, or the stool is black and tarry, call your doctor.</p>`:""}
+  <div class="list">
+   ${row("sleep","sl","Sleep",fu?"Opens the morning you wake up":s.txt,s&&s.met?ok:"")}
+   ${row("gut","dt","Diet",fu?dietPlan(d).length+" steps planned":dt.txt,dt&&dt.met?ok:dt&&dt.junk?'<span class="pill bad">Junk</span>':"")}
+   ${row("workout","wo","Workout",fu?tagOf(d).replace(/ /g," ")+" · "+daySeq(d).length+" items planned":w.txt,!fu&&w.met?ok:"")}
+   ${row("fert","ft","Fertility",fu?"":fertLine(d))}
+   ${row("jr","jr","Journal",fu?"":jt||"Nothing written yet")}
+  </div>`;
+}
+function homeStats(){
+ const tk=todayKey();if(tk<CH_FROM)return "";
+ const last=tk<CH_END?tk:CH_END,days=[];for(let d=CH_FROM;d<=last;d=addDays(d,1))days.push(d);
+ let sl=0,dp=0,wo=0,clean=0,nob=0,full=0;
+ days.forEach(d=>{const s=sleepStat(d),t=dietStat(d),w=workStat(d);
+  if(s.met)sl++;dp+=t.p;if(w.met)wo++;if(!t.junk)clean++;if(!hadBlood(d))nob++;if(s.met&&t.met&&w.met)full++});
+ const N=days.length;
+ return `<div class="dh"><h3>Challenge so far</h3><span>Days so far: ${N}</span></div>
+  <div class="stats">${stat("Sleep goal nights",sl,N,"of")}${stat("Diet steps done",Math.round(dp/N*100)+"%",null)}${stat("Workouts 80%+",wo,N,"of")}
+   ${stat("Clean food days",clean,N,"of")}${stat("Days without blood",nob,N,"of")}${stat("All three met",full,N,"of")}</div>
+  <p class="note">Aim for most days, not perfect days. A missed day is one day; what counts is the next one.</p>`;
+}
+function renderHome(){
+ ensureSel();
+ return `<section class="pg">${homeHero()}${homeToday()}${homeCal()}${homeDay(sel)}${homeStats()}</section>`;
+}
+
+/* =================== JOURNAL =================== */
+/* one entry per day: intention, reflection, stress check-ins, calm habits and fresh starts */
+const STRESS=["","Calm","Low","Some","High","Very high"];
+const CALM=[["br","Breathe slowly for 5 minutes","Long breaths out switch on the body's calming system"],
+ ["out","Time outside in daylight","A walk or 10 minutes in the sun"],
+ ["scr","Screens off an hour before bed","Protects tonight's sleep"]];
+const REMIND=[
+ "You don't need a perfect day. You need the next right step.",
+ "A slip is one moment, not a pattern. Close it out and move on.",
+ "The sleep, food and training you do today build the sperm you'll test in the new year.",
+ "Stress is part of the plan too. Breathe out longer than you breathe in.",
+ "Most of the steps, every day, beats all of them for a week.",
+ "Junk food is chosen one meal at a time. Make the next one clean.",
+ "Missed the workout window? A 10-minute walk still counts as showing up.",
+ "Bad hour? A glass of water, five slow breaths, then check the next step.",
+ "Don't punish yourself for a miss. Just get back on the plan.",
+ "Protect your bedtime tonight. Deep sleep is when testosterone is made.",
+ "Every clean hour adds up. You've already started.",
+ "Compare yourself with yesterday, not with a perfect version of the plan."];
+const FRESH=["That hour is over. This one is clean.","Reset done. One step at a time from here.",
+ "Coming back is the skill, and you just did it.","No catching up, no punishing. Just the next step."];
+function jrData(date){
+ const raw=S.get("jr:"+date,{}),v=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{};
+ return {int:typeof v.int==="string"?v.int:"",ref:typeof v.ref==="string"?v.ref:"",
+  stress:Array.isArray(v.stress)?v.stress.filter(x=>x&&x.v>=1&&x.v<=5):[],
+  calm:v.calm&&typeof v.calm==="object"?v.calm:{},fresh:Array.isArray(v.fresh)?v.fresh.filter(x=>typeof x==="string"):[]};
+}
+function putJr(date,patch){
+ if(date>todayKey())return;
+ const d=Object.assign(jrData(date),patch);
+ if(!d.int&&!d.ref&&!d.stress.length&&!calmCount(d)&&!d.fresh.length)S.del("jr:"+date);else S.set("jr:"+date,d);
+}
+const calmCount=j=>CALM.filter(([k])=>j.calm[k]).length;
+function jrProg(d){const j=jrData(d);return ((j.stress.length?1:0)+(j.int.trim()?1:0)+(j.ref.trim()?1:0)+calmCount(j))/6}
+function freshNow(){
+ const tk=todayKey(),j=jrData(tk),undo=keep("jr:"+tk);
+ putJr(tk,{fresh:j.fresh.concat(nowHM())});
+ refocus=".fresh";renderAll();toast("Fresh start logged",undo);
+}
+function setStress(date,v){
+ if(date>todayKey())return;
+ const j=jrData(date),undo=keep("jr:"+date);
+ putJr(date,{stress:j.stress.concat({t:date===todayKey()?nowHM():"",v})});
+ refocus=`[data-sv="${v}"]`;renderAll();toast("Stress "+v+"/5 logged",undo);
+}
+function flipCalm(date,k){
+ if(date>todayKey())return;
+ const j=jrData(date),c=Object.assign({},j.calm);if(c[k])delete c[k];else c[k]=1;
+ putJr(date,{calm:c});refocus=`[data-c="${k}"]`;renderAll();
+}
+function nextSteps(tk){
+ const st=dietPlan(tk).find(x=>stepState(tk,x)==="todo"),seq=daySeq(tk),wk=seq.find(x=>!entryOn(x.inst.id,tk));
+ const out=[];
+ if(st)out.push(`<li><b>${esc(st.time.replace(/^0/,""))}</b> ${esc(st.name)}</li>`);
+ if(wk)out.push(`<li><b>Workout</b> ${esc(EX[wk.inst.id].f||EX[wk.inst.id].n)}${wk.group?" · "+esc(wk.group):""}</li>`);
+ if(new Date().getHours()>=20)out.push(`<li><b>Tonight</b> Screens off and in bed by 10 PM</li>`);
+ return out.length?`<ul class="nx">${out.join("")}</ul>`:`<p class="hint">Everything planned for today is done. Rest well.</p>`;
+}
+function renderJournal(){
+ const tk=todayKey();ensureSel();
+ const fu=sel>tk,isT=sel===tk,j=jrData(sel),n=chDay(sel);
+ const lastS=j.stress.length?j.stress[j.stress.length-1].v:0,high=lastS>=4;
+ const rem=REMIND[((n%REMIND.length)+REMIND.length)%REMIND.length];
+ const fresh=isT?`<div class="frc">
+   <h3>Messed up in the last hour?</h3>
+   <p>That's done. You don't wait for tomorrow or Monday to restart. The next step starts now.</p>
+   <button type="button" class="fresh" onclick="freshNow()">Start fresh now</button>
+   ${j.fresh.length?`<p class="frm"><b>${esc(FRESH[(j.fresh.length-1)%FRESH.length])}</b> Fresh start at ${esc(fmtClock(j.fresh[j.fresh.length-1]))}${j.fresh.length>1?` · ${j.fresh.length} today, and each one counts`:""}.</p>
+    <p class="lbl">Your next steps</p>${nextSteps(tk)}`:""}
+  </div>`:"";
+ const chips=[1,2,3,4,5].map(v=>`<button type="button" data-sv="${v}" aria-pressed="${lastS===v}"${fu?" disabled":""} onclick="setStress('${sel}',${v})"><b class="num">${v}</b><small>${STRESS[v]}</small></button>`).join("");
+ const hist=j.stress.length>1?`<p class="hint">Today's check-ins: ${j.stress.map(x=>(x.t?fmtClock(x.t)+" ":"")+x.v).join(" · ")}</p>`:"";
+ return `<section class="pg">
+  <p class="goal">Each hour is a new start. Stay calm on purpose: stress raises cortisol, which can lower testosterone, and ongoing stress is linked to lower sperm quality.</p>
+  ${dayStrip("jr")}
+  <div class="dh"><h2>${isT?"Today":esc(DNAME[dkOf(sel)])}</h2><span>${inCh(sel)?"Day "+n+" · ":""}${esc(longDate(sel))}</span></div>
+  <p class="rem">${esc(rem)}</p>
+  ${fresh}
+  <div class="card">
+   <p class="lbl">How stressed are you ${isT?"right now":"that day"}?<small>Check in whenever you notice it rising</small></p>
+   <div class="sv" role="group" aria-label="Stress level, 1 to 5">${chips}</div>
+   ${hist}
+   ${high?`<div class="calm"><h3>Bring it down now</h3><ul class="rl">
+     <li>Breathe: two breaths in through your nose, one long breath out. One minute is enough to feel it.</li>
+     <li>Walk for 10 minutes, outside if you can.</li>
+     <li>Put the phone down for 30 minutes.</li>
+     <li>Pick the one thing you can control right now. Do only that.</li></ul></div>`:""}
+   <button type="button" class="btn brbtn" onclick="openBreathe()"${fu?" disabled":""}>Breathe with me · 1 minute</button>
+  </div>
+  <div class="list"><div class="gh">Calm habits</div>
+   ${CALM.map(([k,l,s])=>`<button type="button" class="row${j.calm[k]?" on":""}" data-c="${k}" aria-pressed="${!!j.calm[k]}"${fu?" disabled":""} onclick="flipCalm('${sel}','${k}')">
+     <span class="bx" aria-hidden="true">✓</span><span class="rt"><span class="nm">${esc(l)}</span><span class="sb">${esc(s)}</span></span></button>`).join("")}
+  </div>
+  <div class="field"><label for="jr_int">Intention for today</label>
+   <textarea id="jr_int" class="ta" placeholder="One thing that makes today a win…"${fu?" disabled":""} oninput="putJr('${sel}',{int:this.value})">${esc(j.int)}</textarea></div>
+  <div class="field"><label for="jr_ref">Evening reflection</label>
+   <textarea id="jr_ref" class="ta" placeholder="What went well? What will you do differently tomorrow?"${fu?" disabled":""} oninput="putJr('${sel}',{ref:this.value})">${esc(j.ref)}</textarea></div>
+ </section>`;
+}
+
+/* ---- guided breathing: the physiological sigh, two inhales then a long exhale, for 1 minute ---- */
+let brT=null,brC=null;
+const BR=[["Breathe in through your nose",2000,"in"],["A little more in",1000,"in2"],["Long, slow breath out",6000,"out"]];
+function openBreathe(){if(todayKey()<sel)return;sheetReturn=".brbtn";focusAfter="sheet";openSheet("breathe");startBreathe()}
+function breatheSheet(){
+ return `<div class="grab" aria-hidden="true"></div>
+  <div class="sh"><div><h2 id="shT">Breathe for a minute</h2><p>Follow the circle. Shoulders down, jaw loose.</p></div>
+   <button type="button" class="x" aria-label="Close" onclick="closeSheet()">×</button></div>
+  <div class="brw"><div class="brc" id="brc" aria-hidden="true"></div><p class="brp" id="brp" aria-live="polite">Get comfortable</p><p class="brl num" id="brl"></p></div>
+  <div class="acts" id="bra"><button type="button" class="btn" onclick="closeSheet()">Stop</button></div>`;
+}
+function startBreathe(){
+ stopBreathe();
+ const end=Date.now()+63000;let i=0;
+ const tick=()=>{const l=$("#brl");if(l)l.textContent=Math.max(0,Math.ceil((end-Date.now())/1000))+" s"};
+ const step=()=>{
+  if(Date.now()>=end){stopBreathe();const c=$("#brc"),p=$("#brp"),a=$("#bra"),l=$("#brl");
+   if(c)c.className="brc";if(p)p.textContent="Done. Notice how you feel now.";if(l)l.textContent="";
+   if(a)a.innerHTML=`<button type="button" class="btn" onclick="closeSheet()">Close</button><button type="button" class="btn pri" onclick="logBreathe()">Count it as a calm habit</button>`;return}
+  const [txt,ms,cls]=BR[i%BR.length];i++;
+  const c=$("#brc"),p=$("#brp");if(c){c.style.transitionDuration=ms+"ms";c.className="brc "+cls}if(p)p.textContent=txt;
+  brT=setTimeout(step,ms);
+ };
+ tick();brC=setInterval(tick,1000);brT=setTimeout(step,1200);
+}
+function stopBreathe(){clearTimeout(brT);clearInterval(brC);brT=brC=null}
+function logBreathe(){const tk=todayKey(),j=jrData(tk);putJr(tk,{calm:Object.assign({},j.calm,{br:1})});closeSheetNow();toast("Breathing logged")}
+
 /* =================== BACKUP =================== */
 function backupFoot(){
  const d=S.get("lastexport",null);
@@ -2087,7 +2448,7 @@ async function exportData(){
  }
  downloadFile(json,name);markBackup(tk);
 }
-const KNOWN=/^(lift:|mode:|sleep:|gut:|fert:|wchk:|fview$|wview$|lastexport$)/;
+const KNOWN=/^(lift:|mode:|sleep:|gut:|fert:|wchk:|jr:|fview$|wview$|lastexport$)/;
 function importData(inp){
  const f=inp.files&&inp.files[0];inp.value="";if(!f)return;
  const r=new FileReader();
@@ -2111,7 +2472,7 @@ function snapshotAll(){
 }
 function resetView(){
  Object.keys(drafts).forEach(k=>delete drafts[k]);openWhy.clear();
- tab="gut";sel=null;weekOff=0;monthOff=0;fertView=S.get("fview","week")==="month"?"month":"week";
+ tab="home";sel=null;weekOff=0;monthOff=0;homeOff=0;fertView=S.get("fview","week")==="month"?"month":"week";
  workView=S.get("wview","day")==="week"?"week":"day";
 }
 function doImport(d,keys){
@@ -2126,7 +2487,7 @@ function doImport(d,keys){
 function checkDay(){
  const tk=todayKey();
  if(tk===lastTk)return;
- if(!sel||sel===lastTk){sel=null;weekOff=0;monthOff=0}
+ if(!sel||sel===lastTk){sel=null;weekOff=0;monthOff=0;homeOff=0}
  lastTk=tk;
  if(!sheet)renderAll();
 }
