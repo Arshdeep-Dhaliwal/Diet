@@ -386,6 +386,9 @@ const isV2=d=>d>=V2_FROM;
 /* the five-pillar version splits supplements out of the meal steps from the day it's first opened; earlier days keep their steps */
 const V3_FROM=(()=>{let v=S.get("v3From",null);if(!isDate(v)){v=todayKey();if(v<V2_FROM)v=V2_FROM;S.set("v3From",v)}return v})();
 const isV3=d=>d>=V3_FROM;
+/* the lifting week (3 gym evenings, 3 morning circuits, 1 light-cardio day) starts the day it's first opened,
+   or the next day if that morning's old workout is already ticked; earlier days keep the old week */
+const V4_FROM=(()=>{let v=S.get("v4From",null);if(!isDate(v)){v=todayKey();if(obj(S.get("gut:diet:"+v,{})).n_move)v=addDays(v,1);S.set("v4From",v)}return v})();
 const IRON_FROM="2026-10-14";
 const LAG=88;                          /* about 74 days to make sperm and 2 more weeks to mature */
 const FEB_A=addDays("2027-02-01",-LAG),FEB_B=addDays("2027-02-28",-LAG);   /* Nov 5 to Dec 2 */
@@ -403,7 +406,7 @@ const PGOAL={heat:"No fever, no heat on the testicles",cortisol:"8 hours of slee
  nutr:"Whole food, no hemorrhoids",horm:"Supplements and moderate workouts"};
 const NUMW=["None","One","Two","Three","Four","Five","Six"];
 
-const MOVE=[
+const MOVE_OLD=[
  {kind:"kb",name:"Kettlebells, 30 min",sub:"Full body, stop two reps short",mins:30},
  {kind:"z2",name:"Easy treadmill, 30 min",sub:"Talk-test pace: full sentences",mins:30},
  {kind:"kb",name:"Kettlebells, 30 min",sub:"Full body, stop two reps short",mins:30},
@@ -411,7 +414,26 @@ const MOVE=[
  {kind:"walk",name:"Walk + mobility, 20 min",sub:"Easy walk, then hips and shoulders",mins:20},
  {kind:"long",name:"Long walk outside, 60 min",sub:"Outdoors, together if you can",mins:60},
  {kind:"rest",name:"Rest day",sub:"Nothing planned. The after-dinner walk still counts.",mins:0}];
+/* moderate compound lifting for testosterone and growth hormone, without the cortisol cost: Mon, Wed, Fri after work.
+   Mornings on the other four days: three circuits, and Sunday is light cardio only so one day a week is real recovery. */
+const GYM={kind:"gym",name:"Gym: compound lifts, 45 min",sub:"Deadlift, chest press, bent-over row, military press",mins:45,pm:1,tag:"45 min · after work"};
+const AMC={kind:"am",name:"Morning circuit, 30 min",sub:"Light cardio, kettlebell, push-ups, Hindu squats, plank",mins:30};
+const EASY={kind:"easy",name:"Light cardio, 30 min",sub:"Easy walk or treadmill. Nothing else today",mins:30};
+const MOVE=[GYM,AMC,GYM,AMC,GYM,AMC,EASY];
+const moveFor=date=>(date>=V4_FROM?MOVE:MOVE_OLD)[dow(date)];
 const MOVE_HOW={
+ gym:["Warm-up: 5 minutes easy, then one light set of each lift.",
+     "Deadlift 3 × 6, chest press 3 × 8, bent-over barbell row 3 × 8, military press 3 × 8.",
+     "Moderate load: finish every set with 2 to 3 reps left. No grinding, no failure, no max attempts.",
+     "Rest 90 seconds to 2 minutes between sets. Out of the gym in 45 minutes.",
+     "Hemorrhoids: breathe out on the effort. Never hold your breath and strain. If bleeding flares, drop the deadlift that week.",
+     "Finish with a dead hang, 2 × 30 seconds.",
+     "Change out of sweaty gear straight after. No sauna, no hot tub. Whey + creatine, then dinner."],
+ am:["10 minutes light cardio on the treadmill: you can talk in full sentences.",
+     "3 rounds: kettlebell swings × 10 (30 lb), push-ups × 10 to 15, Hindu squats × 15 to 20, plank 30 to 45 seconds.",
+     "Rest about 60 seconds between rounds. Stop every set two reps before it gets hard.",
+     "Breathe out as you push. Never hold your breath."],
+ easy:["30 minutes easy walk or treadmill at talking pace.","No kettlebell, no push-ups today. This is the recovery day: hormones are built during rest."],
  kb:["Warm-up, 2 rounds: 20 deep squats, 20 push-ups, hip and shoulder circles.",
      "Circuit, 2 to 3 rounds: swings, presses, windmills and rows, 10 each (per arm where one-armed). Rest about 60 s between rounds.",
      "Stop every set two reps before it gets hard. Start on the 30 lb bell.",
@@ -533,10 +555,10 @@ function rlxRule(date){
 }
 
 function steps(date){
- const w=wakeMin(),out=[],iron=ironDay(date),mv=MOVE[dow(date)],r=rlxRule(date);
+ const w=wakeMin(),out=[],iron=ironDay(date),mv=moveFor(date),gym=!!mv.pm,r=rlxRule(date);
  if(iron)out.push({id:"n_iron",m:w+15,p:"horm",off:iron==="off",name:"Iron + vitamin C",
   sub:iron==="off"?"Off day: iron is every other day":"50 mg iron + vitamin C, with water only"});
- out.push({id:"n_move",m:w+25,p:"horm",mv:1,kind:mv.kind,timer:mv.mins,how:MOVE_HOW[mv.kind],name:mv.name,sub:mv.sub});
+ out.push({id:"n_move",m:gym?1020:w+25,p:"horm",mv:1,kind:mv.kind,timer:mv.mins,how:MOVE_HOW[mv.kind],name:mv.name,sub:mv.sub});
  out.push({id:"n_chia",m:w+75,p:"nutr",name:"Chia + glutamine",sub:"1 tbsp soaked chia · 5 g glutamine"});
  out.push({id:"n_rlx",m:w+105,p:"nutr",rlx:true,due:r.due,name:r.due?"RestoraLAX: take today":"RestoraLAX: skip today",
   sub:r.due?r.why+", so take one 17 g dose":r.why+", so it isn't needed"});
@@ -548,12 +570,13 @@ function steps(date){
  if(isV2(date))out.push({id:"n_calm",m:750,p:"cortisol",timer:5,how:CALM_HOW,name:"Slow breathing, 5 min",sub:"Double breath in, long breath out"});
  out.push({id:"n_oats",m:840,p:"nutr",name:"Oatmeal + berries",sub:"Plain oats, no added sugar"});
  out.push({id:"n_prune",m:900,p:"nutr",name:"Prunes + 30 g nuts",sub:"3 to 4 prunes · walnuts, almonds, hazelnuts"});
- out.push({id:"n_post",m:1020,p:"horm",name:"Whey + creatine",sub:"25 g whey isolate · 5 g creatine"});
- if(v3){out.push({id:"n_dinner",m:1080,p:"nutr",name:"Dinner",sub:"Broth first · cooked tomato in olive oil · kefir"});
-  out.push({id:"n_stack",m:1085,p:"horm",name:"Omega-3, CoQ10, Centrum",sub:"Omega-3 ×2 · CoQ10 300 mg · Centrum, with dinner"})}
+ out.push({id:"n_post",m:gym?1070:1020,p:"horm",name:"Whey + creatine",sub:gym?"Straight after lifting · 25 g whey isolate · 5 g creatine":"25 g whey isolate · 5 g creatine"});
+ if(v3){out.push({id:"n_dinner",m:gym?1095:1080,p:"nutr",name:"Dinner",sub:"Broth first · cooked tomato in olive oil · kefir"});
+  out.push({id:"n_stack",m:gym?1100:1085,p:"horm",name:"Omega-3, CoQ10, Centrum",sub:"Omega-3 ×2 · CoQ10 300 mg · Centrum, with dinner"})}
  else out.push({id:"n_dinner",m:1080,p:"nutr",name:"Dinner + stack",sub:"Broth first · cooked tomato in olive oil · kefir · omega-3 ×2, CoQ10, Centrum"});
- out.push({id:"n_walk",m:1110,p:"horm",mv:1,name:"15-minute walk",sub:"Easy pace, right after dinner"});
- out.push({id:"n_pf",m:1120,p:"oxid",mv:1,name:"Pelvic floor sets",sub:"Your daily sets, any time today"});
+ out.push({id:"n_walk",m:gym?1125:1110,p:"horm",mv:1,name:"15-minute walk",sub:"Easy pace, right after dinner"});
+ out.push({id:"n_pf",m:gym?1135:1120,p:"oxid",mv:1,name:"Pelvic floor sets",sub:"Your daily sets, any time today"});
+ out.forEach((x,i)=>x.i=i);out.sort((a,b)=>a.m-b.m||a.i-b.i);     /* gym days move the workout to the evening */
  return out;
 }
 /* true / false, or null for a step that doesn't count today */
@@ -879,10 +902,10 @@ function renderFun(){
 
 /* ---------- PLAN ---------- */
 /* the week's workouts as a matrix: type of workout down the side, day across the top. Tap a circle to tick it. */
-const MKN={kb:"Kettlebells",z2:"Easy treadmill",walk:"Walk + mobility",long:"Long walk",rest:"Rest"};
+const MKN={gym:"Compound lifts",am:"Morning circuit",easy:"Light cardio only",kb:"Kettlebells",z2:"Easy treadmill",walk:"Walk + mobility",long:"Long walk",rest:"Rest"};
 function moveMatrix(){
  const tk=todayKey(),mon=mondayOf(tk),days=Array.from({length:7},(_,i)=>addDays(mon,i)),ti=dow(tk),WD=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
- const kinds=[];MOVE.forEach(x=>{if(!kinds.includes(x.kind))kinds.push(x.kind)});
+ const wk=days.map(moveFor),kinds=[];MOVE.concat(wk).forEach(x=>{if(wk.includes(x)&&!kinds.includes(x.kind))kinds.push(x.kind)});
  const cell=(d,i,id,name,rest)=>{
   const t=i===ti?' class="t"':"";
   if(rest)return `<td${t}><span><i class="mk rest"></i><span class="sr">Rest</span></span></td>`;
@@ -893,8 +916,8 @@ function moveMatrix(){
  };
  const head=`<thead><tr><th scope="col"><span class="sr">Workout</span></th>${days.map((d,i)=>`<th scope="col"${i===ti?' class="t"':""}><abbr title="${WD[i]}" style="text-decoration:none">${"MTWTFSS"[i]}</abbr></th>`).join("")}</tr></thead>`;
  const rows=kinds.map(k=>{
-  const first=MOVE.findIndex(x=>x.kind===k),mins=MOVE[first].mins;
-  return `<tr><th scope="row"><button type="button" data-act="how" data-id="n_move" data-d="${days[first]}">${MKN[k]||k}${mins?`<small>${mins} min</small>`:""}</button></th>${days.map((d,i)=>MOVE[i].kind===k?cell(d,i,"n_move",MKN[k]||k,k==="rest"):`<td${i===ti?' class="t"':""}></td>`).join("")}</tr>`}).join("");
+  const first=wk.findIndex(x=>x.kind===k),x=wk[first],sub=x.tag||(x.mins?x.mins+" min":"");
+  return `<tr><th scope="row"><button type="button" data-act="how" data-id="n_move" data-d="${days[first]}">${MKN[k]||k}${sub?`<small>${sub}</small>`:""}</button></th>${days.map((d,i)=>wk[i].kind===k?cell(d,i,"n_move",MKN[k]||k,k==="rest"):`<td${i===ti?' class="t"':""}></td>`).join("")}</tr>`}).join("");
  const daily=[["n_walk","After-dinner walk","15 min"],["n_pf","Pelvic floor","Daily sets"]].map(([id,n,sub])=>
   `<tr><th scope="row"><span>${n}<small>${sub}</small></span></th>${days.map((d,i)=>cell(d,i,id,n,false)).join("")}</tr>`).join("");
  return `<table class="mx"><colgroup><col class="c0"><col span="7"></colgroup>${head}<tbody>${rows}<tr class="gh"><th scope="colgroup" colspan="8">EVERY DAY</th></tr>${daily}</tbody></table>`;
@@ -923,7 +946,7 @@ function renderPlan(){
   ${pillarsCard(pillars(tk),tk)}
   ${nowCard(tk)}
   <section aria-label="Workouts"><div class="ch"><h2>Workouts</h2><span>This week</span></div>${moveMatrix()}
-   <p class="note">Moderate: you can still talk. No all-out sessions, and rest when you're run down. Dead hang on gym days. Tap a circle to tick it, or a workout name for how to do it.</p></section>
+   <p class="note">Moderate only: every set ends with 2 to 3 reps left. Sunday is the recovery day. Tap a circle to tick it, or a workout name for the sets and reps.</p></section>
   <button type="button" class="btn wide${!dd.closed&&m>=17*60?" ink":""}" data-act="close" data-d="${tk}">${esc(closedTxt)}</button>
   <div class="dzs">
   ${dz("log","Log",relOk(tk)?"":"Ejaculation due",log,false)}
@@ -938,11 +961,11 @@ function renderPlan(){
   ${rules("oxid",["Ejaculate every day or every other day: short gaps mean better motility and less DNA damage than waiting 4 days or more",
    "Antioxidants from food: 60 g walnuts, almonds and hazelnuts + cooked tomato, daily","No vegetable oil, processed or fast food, or added sugar (whole fruit is fine)",
    "No all-out training: stop two reps short, keep cardio at a pace you can talk at, rest when you're run down","Pelvic floor sets every day"])}
-  ${rules("nutr",["Hemorrhoids: no spicy food, no dairy, no processed junk","Eat until satisfied. No calorie cutting: hormones need fuel","Veg or fruit at every meal","Olive oil for cooking",
+  ${rules("nutr",["Hemorrhoids: no spicy food, no dairy, no processed junk. In the gym, breathe out on the effort and never strain","Eat until satisfied. No calorie cutting: hormones need fuel","Veg or fruit at every meal","Olive oil for cooking",
    "12:00 Metamucil with a full glass of water; 3:00 three or four prunes",
    "RestoraLAX after Types 1 to 3 or a day with none; skip it after 4 to 7","Phone stays outside the bathroom; five minutes, no straining"])}
   ${rules("horm",[`Iron 50 mg + vitamin C at ${fmtM(w+15)}, every other day`,"Vitamin D3 2,000 IU with breakfast","Whey 25 g + creatine 5 g at 5:00 PM",
-   "Omega-3 ×2, CoQ10 300 mg and Centrum with dinner","Workouts: the matrix above. Moderate only, plus a 15-minute walk after dinner",
+   "Omega-3 ×2, CoQ10 300 mg and Centrum with dinner","Lift Mon, Wed, Fri after work: deadlift, chest press, bent-over row, military press. 3 sets, 2 to 3 reps left, 45 minutes","Morning circuit Tue, Thu, Sat; light cardio only on Sunday; 15-minute walk after dinner every day","Lifting raises testosterone and growth hormone for under an hour. Resting levels come from 8 hours of sleep, enough food and not overtraining","No testosterone, steroids or SARMs: they shut down sperm production",
    "Off the list: separate zinc and extra B12. Carnitine waits for the semen analysis"])}
   ${ifs.length?dz("ifs","If-then plans",String(ifs.length),ifs.map((x,i)=>`<div class="fr"><span class="tb" style="cursor:default"><span><b>If</b> ${esc(x.i)}, <b>then</b> ${esc(x.t)}</span></span><button type="button" class="xb" data-act="ifdel" data-v="${i}" aria-label="Delete this plan">×</button></div>`).join(""),false):""}
   ${dz("setup","Set up once",`${SETUP.filter(([k])=>setup[k]).length} of ${SETUP.length}`,SETUP.map(([k,l])=>`<button type="button" class="swr" role="switch" aria-checked="${!!setup[k]}" data-act="setup" data-k="${k}"><span class="lt"><b>${esc(l)}</b></span><span class="sw" aria-hidden="true"><i></i></span></button>`).join(""),false)}
@@ -1002,7 +1025,7 @@ function renderReview(){
  const bleedFree=past.filter(d=>!bloodOn(d)).length;
  const nights=past.filter(d=>{const s=sleepData(d),u=calcSleepDur(s.sleep,s.wake);return u&&u.diff>=480}).length;
  const clean=past.filter(d=>cleanStatus(d)==="y").length,fun=past.filter(funOn).length;
- const train=past.filter(d=>dow(d)<6),sess=train.filter(d=>tick(d,"n_move")).length;
+ const train=past.filter(d=>moveFor(d).kind!=="rest"),sess=train.filter(d=>tick(d,"n_move")).length;
  const pv2=past.filter(isV2),of=(n,a)=>`${n} of ${a.length}`;
  const fevFree=past.filter(d=>!dayD(d).fever).length,cool=pv2.filter(d=>dayD(d).cool===1).length;
  const breath=pv2.filter(d=>tick(d,"n_calm")).length,rel=past.filter(relOk).length;
@@ -1017,7 +1040,7 @@ function renderReview(){
   <section aria-label="The week by pillar"><div class="wdays" aria-hidden="true">${"MTWTFSS".split("").map(x=>`<span>${x}</span>`).join("")}</div>
    ${row("heat",shieldCap)}${row("cortisol",cortCap)}
    ${row("oxid",`Ejaculation on schedule ${of(rel,past)}`)}${row("nutr",`Bleed-free ${bleedFree} of ${past.length} · clean eating ${clean} of ${past.length}`)}
-   ${row("horm",`Workouts ${sess} of ${train.length} · Sunday rest`)}</section>
+   ${row("horm",`Workouts ${sess} of ${train.length}`)}</section>
   <section aria-label="Best moment"><div class="ch"><h2>Best moment</h2></div>${moments.length?`<div class="chips">${moments.map(x=>`<button type="button" class="chip" data-act="best" data-d="${mon}" data-v="${esc(x.t)}" aria-pressed="${rv.best===x.t}">${esc(wdmd(x.d).split(",")[0])}: ${esc(x.t)}</button>`).join("")}</div>`:`<p class="note" style="margin:0">Fun moments you log this week show up here.</p>`}</section>
   <section aria-label="What got in the way"><div class="ch"><h2>What got in the way?</h2></div><div class="chips">${WHY.map(x=>`<button type="button" class="chip" data-act="why" data-d="${mon}" data-v="${esc(x)}" aria-pressed="${why.includes(x)}">${esc(x)}</button>`).join("")}</div></section>
   <section aria-label="One fix"><div class="ch"><h2>One fix for next week</h2></div>
@@ -1414,7 +1437,7 @@ async function exportData(){
  }
  downloadFile(json,name);markBackup(tk);toast("Backup downloaded");
 }
-const KNOWN=/^(lift:|mode:|sleep:|gut:|fert:|wchk:|jr:|day:|wrev:|fview$|wview$|lastexport$|wake$|iron$|funlist$|funbig$|tests$|setup$|ifthen$|planFrom$|v2From$|v3From$|v2seen$)/;
+const KNOWN=/^(lift:|mode:|sleep:|gut:|fert:|wchk:|jr:|day:|wrev:|fview$|wview$|lastexport$|wake$|iron$|funlist$|funbig$|tests$|setup$|ifthen$|planFrom$|v2From$|v3From$|v4From$|v2seen$)/;
 function importData(inp){
  const f=inp.files&&inp.files[0];inp.value="";if(!f)return;
  const r=new FileReader();
@@ -1442,6 +1465,7 @@ function doImport(d,keys){
  if(!isDate(S.get("planFrom",null)))S.set("planFrom",PLAN_FROM);
  if(!isDate(S.get("v2From",null)))S.set("v2From",V2_FROM);
  if(!isDate(S.get("v3From",null)))S.set("v3From",V3_FROM);
+ if(!isDate(S.get("v4From",null)))S.set("v4From",V4_FROM);
  resetCaches();tab="plan";sel=null;renderAll();toast("Backup restored",undo);
 }
 
