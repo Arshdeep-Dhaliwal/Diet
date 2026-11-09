@@ -138,8 +138,8 @@ h2{font-size:16px;line-height:1.3;font-weight:600}
 .bmc.add{border-style:dashed;font-weight:600}
 
 /* tab bar */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;background:var(--bg);border-top:1px solid var(--line);padding:6px max(4px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 2px) max(4px,env(safe-area-inset-left))}
-.tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;font-size:11px;font-weight:500;color:var(--t2)}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;background:var(--bg);border-top:1px solid var(--line);padding:6px max(4px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 2px) max(4px,env(safe-area-inset-left))}
+.tabs button{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;min-height:56px;padding:4px 2px 0;font-size:11px;line-height:1.15;font-weight:500;color:var(--t2);text-align:center}
 .tabs button[aria-current="page"]{color:var(--text);font-weight:700}
 .tabs svg{width:22px;height:22px;stroke-width:1.6}
 .tabs button[aria-current="page"] svg{stroke-width:2}
@@ -274,6 +274,19 @@ button.cell.today{outline:2px solid var(--text);outline-offset:1px}
 .mk.due{border-color:var(--text)}
 .mk.rest{border:0;width:10px;height:1.5px;border-radius:1px;background:var(--t3)}
 .mx tr.gh th{height:34px;border-top:1px solid var(--line);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--t2);vertical-align:bottom;padding-bottom:4px}
+.mx thead th button{width:100%;height:30px;font:inherit;color:inherit}
+.mx.lg col.c0{width:36%}
+.mx.lg td{padding:4px 3px;height:52px}
+.mx.lg thead th{font-size:12px}
+.wi{display:block;width:100%;min-height:42px;padding:0 2px;border:1px solid var(--bd);border-radius:9px;background:var(--card);text-align:center;font-size:16px;font-variant-numeric:tabular-nums}
+.wi::placeholder{color:var(--t3)}
+.wi:focus{outline:2px solid var(--acc);outline-offset:1px}
+.wi:disabled{opacity:.5}
+.na{color:var(--t3)}
+.wkn{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.wkn h2{flex:1;text-align:center;font-size:15px}
+.wkn button{display:grid;place-items:center;width:44px;height:44px;border-radius:999px;color:var(--text)}
+.wkn button svg{width:20px;height:20px}
 .stk{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;padding:9px 0;border-top:1px solid var(--line)}
 .stk small{font-size:12.5px;color:var(--t2);padding-top:2px}
 .stk span{display:flex;flex-direction:column;font-size:14.5px;line-height:1.35}
@@ -340,6 +353,8 @@ details.pf[open] summary::after{content:"−"}
    Three tabs, no + button (Nov 9, 2026): Plan (home: pillars, the step to do now, workout matrix, Log, rules), Sleep, and
    Diet and Supplements (with the standing no spicy / no dairy / no processed junk reminder). 90 days, Fun, the weekly review
    and past days open from Plan.
+   Workout tab (Nov 9, 2026): the week matrix (type of workout by day) and a log matrix for the chosen day
+   (exercise by sets, reps, weight, minutes), stored under wo:<date>.
    Five pillars in his own words (Nov 9, 2026): Heat and Fever · Cortisol Stress · Physical and Oxidative Stress · Nutrition
    (incl. preventing hemorrhoids) · Hormone Optimization (supplements and workouts). Sleep and stress items sit under Cortisol;
    ejaculation frequency, antioxidant food and no junk under Oxidative. Plain wording throughout: no "Calm", "Shield" or "Release".
@@ -492,6 +507,7 @@ const I={
  therm:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/></svg>',
  pill:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-45 12 12)"/><path d="M9.5 9.5l5 5"/></svg>',
  back:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
+ bell:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3 9.5v5M21 9.5v5M6.5 12h11"/></svg>',
  chev:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
  wind:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/></svg>'};
 
@@ -664,7 +680,7 @@ function rolling(fn){
 }
 
 /* =================== VIEW STATE =================== */
-let tab="plan",sel=null,lastTk=todayKey(),refocus=null,timer=null,listEdit=false,revMon=null,addSize="s",openS={};
+let tab="plan",sel=null,lastTk=todayKey(),refocus=null,timer=null,listEdit=false,revMon=null,addSize="s",openS={},wkOff=0,woSel=null;
 const snoozed=new Set();
 const isNight=()=>{const m=nowMin();return m>=SCREENS_OFF||m<wakeMin()};
 const peeking=()=>Number(S.get("peek",0))>Date.now();
@@ -684,17 +700,17 @@ function renderAll(){
  if(night)app.innerHTML=renderNight();
  else{
   if(tab==="today"&&!(sel&&sel<todayKey()))tab="plan";      /* the day view is only for past days, opened from the 90-day grid */
-  const body=tab==="batches"?renderBatches():tab==="fun"?renderFun():tab==="sleep"?renderSleep():tab==="diet"?renderDiet():tab==="review"?renderReview():tab==="today"?renderToday():renderPlan();
+  const body=tab==="batches"?renderBatches():tab==="fun"?renderFun():tab==="workout"?renderWorkout():tab==="sleep"?renderSleep():tab==="diet"?renderDiet():tab==="review"?renderReview():tab==="today"?renderToday():renderPlan();
   app.innerHTML=`<main class="pg">${body}</main>${tabsBar()}`;
  }
  if(sig&&!sheet){try{const el=app.querySelector(sig);if(el)el.focus({preventScroll:true})}catch(e){}}
  tickTimer();
 }
-/* three tabs. 90 days, Fun, the weekly review and past days open from Plan and show Plan as the current tab */
+/* four tabs. 90 days, Fun, the weekly review and past days open from Plan and show Plan as the current tab */
 function tabsBar(){
- const cur=tab==="sleep"||tab==="diet"?tab:"plan";
+ const cur=tab==="sleep"||tab==="diet"||tab==="workout"?tab:"plan";
  const b=(k,icon,label)=>`<button type="button" data-act="tab" data-k="${k}"${cur===k?' aria-current="page"':""}>${icon}${label}</button>`;
- return `<nav class="tabs" aria-label="Sections">${b("plan",I.list,"Plan")}${b("sleep",I.moon,"Sleep")}${b("diet",I.pill,"Diet and Supplements")}</nav>`;
+ return `<nav class="tabs" aria-label="Sections">${b("plan",I.list,"Plan")}${b("workout",I.bell,"Workout")}${b("sleep",I.moon,"Sleep")}${b("diet",I.pill,"Diet and Supplements")}</nav>`;
 }
 const backLink=(k,label)=>`<button type="button" class="lnk" data-act="tab" data-k="${k}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:4px;padding:0;text-decoration:none;margin-bottom:-14px">${I.back.replace('class="i"','class="i" style="width:18px;height:18px"')}${label}</button>`;
 /* a row that opens another page or a sheet */
@@ -900,28 +916,67 @@ function renderFun(){
   </section>`;
 }
 
-/* ---------- PLAN ---------- */
-/* the week's workouts as a matrix: type of workout down the side, day across the top. Tap a circle to tick it. */
+/* ---------- WORKOUT ---------- */
+/* what gets logged for each kind of session: s sets, r reps, w weight in lb, m minutes. The numbers are the targets, shown as placeholders. */
+const WO={
+ gym:[["dl","Deadlift",{s:3,r:6,w:""}],["cp","Chest press",{s:3,r:8,w:""}],["row","Bent-over row",{s:3,r:8,w:""}],["mp","Military press",{s:3,r:8,w:""}],["hang","Dead hang",{s:2,m:.5}],["time","Whole session",{m:45}]],
+ am:[["card","Light cardio",{m:10}],["kb","Kettlebell swings",{s:3,r:10,w:30}],["pu","Push-ups",{s:3,r:12}],["hs","Hindu squats",{s:3,r:15}],["pl","Plank",{s:3,m:.5}]],
+ easy:[["card","Light cardio",{m:30}]],
+ kb:[["kbo","Kettlebell routine",{s:3,r:10,w:30}],["time","Whole session",{m:30}]],
+ z2:[["card","Easy treadmill",{m:30}]],walk:[["card","Walk + mobility",{m:20}]],long:[["card","Long walk",{m:60}]],rest:[]};
+const WOF=[["s","Sets"],["r","Reps"],["w","lb"],["m","Min"]];
+const woLog=date=>obj(S.get("wo:"+date,{}));
+/* the most recent earlier entry for an exercise, to beat or match */
+function woLast(ex,date){
+ for(let i=1;i<=70;i++){const e=obj(woLog(addDays(date,-i))[ex]);
+  if(Object.keys(e).length){const a=[];if(e.s!=null&&e.r!=null)a.push(e.s+" × "+e.r);else if(e.s!=null)a.push(e.s+" sets");if(e.w!=null)a.push(e.w+" lb");if(e.m!=null)a.push(e.m+" min");return a.join(" · ")}}
+ return "";
+}
+/* the week as a matrix: type of workout down the side, day across the top. Tap a circle to tick it, a day to open its log. */
 const MKN={gym:"Compound lifts",am:"Morning circuit",easy:"Light cardio only",kb:"Kettlebells",z2:"Easy treadmill",walk:"Walk + mobility",long:"Long walk",rest:"Rest"};
-function moveMatrix(){
- const tk=todayKey(),mon=mondayOf(tk),days=Array.from({length:7},(_,i)=>addDays(mon,i)),ti=dow(tk),WD=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+function moveMatrix(mon,selD){
+ const tk=todayKey(),days=Array.from({length:7},(_,i)=>addDays(mon,i)),si=days.indexOf(selD),WD=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
  const wk=days.map(moveFor),kinds=[];MOVE.concat(wk).forEach(x=>{if(wk.includes(x)&&!kinds.includes(x.kind))kinds.push(x.kind)});
  const cell=(d,i,id,name,rest)=>{
-  const t=i===ti?' class="t"':"";
+  const t=i===si?' class="t"':"";
   if(rest)return `<td${t}><span><i class="mk rest"></i><span class="sr">Rest</span></span></td>`;
   const st=steps(d).find(x=>x.id===id),on=!!(st&&stepDone(d,st)),auto=!!(st&&autoStep(d,st));
-  const mk=`<i class="mk${on?" on":i===ti?" due":""}">${on?I.check:""}</i>`;
+  const mk=`<i class="mk${on?" on":d===tk?" due":""}">${on?I.check:""}</i>`;
   if(d>tk)return `<td${t}><span>${mk}<span class="sr">Planned</span></span></td>`;
   return `<td${t}><button type="button" data-act="${auto?"autoinfo":"tick"}" data-id="${id}" data-d="${d}" aria-pressed="${on}" aria-label="${esc(name)}, ${WD[i]}${on?": done":""}">${mk}</button></td>`;
  };
- const head=`<thead><tr><th scope="col"><span class="sr">Workout</span></th>${days.map((d,i)=>`<th scope="col"${i===ti?' class="t"':""}><abbr title="${WD[i]}" style="text-decoration:none">${"MTWTFSS"[i]}</abbr></th>`).join("")}</tr></thead>`;
+ const head=`<thead><tr><th scope="col"><span class="sr">Workout</span></th>${days.map((d,i)=>`<th scope="col"${i===si?' class="t"':""}><button type="button" data-act="wday" data-d="${d}" aria-pressed="${i===si}" aria-label="${WD[i]}, ${esc(md(d))}: open the log">${"MTWTFSS"[i]}</button></th>`).join("")}</tr></thead>`;
  const rows=kinds.map(k=>{
   const first=wk.findIndex(x=>x.kind===k),x=wk[first],sub=x.tag||(x.mins?x.mins+" min":"");
-  return `<tr><th scope="row"><button type="button" data-act="how" data-id="n_move" data-d="${days[first]}">${MKN[k]||k}${sub?`<small>${sub}</small>`:""}</button></th>${days.map((d,i)=>wk[i].kind===k?cell(d,i,"n_move",MKN[k]||k,k==="rest"):`<td${i===ti?' class="t"':""}></td>`).join("")}</tr>`}).join("");
+  return `<tr><th scope="row"><button type="button" data-act="how" data-id="n_move" data-d="${days[first]}">${MKN[k]||k}${sub?`<small>${sub}</small>`:""}</button></th>${days.map((d,i)=>wk[i].kind===k?cell(d,i,"n_move",MKN[k]||k,k==="rest"):`<td${i===si?' class="t"':""}></td>`).join("")}</tr>`}).join("");
  const daily=[["n_walk","After-dinner walk","15 min"],["n_pf","Pelvic floor","Daily sets"]].map(([id,n,sub])=>
   `<tr><th scope="row"><span>${n}<small>${sub}</small></span></th>${days.map((d,i)=>cell(d,i,id,n,false)).join("")}</tr>`).join("");
  return `<table class="mx"><colgroup><col class="c0"><col span="7"></colgroup>${head}<tbody>${rows}<tr class="gh"><th scope="colgroup" colspan="8">EVERY DAY</th></tr>${daily}</tbody></table>`;
 }
+/* the day's log as a matrix: exercise down the side; sets, reps, weight and minutes across the top */
+function logMatrix(date){
+ const tk=todayKey(),kind=moveFor(date).kind,list=(WO[kind]||[]).concat([["walk","After-dinner walk",{m:15}]]),log=woLog(date),fut=date>tk;
+ const rows=list.map(([k,name,tg])=>{const e=obj(log[k]),last=woLast(k,date);
+  return `<tr><th scope="row"><span>${name}${last?`<small>Last: ${esc(last)}</small>`:""}</span></th>${WOF.map(([f,l])=>f in tg
+   ?`<td><input class="wi" type="text" inputmode="decimal" maxlength="5" data-in="wo" data-d="${date}" data-k="${k}" data-f="${f}" value="${e[f]!=null?esc(e[f]):""}" placeholder="${tg[f]===""?"":tg[f]}" aria-label="${esc(name)}: ${f==="s"?"sets":f==="r"?"reps":f==="w"?"weight in pounds":"minutes"}"${fut?" disabled":""}></td>`
+   :`<td><span class="na" aria-hidden="true">–</span></td>`).join("")}</tr>`}).join("");
+ return `<table class="mx lg"><colgroup><col class="c0"><col span="4"></colgroup><thead><tr><th scope="col"><span class="sr">Exercise</span></th>${WOF.map(([f,l])=>`<th scope="col">${l}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table>`;
+}
+function renderWorkout(){
+ const tk=todayKey(),mon=addDays(mondayOf(tk),wkOff*7),sun=addDays(mon,6);
+ let sd=woSel&&woSel>=mon&&woSel<=sun?woSel:(wkOff===0?tk:mon);
+ const mv=moveFor(sd),title=wkOff===0?"This week":wkOff===-1?"Last week":`${md(mon)} to ${md(sun)}`;
+ return `<header><h1>Workout</h1><p class="intro">Moderate only: every set ends with 2 to 3 reps left.</p></header>
+  <section aria-label="The week"><div class="wkn"><button type="button" data-act="wk" data-v="-1" aria-label="Earlier week">${I.back}</button><h2>${esc(title)}</h2>
+    <button type="button" data-act="wk" data-v="1" aria-label="Later week"${wkOff>=0?" disabled":""}>${I.chev}</button></div>
+   ${moveMatrix(mon,sd)}
+   <p class="note">Tap a circle to tick it, a day letter to open its log, or a workout name for the sets and reps.</p></section>
+  <section aria-label="Log"><div class="ch"><h2>${esc(wdmd(sd))}${sd===tk?" · today":""}</h2><span>${esc(MKN[mv.kind]||mv.name)}</span></div>
+   ${logMatrix(sd)}
+   <p class="note">${sd>tk?"This day hasn't come yet. The grey numbers are the targets.":"Type what you did; it saves as you go. Grey numbers are the targets. Weight is per bar or bell, in pounds. Half a minute is 0.5."}</p></section>`;
+}
+
+/* ---------- PLAN ---------- */
 function renderPlan(){
  const tk=todayKey(),dd=dayD(tk),m=nowMin(),w=wakeMin(),setup=obj(S.get("setup",{})),ift=S.get("ifthen",[]),ifs=Array.isArray(ift)?ift:[];
  const rules=(k,list,tip)=>dz("p_"+k,PN[k],"",list.map(r=>`<p class="rule">${esc(r)}</p>`).join("")+(tip?`<p class="tip">${esc(tip)}</p>`:""),false);
@@ -945,8 +1000,6 @@ function renderPlan(){
   ${n?`<div class="stack">${n}</div>`:""}
   ${pillarsCard(pillars(tk),tk)}
   ${nowCard(tk)}
-  <section aria-label="Workouts"><div class="ch"><h2>Workouts</h2><span>This week</span></div>${moveMatrix()}
-   <p class="note">Moderate only: every set ends with 2 to 3 reps left. Sunday is the recovery day. Tap a circle to tick it, or a workout name for the sets and reps.</p></section>
   <button type="button" class="btn wide${!dd.closed&&m>=17*60?" ink":""}" data-act="close" data-d="${tk}">${esc(closedTxt)}</button>
   <div class="dzs">
   ${dz("log","Log",relOk(tk)?"":"Ejaculation due",log,false)}
@@ -965,7 +1018,7 @@ function renderPlan(){
    "12:00 Metamucil with a full glass of water; 3:00 three or four prunes",
    "RestoraLAX after Types 1 to 3 or a day with none; skip it after 4 to 7","Phone stays outside the bathroom; five minutes, no straining"])}
   ${rules("horm",[`Iron 50 mg + vitamin C at ${fmtM(w+15)}, every other day`,"Vitamin D3 2,000 IU with breakfast","Whey 25 g + creatine 5 g at 5:00 PM",
-   "Omega-3 ×2, CoQ10 300 mg and Centrum with dinner","Lift Mon, Wed, Fri after work: deadlift, chest press, bent-over row, military press. 3 sets, 2 to 3 reps left, 45 minutes","Morning circuit Tue, Thu, Sat; light cardio only on Sunday; 15-minute walk after dinner every day","Lifting raises testosterone and growth hormone for under an hour. Resting levels come from 8 hours of sleep, enough food and not overtraining","No testosterone, steroids or SARMs: they shut down sperm production",
+   "Omega-3 ×2, CoQ10 300 mg and Centrum with dinner","Workout tab has the week and your log. Lift Mon, Wed, Fri after work: deadlift, chest press, bent-over row, military press. 3 sets, 2 to 3 reps left, 45 minutes","Morning circuit Tue, Thu, Sat; light cardio only on Sunday; 15-minute walk after dinner every day","Lifting raises testosterone and growth hormone for under an hour. Resting levels come from 8 hours of sleep, enough food and not overtraining","No testosterone, steroids or SARMs: they shut down sperm production",
    "Off the list: separate zinc and extra B12. Carnitine waits for the semen analysis"])}
   ${ifs.length?dz("ifs","If-then plans",String(ifs.length),ifs.map((x,i)=>`<div class="fr"><span class="tb" style="cursor:default"><span><b>If</b> ${esc(x.i)}, <b>then</b> ${esc(x.t)}</span></span><button type="button" class="xb" data-act="ifdel" data-v="${i}" aria-label="Delete this plan">×</button></div>`).join(""),false):""}
   ${dz("setup","Set up once",`${SETUP.filter(([k])=>setup[k]).length} of ${SETUP.length}`,SETUP.map(([k,l])=>`<button type="button" class="swr" role="switch" aria-checked="${!!setup[k]}" data-act="setup" data-k="${k}"><span class="lt"><b>${esc(l)}</b></span><span class="sw" aria-hidden="true"><i></i></span></button>`).join(""),false)}
@@ -1063,6 +1116,8 @@ const ACT={
  back:()=>{sel=null;tab="batches";renderAll();window.scrollTo(0,0)},
  day:d=>{if(d.d===todayKey()){tab="plan";sel=null}else{tab="today";sel=d.d}renderAll();window.scrollTo(0,0)},
  review:d=>{tab="review";revMon=d.d||null;sel=null;renderAll();window.scrollTo(0,0)},
+ wk:d=>{wkOff=Math.min(0,Math.max(-26,wkOff+Number(d.v)));woSel=null;renderAll()},
+ wday:d=>{woSel=d.d;renderAll()},
  sec:(d,el)=>{openS[d.k]=el.getAttribute("aria-expanded")!=="true";renderAll()},
  tick:d=>{
   const date=d.d||todayKey();if(date>todayKey())return;
@@ -1164,6 +1219,11 @@ const IN={
  funbig:t=>{const b=funBig();b[t.dataset.k]=t.value.slice(0,100);S.set("funbig",b)},
  rev:t=>{const k="wrev:"+t.dataset.d,r=Object.assign({},obj(S.get(k,{})));r[t.dataset.k]=t.value.slice(0,100);S.set(k,r)},
  pfnum:t=>{const k="wchk:"+t.dataset.d,c=Object.assign({},obj(S.get(k,{}))),v=t.value.replace(/[^\d]/g,"");if(v)c[t.dataset.k]=Number(v);else delete c[t.dataset.k];if(Object.keys(c).length)S.set(k,c);else S.del(k)},
+ wo:t=>{const k="wo:"+t.dataset.d,o=Object.assign({},woLog(t.dataset.d)),e=Object.assign({},obj(o[t.dataset.k]));
+  const v=t.value.replace(",",".").trim(),n=parseFloat(v);
+  if(v!==""&&isFinite(n)&&n>=0)e[t.dataset.f]=Math.round(n*100)/100;else delete e[t.dataset.f];
+  if(Object.keys(e).length)o[t.dataset.k]=e;else delete o[t.dataset.k];
+  if(Object.keys(o).length)S.set(k,o);else S.del(k)},
  sh:t=>{if(sh)sh[t.dataset.k]=t.value}
 };
 const CHG={
@@ -1437,7 +1497,7 @@ async function exportData(){
  }
  downloadFile(json,name);markBackup(tk);toast("Backup downloaded");
 }
-const KNOWN=/^(lift:|mode:|sleep:|gut:|fert:|wchk:|jr:|day:|wrev:|fview$|wview$|lastexport$|wake$|iron$|funlist$|funbig$|tests$|setup$|ifthen$|planFrom$|v2From$|v3From$|v4From$|v2seen$)/;
+const KNOWN=/^(wo:|lift:|mode:|sleep:|gut:|fert:|wchk:|jr:|day:|wrev:|fview$|wview$|lastexport$|wake$|iron$|funlist$|funbig$|tests$|setup$|ifthen$|planFrom$|v2From$|v3From$|v4From$|v2seen$)/;
 function importData(inp){
  const f=inp.files&&inp.files[0];inp.value="";if(!f)return;
  const r=new FileReader();
@@ -1474,10 +1534,10 @@ function doImport(d,keys){
 let lastNight=null;
 function checkDay(){
  const tk=todayKey(),n=nightLocked();
- if(tk!==lastTk){lastTk=tk;sel=null;snoozed.clear();openS={};if(!sheet)renderAll();lastNight=n;return}
+ if(tk!==lastTk){lastTk=tk;sel=null;snoozed.clear();openS={};wkOff=0;woSel=null;if(!sheet)renderAll();lastNight=n;return}
  if(n!==lastNight){lastNight=n;if(!sheet)renderAll();return}
  const ae=document.activeElement,typing=ae&&(ae.tagName==="INPUT"||ae.tagName==="TEXTAREA");
- if(!sheet&&!typing&&(tab==="plan"||tab==="sleep"||tab==="diet"))renderAll();
+ if(!sheet&&!typing&&(tab==="plan"||tab==="sleep"||tab==="diet"||tab==="workout"))renderAll();
 }
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkDay()});
 window.addEventListener("pageshow",checkDay);
