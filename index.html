@@ -64,6 +64,10 @@ h2{font-size:16px;line-height:1.3;font-weight:600}
 .rowbtn{min-height:48px;border:1px solid var(--bd);border-radius:12px;font-size:15px;font-weight:600}
 .links{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 18px}
 
+/* the standing diet reminder */
+.ban{padding:14px 16px;border-radius:14px;background:var(--alert-bg);color:var(--alert)}
+.ban b{display:block;font-size:17px;line-height:1.3;font-weight:700}
+.ban small{display:block;font-size:13.5px;margin-top:2px}
 /* notices: only shown when something needs you */
 .al{display:flex;align-items:center;gap:10px;padding:10px 8px 10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
 .al>span{flex:1;display:flex;flex-direction:column;min-width:0}
@@ -134,13 +138,11 @@ h2{font-size:16px;line-height:1.3;font-weight:600}
 .bmc.add{border-style:dashed;font-weight:600}
 
 /* tab bar */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;background:var(--bg);border-top:1px solid var(--line);padding:6px max(4px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 2px) max(4px,env(safe-area-inset-left))}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;background:var(--bg);border-top:1px solid var(--line);padding:6px max(4px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 2px) max(4px,env(safe-area-inset-left))}
 .tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;font-size:11px;font-weight:500;color:var(--t2)}
 .tabs button[aria-current="page"]{color:var(--text);font-weight:700}
 .tabs svg{width:22px;height:22px;stroke-width:1.6}
 .tabs button[aria-current="page"] svg{stroke-width:2}
-.tabs .plus{justify-self:center;width:46px;height:46px;min-height:0;border-radius:999px;background:var(--ink);color:var(--on-ink)}
-.tabs .plus svg{stroke-width:2}
 
 /* bottom sheet */
 .shade{position:fixed;inset:0;background:var(--shade);z-index:40}
@@ -335,6 +337,9 @@ details.pf[open] summary::after{content:"−"}
    Items that are new in this version only count from V2_FROM, so earlier days keep their scores.
    Minimal look (Nov 9, 2026): one ink and one accent, no boxes; Today shows the six pillars, the one step to do now,
    and three fold-away sections. The week's workouts are a matrix in Plan: type of workout by day. Logs and keys are unchanged.
+   Three tabs, no + button (Nov 9, 2026): Plan (home: pillars, the step to do now, workout matrix, Log, rules), Sleep, and
+   Diet and Supplements (with the standing no spicy / no dairy / no processed junk reminder). 90 days, Fun, the weekly review
+   and past days open from Plan.
    Five pillars in his own words (Nov 9, 2026): Heat and Fever · Cortisol Stress · Physical and Oxidative Stress · Nutrition
    (incl. preventing hemorrhoids) · Hormone Optimization (supplements and workouts). Sleep and stress items sit under Cortisol;
    ejaculation frequency, antioxidant food and no junk under Oxidative. Plain wording throughout: no "Calm", "Shield" or "Release".
@@ -420,7 +425,7 @@ const MOVE_HOW={
 const CALM_HOW=["Breathe in through your nose, then take a second short sip of air to fill right up.",
  "Breathe out slowly through your mouth until you're empty. Repeat for 5 minutes.",
  "Sitting or lying down, eyes closed if you like. Prayer or meditation counts too.",
- "Stressed later in the day? Do another round from the + button."];
+ "Stressed later in the day? Do another round from Plan, under Log."];
 
 /* answered when you close the day; v2 items only count from V2_FROM */
 const CLOSE=[
@@ -636,7 +641,7 @@ function rolling(fn){
 }
 
 /* =================== VIEW STATE =================== */
-let tab="today",sel=null,lastTk=todayKey(),refocus=null,timer=null,listEdit=false,revMon=null,addSize="s",openS={};
+let tab="plan",sel=null,lastTk=todayKey(),refocus=null,timer=null,listEdit=false,revMon=null,addSize="s",openS={};
 const snoozed=new Set();
 const isNight=()=>{const m=nowMin();return m>=SCREENS_OFF||m<wakeMin()};
 const peeking=()=>Number(S.get("peek",0))>Date.now();
@@ -655,17 +660,23 @@ function renderAll(){
  document.documentElement.classList.toggle("nightmode",night);
  if(night)app.innerHTML=renderNight();
  else{
-  const body=tab==="batches"?renderBatches():tab==="fun"?renderFun():tab==="plan"?renderPlan():tab==="review"?renderReview():renderToday();
+  if(tab==="today"&&!(sel&&sel<todayKey()))tab="plan";      /* the day view is only for past days, opened from the 90-day grid */
+  const body=tab==="batches"?renderBatches():tab==="fun"?renderFun():tab==="sleep"?renderSleep():tab==="diet"?renderDiet():tab==="review"?renderReview():tab==="today"?renderToday():renderPlan();
   app.innerHTML=`<main class="pg">${body}</main>${tabsBar()}`;
  }
  if(sig&&!sheet){try{const el=app.querySelector(sig);if(el)el.focus({preventScroll:true})}catch(e){}}
  tickTimer();
 }
+/* three tabs. 90 days, Fun, the weekly review and past days open from Plan and show Plan as the current tab */
 function tabsBar(){
- const b=(k,icon,label)=>`<button type="button" data-act="tab" data-k="${k}"${tab===k?' aria-current="page"':""}>${icon}${label}</button>`;
- return `<nav class="tabs" aria-label="Sections">${b("today",I.pillars,"Today")}${b("batches",I.cal,"Batches")}
-  <button type="button" class="plus" data-act="quick" aria-label="Log something">${I.plus}</button>${b("fun",I.smile,"Fun")}${b("plan",I.list,"Plan")}</nav>`;
+ const cur=tab==="sleep"||tab==="diet"?tab:"plan";
+ const b=(k,icon,label)=>`<button type="button" data-act="tab" data-k="${k}"${cur===k?' aria-current="page"':""}>${icon}${label}</button>`;
+ return `<nav class="tabs" aria-label="Sections">${b("plan",I.list,"Plan")}${b("sleep",I.moon,"Sleep")}${b("diet",I.pill,"Diet and Supplements")}</nav>`;
 }
+const backLink=(k,label)=>`<button type="button" class="lnk" data-act="tab" data-k="${k}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:4px;padding:0;text-decoration:none;margin-bottom:-14px">${I.back.replace('class="i"','class="i" style="width:18px;height:18px"')}${label}</button>`;
+/* a row that opens another page or a sheet */
+const nv=(act,k,title,meta)=>`<section class="dz"><button type="button" class="dh" data-act="${act}"${k?` data-k="${k}"`:""}><b>${title}</b>${meta?`<span class="num">${meta}</span>`:""}${I.chev}</button></section>`;
+const qRow=(k,icon,label,sub)=>`<button type="button" class="qk" data-act="qk" data-k="${k}"><span class="qi">${icon}</span><span class="lt"><b>${label}</b><small>${sub}</small></span></button>`;
 function chLabel(date){return inCh(date)?`Day ${chDay(date)} of 90`:date<CH_FROM?"Starts Oct 31":"Road to February"}
 /* a section that folds away: title, a short status, and the detail only when opened */
 const isOpen=(k,def)=>k in openS?openS[k]:!!def;
@@ -685,7 +696,7 @@ function renderToday(){
  if(isT&&!dd.fever)bits.push("Fever-free "+plural(feverFreeDays(),"day"));
  if(date>=CH_FROM)bits.push((bits.length?"batch":"Batch")+" ready "+md(addDays(date,LAG)));
  let h=`<header class="hdr"><p class="dl">${esc(wdmd(date))}${isT?" · "+esc(fmtClock(nowHM())):""}</p><h1>${esc(chLabel(date))}</h1>${bits.length?`<p class="dl">${esc(bits.join(" · "))}</p>`:""}</header>`;
- if(!isT)h+=al("Viewing "+wdmd(date),"","back","Back to today");
+ if(!isT)h+=al("Viewing "+wdmd(date),"","back","Back to 90 days");
  if(date<PLAN_FROM)return h+legacyDay(date);
  if(isT){
   let n="";const y=addDays(tk,-1),rm=reviewDue();
@@ -712,7 +723,7 @@ function pillarsCard(P,date){
   return `<button type="button" class="pk${p.due&&p.done>=p.due?" full":""}" data-act="pillar" data-k="${k}" data-d="${date}" aria-label="${PN[k]}: ${p.done} of ${p.due} done. Show items">
    <span class="pn">${PS[k]}</span><i class="bar" aria-hidden="true"><i style="width:${Math.round(f*100)}%"></i></i><span class="pc num" aria-hidden="true">${p.done}/${p.due}</span></button>`}).join("")}</section>`;
 }
-function lastNightCard(date,isT){
+function nightRows(date){
  const s=sleepData(date),dur=calcSleepDur(s.sleep,s.wake),dd=dayD(date);
  const done=(dur&&dur.diff>=480?1:0)+(dd.milk===1?1:0)+(dd.scr===1?1:0);
  const ok=!!(dur&&dur.diff>=480);
@@ -722,10 +733,9 @@ function lastNightCard(date,isT){
  const yn=(k,label,sub)=>{const v=dd[k];return `<div class="lnr${v===1?" ok":""}"><span class="ck">${v===1?I.check:""}</span><span class="lt"><b>${label}</b>${sub?`<small>${esc(sub)}</small>`:""}</span>
   <span class="yn" role="group" aria-label="${label}"><button type="button" data-act="ln" data-k="${k}" data-v="1" data-d="${date}" aria-pressed="${v===1}">Yes</button><button type="button" data-act="ln" data-k="${k}" data-v="0" data-d="${date}" aria-pressed="${v===0}">No</button></span></div>`};
  const peek=dd.peek?`You opened the app after 7${dd.peek>1?" ("+dd.peek+" times)":""}`:"";
- /* open until the three answers are in, then it folds away */
- const pending=!dur||dd.milk==null||dd.scr==null;
- return dz("night",isT?"Last night":"The night before",`${done} of 3`,`${sleepRow}${yn("milk","Turmeric milk + kiwi","")}${yn("scr","Screens off after 7",peek)}`,isT&&pending);
+ return {done,rows:`${sleepRow}${yn("milk","Turmeric milk + kiwi","")}${yn("scr","Screens off after 7",peek)}`};
 }
+function lastNightCard(date,isT){const n=nightRows(date);return dz("night",isT?"Last night":"The night before",`${n.done} of 3`,n.rows,false)}
 function nowCard(date){
  const dd=dayD(date),m=nowMin();
  const list=steps(date).filter(st=>stepDone(date,st)===false&&!snoozed.has(st.id));
@@ -810,11 +820,11 @@ function renderBatches(){
  const tests=obj(S.get("tests",{}));
  const tRows=TESTS.map(([k,name,when])=>{const s=TST.includes(tests[k])?tests[k]:"todo";
   return `<button type="button" class="trow" data-act="test" data-k="${k}"><span class="lt"><b>${name}</b><small>${s==="done"?"Done":when}</small></span><span class="stt ${s}">${TSTN[s]}</span></button>`}).join("");
- return `<header><h1>Batches</h1><p class="intro">Sperm take about 88 days to make. Today's batch is ready around ${esc(md(ready))}.</p></header>
+ return `${backLink("plan","Plan")}<header><h1>90 days</h1><p class="intro">Sperm take about 88 days to make. Today's batch is ready around ${esc(md(ready))}.</p></header>
   <section aria-label="February batches"><div class="ch"><h2>February batches</h2><span class="num">${started} of 28 started</span></div>
    <i class="bar lg" aria-hidden="true"><i style="width:${Math.round(started/28*100)}%"></i></i>
    <div class="phs">${phRow(1,"Start February's batches","Nov 5 to Dec 2")}${phRow(2,"Protect them","Dec to Jan · no fever, no heat, low stress, 8-hour nights")}${phRow(3,"Try","February · every 1 to 2 days in the fertile window")}</div></section>
-  <section aria-label="90 days"><div class="ch"><h2>90 days</h2><span>Tap a day to open it</span></div>${batchGrid()}
+  <section aria-label="90 days"><div class="ch"><h2>Every day so far</h2><span>Tap a day to open it</span></div>${batchGrid()}
    <p class="note">Darker means more of the five pillars done. Green days are ready in February.</p></section>
   ${al("Fever-free · "+plural(feverFreeDays(),"day"),"A fever can set sperm back 2 to 3 months","fever","Log a fever")}
   <section aria-label="Ejaculation frequency"><div class="ch"><h2>Ejaculation</h2><span>${relTxt}</span></div><div class="dots">${dots}</div><p class="note">Every 1 to 2 days. Tap a day to log it.</p></section>
@@ -851,7 +861,7 @@ function renderFun(){
  const list=funList(),row=x=>`<div class="fr${x.done?" done":""}"><button type="button" class="tb" data-act="funitem" data-id="${x.id}" aria-pressed="${!!x.done}"><span class="ck" aria-hidden="true">${x.done?I.check:""}</span><span>${esc(x.text)}</span></button>${listEdit?`<button type="button" class="xb" data-act="fundel" data-id="${x.id}" aria-label="Delete ${esc(x.text)}">×</button>`:""}</div>`;
  const grp=(s,label)=>{const xs=list.filter(x=>x.size===s);return xs.length?`<p class="grp">${label}</p>${xs.map(row).join("")}`:""};
  const fb=funBig(),ms=[30,60,90].map(n=>`<div class="ms"><span><b>Day ${n}</b><small>${esc(md(addDays(CH_FROM,n-1)))}</small></span><input class="inp" type="text" data-in="funbig" data-k="${n}" value="${esc(fb[n])}" placeholder="Pick a big one" aria-label="Big fun for day ${n}"></div>`).join("");
- return `<header><h1>Fun</h1><p class="intro">One fun moment a day, one big one a week. It counts toward Cortisol Stress.</p></header>
+ return `${backLink("plan","Plan")}<header><h1>Fun</h1><p class="intro">One fun moment a day, one big one a week. It counts toward Cortisol Stress.</p></header>
   <section><div class="ch"><label for="funToday"><h2>Today</h2></label><span class="num">${r.yes} of ${r.of||0} days</span></div>
    <input id="funToday" class="inp" type="text" maxlength="140" data-in="funtoday" value="${esc(dd.fun||"")}" placeholder="What made you laugh today?">
    <div class="chips" style="margin-top:10px"><button type="button" class="chip" data-act="tog" aria-pressed="${!!dd.tog}">Time together today</button></div>
@@ -890,41 +900,90 @@ function moveMatrix(){
  return `<table class="mx"><colgroup><col class="c0"><col span="7"></colgroup>${head}<tbody>${rows}<tr class="gh"><th scope="colgroup" colspan="8">EVERY DAY</th></tr>${daily}</tbody></table>`;
 }
 function renderPlan(){
- const tk=todayKey(),w=wakeMin(),setup=obj(S.get("setup",{})),ift=S.get("ifthen",[]),ifs=Array.isArray(ift)?ift:[];
+ const tk=todayKey(),dd=dayD(tk),m=nowMin(),w=wakeMin(),setup=obj(S.get("setup",{})),ift=S.get("ifthen",[]),ifs=Array.isArray(ift)?ift:[];
  const rules=(k,list,tip)=>dz("p_"+k,PN[k],"",list.map(r=>`<p class="rule">${esc(r)}</p>`).join("")+(tip?`<p class="tip">${esc(tip)}</p>`:""),false);
  const d=S.get("lastexport",null),bk=isDate(d)?`Last backup: ${wdmd(d)}${dayDiff(d,tk)>=7?" ("+dayDiff(d,tk)+" days ago)":""}`:"No backup yet. Your log lives only in this browser.";
- const menu=steps(tk).map(st=>`<div class="stk"><small class="num">${esc(fmtM(st.m))}</small><span>${esc(st.name)}<i>${esc(st.sub)}</i></span></div>`).join("");
- return `<header><h1>Plan</h1><p class="intro">Everything here is aimed at sperm quality and count.</p></header>
+ const bits=[];
+ if(!dd.fever)bits.push("Fever-free "+plural(feverFreeDays(),"day"));
+ if(tk>=CH_FROM)bits.push((bits.length?"batch":"Batch")+" ready "+md(addDays(tk,LAG)));
+ let n="";const y=addDays(tk,-1),rm=reviewDue();
+ if(dd.fever)n+=al("Fever logged today","Rest, fluids and sleep. Call your doctor if it's high or lasts.","fever","Edit","",true);
+ else if(dd.sick)n+=al("Sick day","Rest, fluids, sleep. Workouts count as done today.","fever","Edit");
+ if(y>=PLAN_FROM&&!dayD(y).closed)n+=al("Yesterday isn't closed","Two minutes to finish it","close","Close it",` data-d="${y}"`);
+ if(rm)n+=al(dow(tk)===6?"Sunday review":"Last week's review","5 minutes: what worked, one fix","review","Open",` data-d="${rm}"`);
+ if(Array.isArray(dd.slips)&&dd.slips.length&&!comebackDone(tk))n+=al("Slip recovery in progress",dd.slips.map(x=>SLIPN[x.k]||"Slip").join(", ")+" logged","comeback","Finish",` data-d="${tk}"`);
+ const rel=relOn(tk),fun=String(dd.fun||"").trim();
+ const log=qRow("rel",I.heart,rel?"Ejaculation logged today":"Ejaculation","Every 1 to 2 days"+(rel?" · tap to remove":""))+
+  qRow("calm",I.wind,"Slow breathing","5 minutes, when stress builds")+
+  qRow("fever",I.therm,"Fever or feeling sick","A fever sets sperm back 2 to 3 months")+
+  qRow("fun",I.smile,"Fun moment",fun?esc(fun):"Counts toward Cortisol Stress");
+ const closedTxt=dd.closed?`Day closed at ${fmtClock(dd.closed)} · edit`:"Close the day";
+ return `<header class="hdr"><p class="dl">${esc(wdmd(tk))} · ${esc(fmtClock(nowHM()))}</p><h1>${esc(chLabel(tk))}</h1>${bits.length?`<p class="dl">${esc(bits.join(" · "))}</p>`:""}</header>
+  ${n?`<div class="stack">${n}</div>`:""}
+  ${pillarsCard(pillars(tk),tk)}
+  ${nowCard(tk)}
   <section aria-label="Workouts"><div class="ch"><h2>Workouts</h2><span>This week</span></div>${moveMatrix()}
    <p class="note">Moderate: you can still talk. No all-out sessions, and rest when you're run down. Dead hang on gym days. Tap a circle to tick it, or a workout name for how to do it.</p></section>
-  <section><div class="swr" style="padding:0"><span class="lt"><b style="font-weight:600;font-size:16px"><label for="wakeIn">Up at</label></b><small>Screens off 7:00 PM · milk ${esc(fmtM(milkMin()))} · lights out ${esc(fmtM(outMin()))}</small></span>
-   <input id="wakeIn" class="inp num" type="time" style="width:140px;flex:none;font-weight:600" value="${hhmm(w)}" data-ch="wake"></div></section>
+  <button type="button" class="btn wide${!dd.closed&&m>=17*60?" ink":""}" data-act="close" data-d="${tk}">${esc(closedTxt)}</button>
   <div class="dzs">
+  ${dz("log","Log",relOk(tk)?"":"Ejaculation due",log,false)}
   ${rules("heat",["No hot tub, sauna, steam room or hot bath","Heated seat off; laptop on a table, never your lap",
    "Loose boxers; change out of sweaty gym clothes soon after","Fever? Log it, then rest and fluids. A fever can set sperm back 2 to 3 months",
    "Wash your hands when you get home and before you eat","Keep away from anyone who's sick; flu shot if your doctor agrees",
    "Before any pill: is it on your list, or truly needed? Ask the pharmacist about fertility"])}
   ${rules("cortisol",[`Lights out ${fmtM(outMin())}, up ${fmtM(w)}: 8 hours asleep. Short sleep raises cortisol and lowers testosterone`,"Screens off at 7:00 PM; phone charges outside the bedroom",
-   `${fmtM(milkMin())} turmeric milk (½ tsp in 1% milk) + 1 to 2 kiwi`,"12:30 slow breathing, 5 minutes. Prayer or meditation counts too",
+   "12:30 slow breathing, 5 minutes. Prayer or meditation counts too",
    "One fun moment a day, one big fun a week","15 minutes together, phones away","Rate your stress when you close the day"],
    "Why: men with the highest stress had about a third lower sperm count. The stress-and-girls link is in mothers: stressed pregnant women had fewer boys, and those with more support had more. From February, your partner's stress matters most.")}
   ${rules("oxid",["Ejaculate every day or every other day: short gaps mean better motility and less DNA damage than waiting 4 days or more",
    "Antioxidants from food: 60 g walnuts, almonds and hazelnuts + cooked tomato, daily","No vegetable oil, processed or fast food, or added sugar (whole fruit is fine)",
    "No all-out training: stop two reps short, keep cardio at a pace you can talk at, rest when you're run down","Pelvic floor sets every day"])}
-  ${rules("nutr",["Eat until satisfied. No calorie cutting: hormones need fuel","Veg or fruit at every meal","Olive oil for cooking",
-   "Hemorrhoids: no spicy food","12:00 Metamucil with a full glass of water; 3:00 three or four prunes",
+  ${rules("nutr",["Hemorrhoids: no spicy food, no dairy, no processed junk","Eat until satisfied. No calorie cutting: hormones need fuel","Veg or fruit at every meal","Olive oil for cooking",
+   "12:00 Metamucil with a full glass of water; 3:00 three or four prunes",
    "RestoraLAX after Types 1 to 3 or a day with none; skip it after 4 to 7","Phone stays outside the bathroom; five minutes, no straining"])}
   ${rules("horm",[`Iron 50 mg + vitamin C at ${fmtM(w+15)}, every other day`,"Vitamin D3 2,000 IU with breakfast","Whey 25 g + creatine 5 g at 5:00 PM",
    "Omega-3 ×2, CoQ10 300 mg and Centrum with dinner","Workouts: the matrix above. Moderate only, plus a 15-minute walk after dinner",
    "Off the list: separate zinc and extra B12. Carnitine waits for the semen analysis"])}
-  ${dz("stack","Today's menu and stack","",`<button type="button" class="swr" role="switch" aria-checked="${ironOn()}" data-act="iron"><span class="lt"><b>Iron course</b><small>Every other day until ferritin is over 100</small></span><span class="sw" aria-hidden="true"><i></i></span></button>
-   ${menu}<div class="stk"><small>Off the list</small><span>Separate zinc and extra B12<i>Carnitine waits for the semen analysis</i></span></div>`,false)}
   ${ifs.length?dz("ifs","If-then plans",String(ifs.length),ifs.map((x,i)=>`<div class="fr"><span class="tb" style="cursor:default"><span><b>If</b> ${esc(x.i)}, <b>then</b> ${esc(x.t)}</span></span><button type="button" class="xb" data-act="ifdel" data-v="${i}" aria-label="Delete this plan">×</button></div>`).join(""),false):""}
   ${dz("setup","Set up once",`${SETUP.filter(([k])=>setup[k]).length} of ${SETUP.length}`,SETUP.map(([k,l])=>`<button type="button" class="swr" role="switch" aria-checked="${!!setup[k]}" data-act="setup" data-k="${k}"><span class="lt"><b>${esc(l)}</b></span><span class="sw" aria-hidden="true"><i></i></span></button>`).join(""),false)}
   ${dz("backup","Backup",isDate(d)?(dayDiff(d,tk)<7?esc(md(d)):dayDiff(d,tk)+" days ago"):"None yet",`<p class="note" style="margin-top:0">${esc(bk)}</p>
    <div class="acts" style="margin-top:12px"><button type="button" class="btn ink" data-act="export">Back up</button><button type="button" class="btn" data-act="import">Restore</button></div>`,false,!(isDate(d)&&dayDiff(d,tk)<7))}
-  </div>
-  <button type="button" class="btn wide" data-act="review">Weekly review</button>`;
+  ${nv("tab","batches","90 days and tests","")}${nv("tab","fun","Fun","")}${nv("review","","Weekly review","")}
+  </div>`;
+}
+
+/* ---------- SLEEP ---------- */
+function renderSleep(){
+ const tk=todayKey(),w=wakeMin(),n=nightRows(tk);
+ const r=rolling(d=>{const s=sleepData(d),u=calcSleepDur(s.sleep,s.wake);return u?(u.diff>=480?"y":"n"):d===tk?"open":"n"});
+ const row=(t,name,sub)=>`<div class="stk"><small class="num">${esc(t)}</small><span>${name}${sub?`<i>${sub}</i>`:""}</span></div>`;
+ return `<header><h1>Sleep</h1><p class="intro">8 hours every night. Short sleep raises cortisol and lowers testosterone.</p></header>
+  <section aria-label="Last night"><div class="ch"><h2>Last night</h2><span class="num">${n.done} of 3</span></div>${n.rows}</section>
+  <section aria-label="Tonight"><div class="ch" style="margin-bottom:4px"><h2>Tonight</h2></div>
+   ${row(fmtM(SCREENS_OFF),"Screens off","The app locks until you wake up")}${row(fmtM(milkMin()),"Turmeric milk + kiwi","½ tsp turmeric in 1% milk · 1 to 2 kiwi")}
+   ${row(fmtM(outMin()),"Lights out","8 h 30 m in bed for 8 hours asleep · phone charges outside the bedroom")}
+   <div class="swr" style="border-top:1px solid var(--line);padding:10px 0 0"><span class="lt"><b><label for="wakeIn">Up at</label></b><small>Change it and the evening moves with it</small></span>
+    <input id="wakeIn" class="inp num" type="time" style="width:140px;flex:none;font-weight:600" value="${hhmm(w)}" data-ch="wake"></div></section>
+  <section aria-label="8-hour nights"><div class="ch" style="margin-bottom:0"><h2>8-hour nights</h2><span class="num">${r.yes} of the last ${r.of||0}</span></div>
+   <div class="roll" role="img" aria-label="${r.yes} nights of 8 hours in the last ${r.of}">${r.cells.map(c=>`<i class="${c}"></i>`).join("")}</div></section>`;
+}
+
+/* ---------- DIET AND SUPPLEMENTS ---------- */
+function renderDiet(){
+ const tk=todayKey(),list=steps(tk).filter(st=>!st.mv&&st.id!=="n_calm");
+ const rows=list.map(st=>{
+  if(st.off)return `<div class="tl off"><span class="ck" aria-hidden="true"></span><span class="tt"><b>No iron today</b><small>Every other day · next dose tomorrow</small></span><span class="tm num">${esc(fmtM(st.m))}</span></div>`;
+  const d=stepDone(tk,st),auto=autoStep(tk,st);
+  return `<button type="button" class="tl${d?" on":""}${auto?" auto":""}" data-act="${auto?"autoinfo":"tick"}" data-id="${st.id}" data-d="${tk}" aria-pressed="${!!d}" style="min-height:56px">
+   <span class="ck" aria-hidden="true">${d?I.check:""}</span><span class="tt"><b>${esc(st.name)}</b><small>${esc(st.sub)}</small></span><span class="tm num">${esc(fmtM(st.m))}</span></button>`;
+ }).join("");
+ const all=list.filter(st=>!st.off),n=all.filter(st=>stepDone(tk,st)).length;
+ return `<header><h1>Diet and Supplements</h1></header>
+  <div class="ban" role="note"><b>No spicy food. No dairy. No processed junk.</b><small>They flare your hemorrhoids.</small></div>
+  <section aria-label="Today"><div class="ch" style="margin-bottom:4px"><h2>Today</h2><span class="num">${n} of ${all.length}</span></div>${rows}</section>
+  <div class="dzs">${bmCard(tk)}
+   <section class="dz"><button type="button" class="swr" role="switch" aria-checked="${ironOn()}" data-act="iron"><span class="lt"><b style="font-size:16px;font-weight:600">Iron course</b><small>Every other day until ferritin is over 100</small></span><span class="sw" aria-hidden="true"><i></i></span></button></section>
+   ${nv("slip","","Something slipped","")}${nv("qk","meds","Before taking a pill","")}</div>`;
 }
 
 /* ---------- WEEKLY REVIEW ---------- */
@@ -953,7 +1012,7 @@ function renderReview(){
  const moments=past.map(d=>({d,t:String(dayD(d).fun||"").trim()})).filter(x=>x.t);
  const why=Array.isArray(rv.why)?rv.why:[];
  const opt=(f,vals)=>vals.map(([v,l])=>`<button type="button" data-act="pf" data-k="${f}" data-v="${v}" data-d="${mon}" aria-pressed="${String(ck[f])===v}">${l}</button>`).join("");
- return `<button type="button" class="lnk" data-act="tab" data-k="today" style="align-self:flex-start;display:inline-flex;align-items:center;gap:4px;padding:0;text-decoration:none;margin-bottom:-14px">${I.back.replace('class="i"','class="i" style="width:18px;height:18px"')}Today</button>
+ return `${backLink("plan","Plan")}
   <header class="hdr"><p class="dl">${esc(md(mon))} to ${esc(md(addDays(mon,6)))} · 5 minutes</p><h1>Week in review</h1></header>
   <section aria-label="The week by pillar"><div class="wdays" aria-hidden="true">${"MTWTFSS".split("").map(x=>`<span>${x}</span>`).join("")}</div>
    ${row("heat",shieldCap)}${row("cortisol",cortCap)}
@@ -978,10 +1037,9 @@ function renderReview(){
 /* =================== ACTIONS =================== */
 const ACT={
  tab:d=>{tab=d.k;sel=null;if(tab!=="review")revMon=null;renderAll();window.scrollTo(0,0)},
- back:()=>{sel=null;renderAll();window.scrollTo(0,0)},
- day:d=>{tab="today";sel=d.d===todayKey()?null:d.d;renderAll();window.scrollTo(0,0)},
+ back:()=>{sel=null;tab="batches";renderAll();window.scrollTo(0,0)},
+ day:d=>{if(d.d===todayKey()){tab="plan";sel=null}else{tab="today";sel=d.d}renderAll();window.scrollTo(0,0)},
  review:d=>{tab="review";revMon=d.d||null;sel=null;renderAll();window.scrollTo(0,0)},
- quick:()=>openSheet("quick"),
  sec:(d,el)=>{openS[d.k]=el.getAttribute("aria-expanded")!=="true";renderAll()},
  tick:d=>{
   const date=d.d||todayKey();if(date>todayKey())return;
@@ -1032,7 +1090,7 @@ const ACT={
   if(Object.keys(c).length)S.set(k,c);else S.del(k);renderAll()},
  startweek:d=>{const k="wrev:"+d.d,r=Object.assign({},obj(S.get(k,{})));r.done=todayKey();S.set(k,r);
   if(r.ifx&&r.thenx){const a=S.get("ifthen",[]),list=Array.isArray(a)?a:[];if(!list.some(x=>x.i===r.ifx&&x.t===r.thenx)){list.unshift({i:r.ifx,t:r.thenx,at:todayKey()});S.set("ifthen",list.slice(0,12))}}
-  tab="today";revMon=null;renderAll();window.scrollTo(0,0);toast("Review saved. Fresh week.")},
+  tab="plan";revMon=null;renderAll();window.scrollTo(0,0);toast("Review saved. New week.")},
  peek:()=>confirmAsk({title:"Open the app after 7?",text:"This counts as screen time tonight. It opens for 2 minutes, then goes back to screens off.",ok:"Open for 2 minutes",
   run:()=>{S.set("peek",Date.now()+120000);const nd=addDays(nightDay(),1),cur=Number(dayD(nd).peek)||0;putDay(nd,{peek:cur+1});renderAll()}}),
  export:()=>exportData(),
@@ -1044,7 +1102,7 @@ const ACT={
  bmFlag:d=>{sh[d.k]=!sh[d.k];renderSheet("bm_"+d.k)},
  bmSave:()=>saveStool(),
  bmDel:()=>delStool(),
- qk:d=>{const k=d.k;closeSheetNow();
+ qk:d=>{const k=d.k;if(sheet)closeSheetNow();
   if(k==="bm")openStool(todayKey());else if(k==="slip")ACT.slip({});else if(k==="rel")ACT.rel({});else if(k==="fever")ACT.fever();
   else if(k==="calm")openSheet("how",{date:todayKey(),id:"n_calm"});
   else if(k==="meds")openSheet("meds",{name:""});else if(k==="fun")openSheet("fun",{text:String(dayD(todayKey()).fun||""),tog:!!dayD(todayKey()).tog})},
@@ -1171,13 +1229,6 @@ const SHEETS={
  ask:()=>`${head(sh.title)}<p style="font-size:15px;line-height:1.45;color:var(--t2)">${esc(sh.text)}</p>
   <div class="acts"><button type="button" class="btn" data-act="x">Cancel</button><button type="button" class="btn ink" data-act="askOk">${esc(sh.ok)}</button></div>`,
 
- quick:()=>{const tk=todayKey(),rel=relOn(tk);
-  const q=(k,cls,icon,label,sub)=>`<button type="button" class="qk ${cls}" data-act="qk" data-k="${k}"><span class="qi">${icon}</span><span class="lt"><b>${label}</b><small>${sub}</small></span></button>`;
-  return `${head("Log something")}${q("calm","",I.wind,"Slow breathing","5 minutes, when stress builds")}${q("rel","",I.heart,rel?"Ejaculation logged today":"Ejaculation","Every 1 to 2 days"+(rel?" · tap to remove":""))}
-   ${q("fever","",I.therm,"Fever or feeling sick","A fever sets sperm back 2 to 3 months")}${q("bm","food",I.drop,"Bowel movement","Type, blood, toilet habits")}
-   ${q("fun","calm",I.smile,"Fun moment","Counts toward Cortisol Stress")}${q("slip","amb",I.bolt,"Something slipped","Log it and plan the recovery")}
-   ${q("meds","shield",I.pill,"Before taking a pill","Is it needed? Is it on your list?")}`},
-
  bm:()=>{const s=sh,b=BRISTOL[s.type]||BRISTOL[4],edit=s.id!=null,t=Number(s.type)||4;
   return `${head(edit?"Edit bowel movement":"Bowel movement",wdmd(s.date))}
   <label class="lb" for="bmTime" style="margin-top:4px">Time</label><input id="bmTime" class="inp num" type="time" value="${esc(s.time)}" data-in="sh" data-k="time" style="width:150px">
@@ -1267,7 +1318,7 @@ const SHEETS={
   const rows=p.items.map(it=>{
    if(it.id&&!it.auto)return `<button type="button" class="tl ${sh.k}${it.done?" on":""}" data-act="tick" data-id="${it.id}" data-d="${sh.date}" aria-pressed="${it.done}"><span class="ck" aria-hidden="true">${it.done?I.check:""}</span><span class="tt"><b>${esc(it.label)}</b></span></button>`;
    if(it.rel){const on=relOn(sh.date);return `<button type="button" class="tl ${sh.k}${it.done?" on":""}" data-act="rel" data-d="${sh.date}" aria-pressed="${on}"><span class="ck" aria-hidden="true">${it.done?I.check:""}</span><span class="tt"><b>${esc(it.label)}</b><small>${on?"Tap to remove":"Tap to log "+(isT?"today's":"that day's")}</small></span></button>`}
-   const hint=it.close?"From Close the day":it.fun||it.tog?"Close the day or the Fun tab":it.sleep||it.night?"From the Last night card":
+   const hint=it.close?"From Close the day":it.fun||it.tog?"From Close the day, or Log on Plan":it.sleep||it.night?"From the Sleep tab":
     it.fever?(it.done?"Automatic unless you log a fever":"Fever logged"):it.blood?(it.done?"From your bowel movement logs":"Blood logged"):"Automatic today";
    return `<div class="tl ${sh.k}${it.done?" on":""}"><span class="ck" aria-hidden="true">${it.done?I.check:""}</span><span class="tt"><b>${esc(it.label)}</b><small>${hint}</small></span></div>`;
   }).join("");
@@ -1391,7 +1442,7 @@ function doImport(d,keys){
  if(!isDate(S.get("planFrom",null)))S.set("planFrom",PLAN_FROM);
  if(!isDate(S.get("v2From",null)))S.set("v2From",V2_FROM);
  if(!isDate(S.get("v3From",null)))S.set("v3From",V3_FROM);
- resetCaches();tab="today";sel=null;renderAll();toast("Backup restored",undo);
+ resetCaches();tab="plan";sel=null;renderAll();toast("Backup restored",undo);
 }
 
 /* =================== START =================== */
@@ -1402,7 +1453,7 @@ function checkDay(){
  if(tk!==lastTk){lastTk=tk;sel=null;snoozed.clear();openS={};if(!sheet)renderAll();lastNight=n;return}
  if(n!==lastNight){lastNight=n;if(!sheet)renderAll();return}
  const ae=document.activeElement,typing=ae&&(ae.tagName==="INPUT"||ae.tagName==="TEXTAREA");
- if(!sheet&&!typing&&tab==="today")renderAll();
+ if(!sheet&&!typing&&(tab==="plan"||tab==="sleep"||tab==="diet"))renderAll();
 }
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkDay()});
 window.addEventListener("pageshow",checkDay);
