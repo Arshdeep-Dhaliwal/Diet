@@ -75,6 +75,9 @@ h2{font-size:16px;line-height:1.3;font-weight:600}
 .tm{flex-shrink:0;font-size:12.5px;color:var(--t2);white-space:nowrap}
 .tl.on .tt b{color:var(--t2)}
 .none{font-size:14.5px;color:var(--t2);padding:10px 0}
+.tl.sm{min-height:46px}
+.grp{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--t2);padding:14px 0 2px}
+.ch+.grp{padding-top:2px}
 
 /* inputs */
 .lb{display:block;font-size:13px;font-weight:600;color:var(--t2);margin:0 0 6px}
@@ -92,11 +95,12 @@ h2{font-size:16px;line-height:1.3;font-weight:600}
 .big.ok{color:var(--acc)}
 .big small{font-size:14px;font-weight:500;letter-spacing:0;color:var(--t2);margin-left:8px}
 .n7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
-.n7 button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;border-radius:10px}
+.n7 button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:68px;border-radius:10px}
 .n7 small{font-size:11px;font-weight:600;color:var(--t2)}
 .n7 b{font-size:13.5px;font-weight:600}
 .n7 b.ok{color:var(--acc)}
 .n7 b.no{color:var(--t3);font-weight:400}
+.n7 i{font-style:normal;font-size:11px;line-height:1.2;min-height:13px;color:var(--t2)}
 .n7 button[aria-pressed="true"]{background:var(--card);box-shadow:inset 0 0 0 1px var(--bd)}
 
 /* stool log */
@@ -121,6 +125,16 @@ h2{font-size:16px;line-height:1.3;font-weight:600}
 .ed .inp.sm{min-height:38px;font-size:14.5px;color:var(--t2)}
 .ed .xb{width:40px;height:46px}
 .ed input[type="time"]::-webkit-calendar-picker-indicator{display:none}
+
+/* workout plan editor */
+.we{padding:10px 0;border-top:1px solid var(--line)}
+.we:first-child{border-top:0}
+.wen{display:flex;gap:6px}
+.wen .inp{flex:1;min-width:0}
+.wen .xb{width:40px;height:46px}
+.wet{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:6px;padding-right:46px}
+.wet label{display:flex;flex-direction:column;gap:2px}
+.wet span{font-size:11px;font-weight:600;color:var(--t2);text-align:center}
 
 /* tab bar */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;background:var(--bg);border-top:1px solid var(--line);padding:6px max(2px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 2px) max(2px,env(safe-area-inset-left))}
@@ -201,7 +215,9 @@ h2{font-size:16px;line-height:1.3;font-weight:600}
    No reminders, no notices, no evening lock, no "close the day": every tab is just its log.
    Every log keeps the bt26: keys of the earlier versions, so existing entries and backups load unchanged:
    sleep:<date> · gut:stools:<date> · gut:diet:<date> (ticks) · wo:<date> · fert:<date> (rel = actual, plan = planned).
-   New: plan:<date> is the diet list for that day; a day without its own list uses the most recent earlier one. */
+   New: plan:<date> is the diet list for that day; a day without its own list uses the most recent earlier one.
+   Nov 14, later: sleep score on Sleep; Stool opens with the Discipline ticks (mechanics, diet, proactive management);
+   bedtime is kiwi + turmeric tea; the workout plan can be edited (wp:<date>: the day's kind and its exercise lists). */
 
 /* =================== STORE & DATES =================== */
 const K="bt26:";
@@ -253,8 +269,8 @@ function stools(date){const v=S.get("gut:stools:"+date,[]);return Array.isArray(
 const bloodOn=date=>stools(date).some(s=>s.blood);
 function sleepData(date){
  const v=S.get("sleep:"+date,null);
- if(!v||typeof v!=="object")return {sleep:"",wake:""};
- return {sleep:typeof v.sleep==="string"?v.sleep:"",wake:typeof v.wake==="string"?v.wake:""};
+ if(!v||typeof v!=="object")return {sleep:"",wake:"",score:""};
+ return {sleep:typeof v.sleep==="string"?v.sleep:"",wake:typeof v.wake==="string"?v.wake:"",score:v.score!=null&&v.score!==""?String(v.score):""};
 }
 /* bedtime from noon on is the evening before; earlier bedtimes are just after midnight */
 function calcSleepDur(bed,wake){
@@ -278,7 +294,7 @@ const relOn=date=>{const f=fert(date);return !!(f.rel||f.sex||f.nm===false)};
 const planOn=date=>!!fert(date).plan;
 
 /* =================== VIEW STATE =================== */
-let tab="sleep",sel=todayKey(),lastTk=todayKey(),refocus=null,timer=null,wkOff=0,woSel=null,ejOff=0,dietDay=0,dietEdit=false;
+let tab="sleep",sel=todayKey(),lastTk=todayKey(),refocus=null,timer=null,wkOff=0,woSel=null,woEdit=false,ejOff=0,dietDay=0,dietEdit=false;
 let bmF={time:null,type:4,blood:false};
 
 /* =================== RENDER =================== */
@@ -305,19 +321,24 @@ const dayLabel=()=>wdmd(sel)+(sel===todayKey()?" · today":"");
 /* ---------- 1 SLEEP ---------- */
 function renderSleep(){
  const tk=todayKey(),s=sleepData(sel),dur=calcSleepDur(s.sleep,s.wake);
- const nights=Array.from({length:7},(_,i)=>addDays(tk,i-6)).map(d=>{const u=sleepDur(d);
-  return `<button type="button" data-act="pick" data-d="${d}" aria-pressed="${d===sel}" aria-label="${esc(wdmd(d))}: ${u?u.hours+" hours "+u.mins+" minutes":"not logged"}"><small>${"SMTWTFS"[parseD(d).getDay()]}</small><b class="num ${u?(u.diff>=480?"ok":""):"no"}">${u?u.hours+":"+pad(u.mins):"–"}</b></button>`}).join("");
+ const nights=Array.from({length:7},(_,i)=>addDays(tk,i-6)).map(d=>{const u=sleepDur(d),sc=sleepData(d).score;
+  return `<button type="button" data-act="pick" data-d="${d}" aria-pressed="${d===sel}" aria-label="${esc(wdmd(d))}: ${u?u.hours+" hours "+u.mins+" minutes":"hours not logged"}${sc?", score "+esc(sc):""}"><small>${"SMTWTFS"[parseD(d).getDay()]}</small><b class="num ${u?(u.diff>=480?"ok":""):"no"}">${u?u.hours+":"+pad(u.mins):"–"}</b><i class="num">${esc(sc)}</i></button>`}).join("");
  return `<header><h1>Sleep</h1></header>
   <section aria-label="Night">${dayNav(sel===tk?"Last night":"Woke "+wdmd(sel))}
    <div class="tin"><div><label class="lb" for="slB">Bed</label><input id="slB" class="inp num" type="time" value="${esc(s.sleep)}" data-ch="sl" data-f="sleep"></div>
     <div><label class="lb" for="slW">Up</label><input id="slW" class="inp num" type="time" value="${esc(s.wake)}" data-ch="sl" data-f="wake"></div></div>
    <p class="big num${dur&&dur.diff>=480?" ok":""}">${dur?`${dur.hours} h ${pad(dur.mins)} m`:"–"}<small>of 8 h</small></p></section>
-  <section aria-label="Last 7 nights"><div class="ch"><h2>Last 7 nights</h2></div><div class="n7">${nights}</div></section>
+  <section aria-label="Sleep score"><div class="ch"><h2><label for="slS">Sleep score</label></h2></div>
+   <input id="slS" class="inp num" type="text" inputmode="numeric" maxlength="3" style="width:150px" value="${esc(s.score)}" placeholder="0 to 100" data-ch="slsc"></section>
+  <section aria-label="Last 7 nights"><div class="ch"><h2>Last 7 nights</h2><span>Hours · score</span></div><div class="n7">${nights}</div></section>
   <p class="links"><button type="button" class="lnk" data-act="export">Back up</button><button type="button" class="lnk" data-act="import">Restore</button></p>`;
 }
 
 /* ---------- 2 PREVENT BLOOD IN STOOL ---------- */
-const CHECKS=[["x_dairy","No dairy"],["x_spicy","No spicy food"],["x_junk","No junk food"],["n_rlx","RestoraLAX"],["n_psy","Metamucil"]];
+const DISC=[
+ ["Mechanics",[["m_times","1 or max 2 times"],["m_strain","No straining"],["m_finger","No finger"],["m_five","Max 5 minutes"]]],
+ ["Diet",[["x_spicy","No spicy food"],["x_dairy","No dairy"],["x_junk","No processed food"]]],
+ ["Proactive management",[["n_rlx","RestoraLAX"],["n_psy","Metamucil"]]]];
 const BRISTOL={1:"Separate hard lumps",2:"Sausage-shaped but lumpy",3:"A sausage with cracks",4:"Smooth, soft snake",5:"Soft blobs with clear edges",6:"Fluffy, mushy pieces",7:"Entirely liquid"};
 /* days since blood was last logged; 0 when it's today; null before the first stool log */
 function bloodFree(){
@@ -329,14 +350,15 @@ function bloodFree(){
 }
 function renderStool(){
  const tk=todayKey(),list=stools(sel),n=bloodFree(),t=bmF.type;
- const checks=CHECKS.map(([id,name])=>{const on=tick(sel,id);
-  return `<button type="button" class="tl${on?" on":""}" data-act="tick" data-id="${id}" data-d="${sel}" aria-pressed="${on}"><span class="ck" aria-hidden="true">${on?I.check:""}</span><span class="tt"><b>${name}</b></span></button>`}).join("");
+ const disc=DISC.map(([g,items])=>`<p class="grp">${g.toUpperCase()}</p><div role="group" aria-label="${g}">${items.map(([id,name])=>{const on=tick(sel,id);
+  return `<button type="button" class="tl sm${on?" on":""}" data-act="tick" data-id="${id}" data-d="${sel}" aria-pressed="${on}"><span class="ck" aria-hidden="true">${on?I.check:""}</span><span class="tt"><b>${name}</b></span></button>`}).join("")}</div>`).join("");
  const rows=list.map(x=>`<div class="er${x.blood?" bl":""}"><span class="num">${esc(x.time?fmtClock(x.time):"No time")}</span><b>Type ${Number(x.type)||4}</b><span class="s">${x.blood?"Blood":"No blood"}</span>
    <button type="button" class="xb" data-act="bmDel" data-id="${esc(x.id)}" aria-label="Delete this entry">×</button></div>`).join("");
  const time=bmF.time!=null?bmF.time:(sel===tk?nowHM():"");
  return `<header><h1>Prevent Blood in Stool</h1>${n==null?"":`<p class="intro${n===0?" bad":""}">${n===0?"Blood logged today.":plural(n,"day")+" without blood."}</p>`}</header>
   ${dayNav(dayLabel())}
-  <section aria-label="Stool">
+  <section aria-label="Discipline"><div class="ch"><h2>Discipline</h2></div>${disc}</section>
+  <section aria-label="Stool log"><div class="ch"><h2>Stool log</h2></div>
    <div class="bf">
     <div class="tin"><div><label class="lb" for="bmTime">Time</label><input id="bmTime" class="inp num" type="time" value="${esc(time)}" data-in="bmt"></div>
      <div><span class="lb" id="bmBl">Blood</span><div class="seg2" role="group" aria-labelledby="bmBl"><button type="button" data-act="bmBlood" data-v="0" aria-pressed="${!bmF.blood}">No</button><button type="button" class="bl" data-act="bmBlood" data-v="1" aria-pressed="${!!bmF.blood}">Yes</button></div></div></div>
@@ -344,8 +366,7 @@ function renderStool(){
     <p class="note">Type ${t}: ${BRISTOL[t]}</p>
     <button type="button" class="btn ink wide" data-act="bmSave">Log stool</button>
    </div>
-   ${rows?`<div class="ers">${rows}</div>`:""}</section>
-  <section aria-label="Checks"><div>${checks}</div></section>`;
+   ${rows?`<div class="ers">${rows}</div>`:""}</section>`;
 }
 
 /* ---------- 3 DIET AND SUPPLEMENTS ---------- */
@@ -360,8 +381,12 @@ const DIET=[
  ["n_post","17:00","Whey + creatine","25 g whey isolate · 5 g creatine"],
  ["n_dinner","18:00","Dinner","Broth first · cooked tomato in olive oil · kefir"],
  ["n_stack","18:05","Omega-3, CoQ10, Centrum","Omega-3 ×2 · CoQ10 300 mg · Centrum, with dinner"],
- ["n_milk","20:30","Turmeric milk + kiwi","½ tsp turmeric in 1% milk · 1 to 2 kiwi"]
+ ["n_milk","20:30","Kiwi + turmeric tea","Before bed · 1 to 2 kiwi"]
 ].map(([id,t,n,s])=>({id,t,n,s}));
+/* lists saved before the bedtime row became kiwi + turmeric tea: update that row where it was left as it came */
+S.keys().forEach(k=>{if(k.indexOf("plan:")!==0)return;const v=S.get(k,null);if(!Array.isArray(v))return;let ch=false;
+ v.forEach(x=>{if(x&&x.id==="n_milk"&&x.n==="Turmeric milk + kiwi"){x.n="Kiwi + turmeric tea";if(x.s==="½ tsp turmeric in 1% milk · 1 to 2 kiwi")x.s="Before bed · 1 to 2 kiwi";ch=true}});
+ if(ch)S.set(k,v)});
 let planDates=null;
 /* a day without its own list uses the most recent earlier one, so a change carries forward until you change it again */
 function planFor(date){
@@ -393,7 +418,7 @@ function renderDiet(){
    ${dietEdit?`<button type="button" class="btn wide dash" data-act="pladd">Add a row</button>`:""}</section>`;
 }
 
-/* ---------- 4 WORKOUT (unchanged) ---------- */
+/* ---------- 4 WORKOUT ---------- */
 /* the lifting week (3 gym evenings, 3 morning circuits, 1 light-cardio day) started the day that version was first opened; earlier days keep the old week */
 const V4_FROM=(()=>{let v=S.get("v4From",null);if(!isDate(v)){v=todayKey();S.set("v4From",v)}return v})();
 const MOVE_OLD=[
@@ -410,7 +435,21 @@ const GYM={kind:"gym",name:"Gym: compound lifts, 45 min",sub:"Deadlift, chest pr
 const AMC={kind:"am",name:"Morning circuit, 30 min",sub:"Light cardio, kettlebell, push-ups, Hindu squats, plank",mins:30};
 const EASY={kind:"easy",name:"Light cardio, 30 min",sub:"Easy walk or treadmill. Nothing else today",mins:30};
 const MOVE=[GYM,AMC,GYM,AMC,GYM,AMC,EASY];
-const moveFor=date=>(date>=V4_FROM?MOVE:MOVE_OLD)[dow(date)];
+const KIND={gym:GYM,am:AMC,easy:EASY,kb:MOVE_OLD[0],z2:MOVE_OLD[1],walk:MOVE_OLD[4],long:MOVE_OLD[5],rest:MOVE_OLD[6]};
+const KORDER=["gym","am","easy","kb","z2","walk","long","rest"],KPICK=["gym","am","easy","rest"];
+/* the plan can be changed from any day on. wp:<date> = {kind, ex:{<kind>:[rows]}}.
+   A changed kind repeats on that weekday from then on; a changed exercise list is used by every later session of that kind. */
+let wpIdx=null;
+function wpAll(){
+ if(!wpIdx)wpIdx=S.keys().filter(k=>k.indexOf("wp:")===0).map(k=>k.slice(3)).filter(isDate).sort().reverse()
+  .map(d=>{const v=obj(S.get("wp:"+d,{}));return {d,dw:dow(d),kind:KIND[v.kind]?v.kind:null,ex:obj(v.ex)}});
+ return wpIdx;
+}
+function kindFor(date){
+ const dw=dow(date),hit=wpAll().find(x=>x.d<=date&&x.dw===dw&&x.kind);
+ return hit?hit.kind:(date>=V4_FROM?MOVE:MOVE_OLD)[dw].kind;
+}
+const moveFor=date=>KIND[kindFor(date)];
 const MOVE_HOW={
  gym:["Warm-up: 5 minutes easy, then one light set of each lift.",
      "Deadlift 3 × 6, chest press 3 × 8, bent-over barbell row 3 × 8, military press 3 × 8.",
@@ -442,7 +481,7 @@ function woStep(date,id){
  if(id==="n_pf")return {id,mv:1,name:"Pelvic floor sets"};
  return null;
 }
-const autoStep=(date,st)=>st.kind==="rest"||(!!st.mv&&!!dayD(date).sick);
+const autoStep=(date,st)=>(st.id==="n_move"&&st.kind==="rest")||(!!st.mv&&!!dayD(date).sick);
 const stepDone=(date,st)=>autoStep(date,st)||tick(date,st.id);
 /* what gets logged for each kind of session: s sets, r reps, w weight in lb, m minutes. The numbers are the targets, shown as placeholders. */
 const WO={
@@ -453,6 +492,18 @@ const WO={
  z2:[["card","Easy treadmill",{m:30}]],walk:[["card","Walk + mobility",{m:20}]],long:[["card","Long walk",{m:60}]],rest:[]};
 const WOF=[["s","Sets"],["r","Reps"],["w","lb"],["m","Min"]];
 const woLog=date=>obj(S.get("wo:"+date,{}));
+/* a day's exercises: {k, n, and any of s r w m}. A field that is there gets a box in the log; its number is the target ("" = no target). */
+function exClean(x){const o={k:String(x.k),n:String(x.n||"")};
+ WOF.forEach(([f])=>{if(f in x){const n=parseFloat(x[f]);o[f]=x[f]===""||x[f]==null||!isFinite(n)?"":n}});return o}
+function exStored(date){
+ const kind=kindFor(date),hit=wpAll().find(x=>x.d<=date&&Array.isArray(x.ex[kind]));
+ return hit?hit.ex[kind].filter(x=>x&&typeof x==="object"&&x.k!=null).map(exClean):null;
+}
+const exList=date=>exStored(date)||(WO[kindFor(date)]||[]).map(([k,n,tg])=>Object.assign({k,n},tg));
+function saveEx(date,list){const v=Object.assign({},obj(S.get("wp:"+date,{})));v.ex=Object.assign({},obj(v.ex),{[kindFor(date)]:list});S.set("wp:"+date,v);wpIdx=null}
+const exLine=x=>x.n+(x.s&&x.r?` ${x.s} × ${x.r}`:x.s?` ${x.s} sets`:"")+(x.w?` ${x.w} lb`:"")+(x.m?` ${x.m} min`:"");
+/* the lines of each write-up that name exercises; they give way to the list once it has been edited */
+const HOW_EX={gym:[1,5],am:[0,1],easy:[0,1]};
 /* the most recent earlier entry for an exercise, to beat or match */
 function woLast(ex,date){
  for(let i=1;i<=70;i++){const e=obj(woLog(addDays(date,-i))[ex]);
@@ -464,7 +515,7 @@ const MKN={gym:"Compound lifts",am:"Morning circuit",easy:"Light cardio only",kb
 const WD=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 function moveMatrix(mon,selD){
  const tk=todayKey(),days=Array.from({length:7},(_,i)=>addDays(mon,i)),si=days.indexOf(selD);
- const wk=days.map(moveFor),kinds=[];MOVE.concat(wk).forEach(x=>{if(wk.includes(x)&&!kinds.includes(x.kind))kinds.push(x.kind)});
+ const wk=days.map(kindFor),kinds=KORDER.filter(k=>wk.includes(k)||(woEdit&&KPICK.includes(k)));
  const cell=(d,i,id,name,rest)=>{
   const t=i===si?' class="t"':"";
   if(rest)return `<td${t}><span><i class="mk rest"></i><span class="sr">Rest</span></span></td>`;
@@ -474,34 +525,46 @@ function moveMatrix(mon,selD){
   return `<td${t}><button type="button" data-act="${auto?"autoinfo":"tick"}" data-id="${id}" data-d="${d}" aria-pressed="${on}" aria-label="${esc(name)}, ${WD[i]}${on?": done":""}">${mk}</button></td>`;
  };
  const head=`<thead><tr><th scope="col"><span class="sr">Workout</span></th>${days.map((d,i)=>`<th scope="col"${i===si?' class="t"':""}><button type="button" data-act="wday" data-d="${d}" aria-pressed="${i===si}" aria-label="${WD[i]}, ${esc(md(d))}: open the log">${"MTWTFSS"[i]}</button></th>`).join("")}</tr></thead>`;
+ /* while editing, every row is a choice: one workout per day, today onward */
+ const pick=(d,i,k)=>{const on=wk[i]===k,t=i===si?' class="t"':"",mk=`<i class="mk pl${on?" on":""}"></i>`;
+  if(d<tk)return `<td${t}><span style="opacity:.3">${on?mk:""}</span></td>`;
+  return `<td${t}><button type="button" data-act="wkind" data-d="${d}" data-k="${k}" aria-pressed="${on}" aria-label="${MKN[k]||k}, ${WD[i]}${on?": planned":""}">${mk}</button></td>`};
  const rows=kinds.map(k=>{
-  const first=wk.findIndex(x=>x.kind===k),x=wk[first],sub=x.tag||(x.mins?x.mins+" min":"");
-  return `<tr><th scope="row"><button type="button" data-act="how" data-id="n_move" data-d="${days[first]}">${MKN[k]||k}${sub?`<small>${sub}</small>`:""}</button></th>${days.map((d,i)=>wk[i].kind===k?cell(d,i,"n_move",MKN[k]||k,k==="rest"):`<td${i===si?' class="t"':""}></td>`).join("")}</tr>`}).join("");
- const daily=[["n_walk","After-dinner walk","15 min"],["n_pf","Pelvic floor","Daily sets"]].map(([id,n,sub])=>
+  const first=wk[si]===k?si:wk.lastIndexOf(k),x=KIND[k],sub=x.tag||(x.mins?x.mins+" min":""),lab=`${MKN[k]||k}${sub?`<small>${sub}</small>`:""}`;
+  return `<tr><th scope="row">${first>=0&&!woEdit?`<button type="button" data-act="how" data-id="n_move" data-d="${days[first]}">${lab}</button>`:`<span>${lab}</span>`}</th>${days.map((d,i)=>woEdit?pick(d,i,k):wk[i]===k?cell(d,i,"n_move",MKN[k]||k,k==="rest"):`<td${i===si?' class="t"':""}></td>`).join("")}</tr>`}).join("");
+ const daily=woEdit?"":`<tr class="gh"><th scope="colgroup" colspan="8">EVERY DAY</th></tr>`+[["n_walk","After-dinner walk","15 min"],["n_pf","Pelvic floor","Daily sets"]].map(([id,n,sub])=>
   `<tr><th scope="row"><span>${n}<small>${sub}</small></span></th>${days.map((d,i)=>cell(d,i,id,n,false)).join("")}</tr>`).join("");
- return `<table class="mx"><colgroup><col class="c0"><col span="7"></colgroup>${head}<tbody>${rows}<tr class="gh"><th scope="colgroup" colspan="8">EVERY DAY</th></tr>${daily}</tbody></table>`;
+ return `<table class="mx"><colgroup><col class="c0"><col span="7"></colgroup>${head}<tbody>${rows}${daily}</tbody></table>`;
 }
 /* the day's log as a matrix: exercise down the side; sets, reps, weight and minutes across the top */
 function logMatrix(date){
- const tk=todayKey(),kind=moveFor(date).kind,list=(WO[kind]||[]).concat([["walk","After-dinner walk",{m:15}]]),log=woLog(date),fut=date>tk;
- const rows=list.map(([k,name,tg])=>{const e=obj(log[k]),last=woLast(k,date);
+ const tk=todayKey(),list=exList(date).filter(x=>x.n.trim()).concat([{k:"walk",n:"After-dinner walk",m:15}]),log=woLog(date),fut=date>tk;
+ const rows=list.map(tg=>{const k=tg.k,name=esc(tg.n),e=obj(log[k]),last=woLast(k,date);
   return `<tr><th scope="row"><span>${name}${last?`<small>Last: ${esc(last)}</small>`:""}</span></th>${WOF.map(([f,l])=>f in tg
-   ?`<td><input class="wi" type="text" inputmode="decimal" maxlength="5" data-in="wo" data-d="${date}" data-k="${k}" data-f="${f}" value="${e[f]!=null?esc(e[f]):""}" placeholder="${tg[f]===""?"":tg[f]}" aria-label="${esc(name)}: ${f==="s"?"sets":f==="r"?"reps":f==="w"?"weight in pounds":"minutes"}"${fut?" disabled":""}></td>`
+   ?`<td><input class="wi" type="text" inputmode="decimal" maxlength="5" data-in="wo" data-d="${date}" data-k="${esc(k)}" data-f="${f}" value="${e[f]!=null?esc(e[f]):""}" placeholder="${tg[f]===""?"":tg[f]}" aria-label="${name}: ${f==="s"?"sets":f==="r"?"reps":f==="w"?"weight in pounds":"minutes"}"${fut?" disabled":""}></td>`
    :`<td><span class="na" aria-hidden="true">–</span></td>`).join("")}</tr>`}).join("");
  return `<table class="mx lg"><colgroup><col class="c0"><col span="4"></colgroup><thead><tr><th scope="col"><span class="sr">Exercise</span></th>${WOF.map(([f,l])=>`<th scope="col">${l}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table>`;
+}
+/* the chosen day's exercises as an editable list: name, then the four targets */
+function woEditor(date){
+ const rows=exList(date).map(x=>`<div class="we"><div class="wen"><input class="inp" type="text" maxlength="40" value="${esc(x.n)}" placeholder="Exercise" data-in="wx" data-f="n" data-k="${esc(x.k)}" data-d="${date}" aria-label="Exercise">
+   <button type="button" class="xb" data-act="wxdel" data-k="${esc(x.k)}" data-d="${date}" aria-label="Remove ${esc(x.n||"this row")}">×</button></div>
+  <div class="wet">${WOF.map(([f,l])=>`<label><span>${l}</span><input class="wi" type="text" inputmode="decimal" maxlength="5" value="${x[f]!=null&&x[f]!==""?esc(x[f]):""}" data-in="wx" data-f="${f}" data-k="${esc(x.k)}" data-d="${date}"></label>`).join("")}</div></div>`).join("");
+ return `<div>${rows||`<p class="none">${kindFor(date)==="rest"?"Rest day.":"No exercises yet."}</p>`}</div><button type="button" class="btn wide dash" data-act="wxadd" data-d="${date}">Add a row</button>`;
 }
 function renderWorkout(){
  const tk=todayKey(),mon=addDays(mondayOf(tk),wkOff*7),sun=addDays(mon,6);
  let sd=woSel&&woSel>=mon&&woSel<=sun?woSel:(wkOff===0?tk:mon);
- const mv=moveFor(sd),title=wkOff===0?"This week":wkOff===-1?"Last week":`${md(mon)} to ${md(sun)}`;
- return `<header><h1>Workout</h1><p class="intro">Moderate only: every set ends with 2 to 3 reps left.</p></header>
+ const mv=moveFor(sd),title=wkOff===0?"This week":wkOff===-1?"Last week":wkOff===1?"Next week":`${md(mon)} to ${md(sun)}`;
+ const when=sd===tk?" · today":sd===addDays(tk,1)?" · tomorrow":"",ed=woEdit&&sd>=tk,kn=MKN[mv.kind]||mv.name;
+ return `<header><div class="ch"><h1>Workout</h1><button type="button" class="lnk" data-act="wedit">${woEdit?"Done":"Edit plan"}</button></div><p class="intro">Moderate only: every set ends with 2 to 3 reps left.</p></header>
   <section aria-label="The week"><div class="wkn"><button type="button" data-act="wk" data-v="-1" aria-label="Earlier week">${I.back}</button><h2>${esc(title)}</h2>
-    <button type="button" data-act="wk" data-v="1" aria-label="Later week"${wkOff>=0?" disabled":""}>${I.chev}</button></div>
+    <button type="button" data-act="wk" data-v="1" aria-label="Later week"${wkOff>=4?" disabled":""}>${I.chev}</button></div>
    ${moveMatrix(mon,sd)}
-   <p class="note">Tap a circle to tick it, a day letter to open its log, or a workout name for the sets and reps.</p></section>
-  <section aria-label="Log"><div class="ch"><h2>${esc(wdmd(sd))}${sd===tk?" · today":""}</h2><span>${esc(MKN[mv.kind]||mv.name)}</span></div>
-   ${logMatrix(sd)}
-   <p class="note">${sd>tk?"This day hasn't come yet. The grey numbers are the targets.":"Type what you did; it saves as you go. Grey numbers are the targets. Weight is per bar or bell, in pounds. Half a minute is 0.5."}</p></section>`;
+   <p class="note">${woEdit?"Tap a circle to put that workout on that day. It stays on that weekday from then on. Tap a day letter to edit its exercises.":"Tap a circle to tick it, a day letter to open its log, or a workout name for the sets and reps."}</p></section>
+  <section aria-label="${ed?"Exercises":"Log"}"><div class="ch"><h2>${esc(wdmd(sd))}${when}</h2><span>${esc(kn)}</span></div>
+   ${ed?woEditor(sd):logMatrix(sd)}
+   <p class="note">${ed?`The numbers are the targets; leave a box empty for none. Later ${esc(kn.toLowerCase())} days use this list too.`:sd>tk?"This day hasn't come yet. The grey numbers are the targets.":"Type what you did; it saves as you go. Grey numbers are the targets. Weight is per bar or bell, in pounds. Half a minute is 0.5."}</p></section>`;
 }
 
 /* ---------- 5 EJACULATION ---------- */
@@ -527,7 +590,7 @@ function renderEj(){
 
 /* =================== ACTIONS =================== */
 const ACT={
- tab:d=>{tab=d.k;dietEdit&&endEdit();renderAll();window.scrollTo(0,0)},
+ tab:d=>{tab=d.k;dietEdit&&endEdit();woEdit&&endWoEdit();renderAll();window.scrollTo(0,0)},
  dnav:d=>{const tk=todayKey();let n=addDays(sel,Number(d.v));if(n>tk)n=tk;if(n<addDays(tk,-730))return;sel=n;bmF={time:null,type:4,blood:false};renderAll()},
  pick:d=>{if(isDate(d.d)&&d.d<=todayKey()){sel=d.d;renderAll()}},
  tick:d=>{
@@ -561,7 +624,14 @@ const ACT={
   refocus=`[data-in="pl"][data-f="n"][data-id="${id}"]`;renderAll()},
  pldel:d=>{const date=dietDate(),undo=keep("plan:"+date);savePlan(date,planFor(date).filter(x=>x.id!==String(d.id)));renderAll();toast("Removed",undo)},
  /* workout */
- wk:d=>{wkOff=Math.min(0,Math.max(-26,wkOff+Number(d.v)));woSel=null;renderAll()},
+ wk:d=>{wkOff=Math.min(4,Math.max(-26,wkOff+Number(d.v)));woSel=null;renderAll()},
+ wedit:()=>{if(woEdit)endWoEdit();else woEdit=true;renderAll()},
+ wkind:d=>{if(d.d<todayKey()||!KIND[d.k])return;woSel=d.d;
+  if(kindFor(d.d)!==d.k){const v=Object.assign({},obj(S.get("wp:"+d.d,{})));v.kind=d.k;S.set("wp:"+d.d,v);wpIdx=null}
+  renderAll()},
+ wxadd:d=>{if(d.d<todayKey())return;const list=exList(d.d),k="u"+Date.now().toString(36);list.push({k,n:"",s:"",r:"",w:"",m:""});saveEx(d.d,list);
+  refocus=`[data-in="wx"][data-f="n"][data-k="${k}"]`;renderAll()},
+ wxdel:d=>{const undo=keep("wp:"+d.d);saveEx(d.d,exList(d.d).filter(x=>x.k!==String(d.k)));renderAll();toast("Removed",undo)},
  wday:d=>{woSel=d.d;renderAll()},
  autoinfo:d=>{const st=woStep(d.d||todayKey(),d.id);if(st)toast(st.kind==="rest"?"Rest day: nothing to tick":"Sick day: workouts count as done")},
  timer:d=>{timer={id:d.id,end:Date.now()+Number(d.v||30)*60000,done:false};renderAll();if(sheet==="how")renderSheet("hw_stop")},
@@ -585,10 +655,22 @@ function endEdit(){
  dietEdit=false;const date=dietDate(),all=planFor(date),list=all.filter(x=>x.n.trim());
  if(list.length!==all.length)savePlan(date,list);
 }
+/* same for the workout editor, on every day it touched */
+function endWoEdit(){
+ woEdit=false;
+ S.keys().forEach(k=>{if(k.indexOf("wp:")!==0)return;const v=obj(S.get(k,{})),ex=obj(v.ex);let ch=false;
+  Object.keys(ex).forEach(kd=>{if(!Array.isArray(ex[kd]))return;const keepRows=ex[kd].filter(x=>x&&String(x.n||"").trim());if(keepRows.length!==ex[kd].length){ex[kd]=keepRows;ch=true}});
+  if(ch)S.set(k,v)});
+ wpIdx=null;
+}
 function planEdit(t,f,v){const date=dietDate(),list=planFor(date),x=list.find(y=>y.id===t.dataset.id);if(!x)return;x[f]=v;savePlan(date,list)}
 const IN={
  bmt:t=>{bmF.time=t.value},
  pl:t=>planEdit(t,t.dataset.f==="s"?"s":"n",t.value.slice(0,90)),
+ wx:t=>{const date=t.dataset.d,list=exList(date),x=list.find(y=>y.k===t.dataset.k),f=t.dataset.f;if(!x||date<todayKey())return;
+  if(f==="n")x.n=t.value.slice(0,40);
+  else{const v=t.value.replace(",",".").trim(),n=parseFloat(v);x[f]=v!==""&&isFinite(n)&&n>=0?Math.round(n*100)/100:""}
+  saveEx(date,list)},
  wo:t=>{const k="wo:"+t.dataset.d,o=Object.assign({},woLog(t.dataset.d)),e=Object.assign({},obj(o[t.dataset.k]));
   const v=t.value.replace(",",".").trim(),n=parseFloat(v);
   if(v!==""&&isFinite(n)&&n>=0)e[t.dataset.f]=Math.round(n*100)/100;else delete e[t.dataset.f];
@@ -598,6 +680,12 @@ const IN={
 const CHG={
  sl:t=>{const f=t.dataset.f==="wake"?"wake":"sleep",k="sleep:"+sel,o=Object.assign({},obj(S.get(k,{})));
   o[f]=fixSleepTime(f,t.value);
+  if(!o.sleep&&!o.wake&&(o.score==null||o.score==="")&&!o.note)S.del(k);else S.set(k,o);
+  renderAll()},
+ slsc:t=>{const k="sleep:"+sel,o=Object.assign({},obj(S.get(k,{}))),v=t.value.trim(),n=Number(v);
+  if(v===""){delete o.score}
+  else if(Number.isInteger(n)&&n>=0&&n<=100)o.score=n;
+  else{toast("Sleep score is 0 to 100.");renderAll();return}
   if(!o.sleep&&!o.wake&&(o.score==null||o.score==="")&&!o.note)S.del(k);else S.set(k,o);
   renderAll()},
  plt:t=>{planEdit(t,"t",toMin(t.value)!=null?hhmm(toMin(t.value)):"");renderAll()}
@@ -634,7 +722,7 @@ function undoToast(){const u=toastUndo;hideToast();if(u){u();toast("Undone")}}
 /* remembers the stored value of a few keys, and returns a function that puts them back */
 function keep(...keys){
  const prev=keys.map(k=>{let v=null;try{v=localStorage.getItem(K+k)}catch(e){}return [k,v]});
- return ()=>{prev.forEach(([k,v])=>{try{v===null?localStorage.removeItem(K+k):localStorage.setItem(K+k,v)}catch(e){}});planDates=null;renderAll();if(sheet)renderSheet()};
+ return ()=>{prev.forEach(([k,v])=>{try{v===null?localStorage.removeItem(K+k):localStorage.setItem(K+k,v)}catch(e){}});planDates=null;wpIdx=null;renderAll();if(sheet)renderSheet()};
 }
 
 /* =================== SHEETS =================== */
@@ -672,7 +760,9 @@ const SHEETS={
   <div class="acts"><button type="button" class="btn" data-act="x">Cancel</button><button type="button" class="btn ink" data-act="askOk">${esc(sh.ok)}</button></div>`,
  how:()=>{const st=woStep(sh.date,sh.id);if(!st||!st.how)return head("Not on today's list");
   const run=timer&&timer.id===st.id,isT=sh.date===todayKey();
-  return `${head(st.name,wdmd(sh.date))}<div class="box tint">${st.how.map(x=>`<p class="rule">${esc(x)}</p>`).join("")}</div>
+  const cust=exStored(sh.date),skip=HOW_EX[st.kind]||[];
+  const lines=cust?[cust.filter(x=>x.n.trim()).map(exLine).join(" · ")].filter(Boolean).concat(st.how.filter((_,i)=>!skip.includes(i))):st.how;
+  return `${head(st.name,wdmd(sh.date))}<div class="box tint">${lines.map(x=>`<p class="rule">${esc(x)}</p>`).join("")}</div>
   ${isT&&st.timer?`${run?`<p class="tmr num" data-tmr style="margin-top:14px;text-align:center">${fmtLeft(timer.end-Date.now())}</p>`:""}
    <div class="acts">${run?`<button type="button" id="hw_stop" class="btn" data-act="stoptimer">Stop</button>`:`<button type="button" id="hw_start" class="btn ink" data-act="timer" data-id="${st.id}" data-v="${st.timer}">Start ${st.timer}:00</button>`}
     <button type="button" class="btn ink" data-act="howDone">Done</button></div>`:""}`}
@@ -698,7 +788,7 @@ async function exportData(){
  }
  downloadFile(json,name);S.set("lastexport",tk);toast("Backup downloaded");
 }
-const KNOWN=/^(plan:|wo:|lift:|mode:|sleep:|gut:|fert:|wchk:|jr:|day:|wrev:|fview$|wview$|lastexport$|wake$|iron$|funlist$|funbig$|tests$|setup$|ifthen$|planFrom$|v2From$|v3From$|v4From$|v2seen$)/;
+const KNOWN=/^(plan:|wp:|wo:|lift:|mode:|sleep:|gut:|fert:|wchk:|jr:|day:|wrev:|fview$|wview$|lastexport$|wake$|iron$|funlist$|funbig$|tests$|setup$|ifthen$|planFrom$|v2From$|v3From$|v4From$|v2seen$)/;
 function importData(inp){
  const f=inp.files&&inp.files[0];inp.value="";if(!f)return;
  const r=new FileReader();
@@ -717,23 +807,23 @@ function importData(inp){
 function snapshotAll(){
  const snap={};S.keys().forEach(k=>{try{snap[k]=localStorage.getItem(K+k)}catch(e){}});
  return ()=>{S.keys().forEach(k=>{if(!(k in snap))S.del(k)});
-  Object.keys(snap).forEach(k=>{try{localStorage.setItem(K+k,snap[k])}catch(e){}});planDates=null;renderAll()};
+  Object.keys(snap).forEach(k=>{try{localStorage.setItem(K+k,snap[k])}catch(e){}});planDates=null;wpIdx=null;renderAll()};
 }
 function doImport(d,keys){
  const undo=snapshotAll();
  S.keys().forEach(k=>S.del(k));
  for(const k of keys){if(!S.set(k,d[k])){undo();toast("Couldn't restore: this browser is out of space. Nothing changed.");return}}
  if(!isDate(S.get("v4From",null)))S.set("v4From",V4_FROM);
- planDates=null;renderAll();toast("Backup restored",undo);
+ planDates=null;wpIdx=null;renderAll();toast("Backup restored",undo);
 }
 
 /* =================== START =================== */
 /* home-screen apps stay suspended overnight: jump to the new day when the app comes back */
 function checkDay(){
  const tk=todayKey();
- if(tk!==lastTk){lastTk=tk;sel=tk;wkOff=0;woSel=null;ejOff=0;dietDay=0;dietEdit=false;bmF={time:null,type:4,blood:false};if(!sheet)renderAll();return}
+ if(tk!==lastTk){lastTk=tk;sel=tk;wkOff=0;woSel=null;woEdit=false;ejOff=0;dietDay=0;dietEdit=false;bmF={time:null,type:4,blood:false};if(!sheet)renderAll();return}
  const ae=document.activeElement,typing=ae&&ae.tagName==="INPUT";
- if(!sheet&&!typing&&!dietEdit)renderAll();
+ if(!sheet&&!typing&&!dietEdit&&!woEdit)renderAll();
 }
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkDay()});
 window.addEventListener("pageshow",checkDay);
